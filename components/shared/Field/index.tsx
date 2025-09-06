@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 12,
     backgroundColor: theme.colors.gray700,
-    borderRadius: 4,
+    borderRadius: 20,
   },
 
   icon: {
