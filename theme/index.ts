@@ -12,6 +12,6 @@ export const theme = {
 
   fontFamilies: {
     inter_400: 'Inter_400Regular',
-    inter_500: 'Inter_500SemiBold',
+    inter_500: 'Inter_500Medium',
   },
 };
