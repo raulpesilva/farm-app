@@ -1,29 +1,30 @@
 // import { auth } from '@/FirebaseConfig';
 // import { dispatchIsAuthenticated } from '@/states';
 import { useRouter } from 'expo-router';
-// import { signInWithEmailAndPassword } from 'firebase/auth';
+// import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Field, Typography } from '../shared';
 
-const useFormSignIn = () => {
-  const router = useRouter();
+const useFormSignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleCreateAccount = async () => {
+    if (password !== confirmPassword) return setError('As senhas não coincidem');
     try {
       setLoading(true);
-      if (!email || !password) return setError('Preencha todos os campos');
-      // const user = await signInWithEmailAndPassword(auth, email, password);
+      if (!email || !password || !confirmPassword) return setError('Preencha todos os campos');
+      // const user = await createUserWithEmailAndPassword(auth, email, password);
       // if (user) dispatchIsAuthenticated(true);
     } catch (error: any) {
-      console.log('Error signing in with email and password:', error);
+      console.log('Error creating account:', error);
       if (error.message.includes('auth/invalid-email')) return setError('E-mail inválido');
-      if (error.message.includes('auth/wrong-password')) return setError('Senha incorreta');
-      if (error.message.includes('auth/user-not-found')) return setError('Usuário não encontrado');
+      if (error.message.includes('auth/weak-password')) return setError('A senha deve ter pelo menos 6 caracteres');
+      if (error.message.includes('auth/email-already-in-use')) return setError('E-mail ja cadastrado');
       setError('Sign in failed: ' + error.message);
     } finally {
       setLoading(false);
@@ -35,24 +36,35 @@ const useFormSignIn = () => {
     setError('');
   };
 
-  const handleRegister = () => router.navigate('/register');
-
   return {
     email,
     password,
+    confirmPassword,
     error,
     loading,
     setEmail,
     setPassword,
-    handleLogin,
+    setConfirmPassword,
+    handleCreateAccount,
     onChange,
-    handleRegister,
   };
 };
 
-export const FormSignIn = () => {
-  const { email, password, error, loading, setEmail, setPassword, handleLogin, onChange, handleRegister } =
-    useFormSignIn();
+export const FormSignUp = () => {
+  const router = useRouter();
+
+  const {
+    email,
+    password,
+    confirmPassword,
+    error,
+    loading,
+    setEmail,
+    setPassword,
+    setConfirmPassword,
+    handleCreateAccount,
+    onChange,
+  } = useFormSignUp();
 
   return (
     <View style={styles.container}>
@@ -71,7 +83,18 @@ export const FormSignIn = () => {
           placeholder='Digite sua senha'
           value={password}
           onChangeText={(value) => onChange(setPassword, value)}
-          textContentType='password'
+          textContentType='oneTimeCode'
+          keyboardType='default'
+          secureTextEntry
+        />
+      </Field>
+      <Field>
+        <Field.TextInput
+          placeholder='Confirme sua senha'
+          value={confirmPassword}
+          onChangeText={(value) => onChange(setConfirmPassword, value)}
+          textContentType='oneTimeCode'
+          keyboardType='default'
           secureTextEntry
         />
       </Field>
@@ -82,11 +105,11 @@ export const FormSignIn = () => {
         </Typography>
       )}
 
-      <Button onPress={handleLogin} loading={loading}>
-        <Typography>Entrar</Typography>
-      </Button>
-      <Button variant='outlined' onPress={handleRegister} loading={loading}>
+      <Button onPress={handleCreateAccount} loading={loading}>
         <Typography>Criar conta</Typography>
+      </Button>
+      <Button variant='outlined' onPress={router.back} loading={loading}>
+        <Typography>Voltar</Typography>
       </Button>
     </View>
   );

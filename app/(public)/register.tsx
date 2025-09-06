@@ -1,11 +1,15 @@
-import { theme } from '@/theme';
-import { StyleSheet, Text, View } from 'react-native';
+import { FormSignUp, KeyboardAvoiding } from '@/components';
+import { LogoIcon } from '@/components/icons';
+import { SafeAreaView, StyleSheet } from 'react-native';
 
 export default function Register() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Register</Text>
-    </View>
+    <KeyboardAvoiding>
+      <SafeAreaView style={styles.container}>
+        <LogoIcon />
+        <FormSignUp />
+      </SafeAreaView>
+    </KeyboardAvoiding>
   );
 }
 
@@ -14,11 +18,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 24,
-  },
-
-  text: {
-    color: theme.colors.white,
-    fontFamily: theme.fontFamilies.inter_500,
   },
 });
