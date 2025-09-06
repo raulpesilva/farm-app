@@ -48,6 +48,7 @@ const variants = {
   paragraph: [styles.regular, styles.sizeXs],
   label: [styles.medium, styles.sizeXs],
   span: [styles.regular, styles.sizeXs],
+  error: [styles.regular, styles.sizeXs, { color: theme.colors.error }],
 };
 
 interface TypographyProps extends TextProps {

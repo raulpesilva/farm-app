@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.error,
   },
   disabled: {
-    opacity: 0.7,
+    opacity: 0.6,
   },
 
   icon: {
@@ -81,19 +81,20 @@ interface ButtonProps extends TouchableOpacityProps {
   variant?: keyof typeof variants;
   style?: StyleProp<ViewStyle>;
   disabled?: boolean;
+  loading?: boolean;
 }
 
-export const Button = ({ children, variant = 'contained', style, disabled, ...props }: ButtonProps) => {
+export const Button = ({ children, variant = 'contained', style, disabled, loading, ...props }: ButtonProps) => {
   const { others } = useMemo(() => groupElements(children, { variant }), [children, variant]);
 
   return (
     <TouchableOpacity
       style={[styles.container, ...variants[variant], disabled && styles.disabled, style]}
-      disabled={disabled}
-      activeOpacity={0.7}
+      disabled={disabled || loading}
+      activeOpacity={0.6}
       {...props}
     >
-      {disabled ? <ActivityIndicator size='small' color={variantsText[`${variant}Text`].color} /> : others}
+      {loading ? <ActivityIndicator size='small' color={variantsText[`${variant}Text`].color} /> : others}
     </TouchableOpacity>
   );
 };

@@ -1,7 +1,16 @@
-import { StyleSheet, View } from 'react-native';
+import { FormSignIn, KeyboardAvoiding } from '@/components';
+import { LogoIcon } from '@/components/icons';
+import { SafeAreaView, StyleSheet } from 'react-native';
 
 export default function Login() {
-  return <View style={styles.container}></View>;
+  return (
+    <KeyboardAvoiding>
+      <SafeAreaView style={styles.container}>
+        <LogoIcon />
+        <FormSignIn />
+      </SafeAreaView>
+    </KeyboardAvoiding>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -9,6 +18,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 24,
   },
 });
