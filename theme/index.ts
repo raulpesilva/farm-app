@@ -8,6 +8,8 @@ export const theme = {
     gray200: '#ADADAD',
     gray50: '#F6F6F5',
     white: '#FFFFFF',
+    error: '#BF1313',
+    success: '#2AA631',
   },
 
   fontFamilies: {

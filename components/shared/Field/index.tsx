@@ -19,8 +19,8 @@ const Icon = ({ children }: { children: React.ReactNode }) => {
   return <View style={styles.icon}>{children}</View>;
 };
 
-const Input = (props: TextInputProps) => {
-  return <TextInput style={[styles.input, props.style]} placeholderTextColor={theme.colors.gray200} {...props} />;
+const Input = ({ style, ...props }: TextInputProps) => {
+  return <TextInput style={[styles.input, style]} placeholderTextColor={theme.colors.gray200} {...props} />;
 };
 
 const FeedbackMessage = ({ children }: { children: React.ReactNode }) => {
