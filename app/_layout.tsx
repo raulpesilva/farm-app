@@ -1,7 +1,7 @@
 import { SplashScreenController } from '@/components';
 import { dispatchIsFontReady, useIsAuthenticatedSelect } from '@/states';
 import { theme } from '@/theme';
-import { Inter_400Regular, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
+import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -26,7 +26,7 @@ const MainRoutes = () => {
 };
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({ Inter_400Regular, Inter_600SemiBold, Inter_700Bold });
+  const [fontsLoaded] = useFonts({ Inter_400Regular, Inter_500Medium });
 
   useEffect(() => dispatchIsFontReady(fontsLoaded), [fontsLoaded]);
 

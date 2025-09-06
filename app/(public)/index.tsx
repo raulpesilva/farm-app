@@ -1,10 +1,10 @@
-import { theme } from '@/theme';
-import { StyleSheet, Text, View } from 'react-native';
+import { Typography } from '@/components/shared';
+import { StyleSheet, View } from 'react-native';
 
 export default function Login() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Login</Text>
+      <Typography>Login</Typography>
     </View>
   );
 }
@@ -15,10 +15,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 24,
-  },
-
-  text: {
-    color: theme.colors.white,
-    fontFamily: theme.fontFamilies.inter_700,
   },
 });

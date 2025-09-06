@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
 
   text: {
     color: theme.colors.white,
-    fontFamily: theme.fontFamilies.inter_700,
+    fontFamily: theme.fontFamilies.inter_500,
   },
 });
