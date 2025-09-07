@@ -11,7 +11,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MainRoutes = () => {
   // const isAuthenticated = useIsAuthenticatedSelect();
+  // const hasFarm = useHasFarmSelect();
   const isAuthenticated = true;
+  const hasFarm = false;
 
   return (
     <ThemeProvider value={DarkTheme}>
@@ -21,7 +23,13 @@ const MainRoutes = () => {
         </Stack.Protected>
 
         <Stack.Protected guard={isAuthenticated}>
-          <Stack.Screen name='(tabs)' />
+          <Stack.Protected guard={!hasFarm}>
+            <Stack.Screen name='addFarm' />
+          </Stack.Protected>
+
+          <Stack.Protected guard={hasFarm}>
+            <Stack.Screen name='(tabs)' />
+          </Stack.Protected>
         </Stack.Protected>
       </Stack>
     </ThemeProvider>
