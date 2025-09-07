@@ -1,12 +1,5 @@
 import { theme } from '@/theme';
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 interface KeyboardAvoidingProps {
   children: React.ReactNode;
@@ -17,11 +10,7 @@ export const KeyboardAvoiding = ({ children }: KeyboardAvoidingProps) => {
 
   return (
     <KeyboardAvoidingView behavior={behavior} style={style.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView contentContainerStyle={style.content} keyboardShouldPersistTaps='handled'>
-          {children}
-        </ScrollView>
-      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>{children}</TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
@@ -30,11 +19,6 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.gray900,
-  },
-
-  content: {
-    flexGrow: 1,
-    alignItems: 'center',
     paddingHorizontal: 24,
   },
 });
