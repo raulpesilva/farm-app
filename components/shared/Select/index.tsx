@@ -1,12 +1,18 @@
 import { theme } from '@/theme';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import { Icon, ICON_MAP } from '../Icon';
 import { Typography } from '../Typography';
+
+interface Option {
+  title: string;
+  icon?: keyof typeof ICON_MAP;
+}
 
 interface SelectProps {
   placeholder: string;
-  options: string[];
+  options: Option[];
   onPress: (option: string) => void;
   value?: string;
 }
@@ -19,15 +25,20 @@ export const Select = ({ placeholder, options, onPress, value }: SelectProps) =>
       onSelect={(selectedItem) => onPress(selectedItem)}
       renderButton={(selectedItem) => (
         <View style={styles.button}>
-          <Text style={(styles.buttonText, { color: selectedItem ? theme.colors.white : theme.colors.gray200 })}>
-            {selectedItem || placeholder}
-          </Text>
+          {selectedItem?.icon && <Icon type={selectedItem.icon} />}
+          <Typography
+            variant='heading3'
+            style={(styles.buttonText, { color: selectedItem ? theme.colors.white : theme.colors.gray200 })}
+          >
+            {selectedItem?.title || placeholder}
+          </Typography>
         </View>
       )}
       renderItem={(item, index, isSelected) => {
         return (
           <View style={[styles.item, isSelected && { backgroundColor: theme.colors.gray500 }]}>
-            <Typography>{item}</Typography>
+            {item?.icon && <Icon type={item.icon} />}
+            <Typography>{item?.title}</Typography>
           </View>
         );
       }}
@@ -51,8 +62,6 @@ const styles = StyleSheet.create({
 
   buttonText: {
     fontFamily: theme.fontFamilies.inter_400,
-    fontSize: 14,
-    lineHeight: 17,
   },
 
   item: {
