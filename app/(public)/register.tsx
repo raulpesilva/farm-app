@@ -1,5 +1,4 @@
-import { FormSignUp, KeyboardAvoiding } from '@/components';
-import { LogoIcon } from '@/components/icons';
+import { FormSignUp, KeyboardAvoiding, LogoIcon } from '@/components';
 import { SafeAreaView, StyleSheet } from 'react-native';
 
 export default function Register() {

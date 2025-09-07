@@ -1,5 +1,4 @@
-import { FormSignIn, KeyboardAvoiding } from '@/components';
-import { LogoIcon } from '@/components/icons';
+import { FormSignIn, KeyboardAvoiding, LogoIcon } from '@/components';
 import { SafeAreaView, StyleSheet } from 'react-native';
 
 export default function Login() {

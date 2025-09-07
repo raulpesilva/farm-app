@@ -1,5 +1,7 @@
 export * from './FormSignIn';
 export * from './FormSignUp';
+export * from './icons';
 export * from './KeyboardAvoiding';
+export * from './shared';
 export * from './SplashScreenController';
 

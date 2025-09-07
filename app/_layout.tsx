@@ -1,5 +1,5 @@
 import { SplashScreenController } from '@/components';
-import { dispatchIsFontReady, useIsAuthenticatedSelect } from '@/states';
+import { dispatchIsFontReady } from '@/states';
 import { theme } from '@/theme';
 import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
@@ -10,7 +10,8 @@ import { StatusBar, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MainRoutes = () => {
-  const isAuthenticated = useIsAuthenticatedSelect();
+  // const isAuthenticated = useIsAuthenticatedSelect();
+  const isAuthenticated = true;
 
   return (
     <ThemeProvider value={DarkTheme}>
@@ -19,7 +20,9 @@ const MainRoutes = () => {
           <Stack.Screen name='(public)' />
         </Stack.Protected>
 
-        <Stack.Protected guard={isAuthenticated}></Stack.Protected>
+        <Stack.Protected guard={isAuthenticated}>
+          <Stack.Screen name='(tabs)' />
+        </Stack.Protected>
       </Stack>
     </ThemeProvider>
   );
