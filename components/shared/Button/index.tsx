@@ -50,7 +50,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   canceled: {
-    backgroundColor: theme.colors.error,
+    backgroundColor: theme.colors.gray900,
+    borderColor: theme.colors.error,
+    borderWidth: 2,
+    paddingHorizontal: 14,
   },
   disabled: {
     opacity: 0.6,
@@ -73,7 +76,7 @@ const variants = {
 const variantsText: Record<`${keyof typeof variants}Text`, TextStyle> = {
   containedText: { color: theme.colors.white },
   outlinedText: { color: theme.colors.primary },
-  canceledText: { color: theme.colors.white },
+  canceledText: { color: theme.colors.error },
 };
 
 interface ButtonProps extends TouchableOpacityProps {

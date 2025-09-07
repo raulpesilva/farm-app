@@ -1,5 +1,5 @@
 import { SplashScreenController } from '@/components';
-import { dispatchIsFontReady } from '@/states';
+import { dispatchIsFontReady, useHasFarmSelect, useIsAuthenticatedSelect } from '@/states';
 import { theme } from '@/theme';
 import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
@@ -10,10 +10,8 @@ import { StatusBar, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MainRoutes = () => {
-  // const isAuthenticated = useIsAuthenticatedSelect();
-  // const hasFarm = useHasFarmSelect();
-  const isAuthenticated = true;
-  const hasFarm = false;
+  const isAuthenticated = useIsAuthenticatedSelect();
+  const hasFarm = useHasFarmSelect();
 
   return (
     <ThemeProvider value={DarkTheme}>
@@ -22,14 +20,12 @@ const MainRoutes = () => {
           <Stack.Screen name='(public)' />
         </Stack.Protected>
 
-        <Stack.Protected guard={isAuthenticated}>
-          <Stack.Protected guard={!hasFarm}>
-            <Stack.Screen name='addFarm' />
-          </Stack.Protected>
+        <Stack.Protected guard={isAuthenticated && !hasFarm}>
+          <Stack.Screen name='addFarm' />
+        </Stack.Protected>
 
-          <Stack.Protected guard={hasFarm}>
-            <Stack.Screen name='(tabs)' />
-          </Stack.Protected>
+        <Stack.Protected guard={isAuthenticated && hasFarm}>
+          <Stack.Screen name='(tabs)' />
         </Stack.Protected>
       </Stack>
     </ThemeProvider>

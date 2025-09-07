@@ -1,7 +1,7 @@
 // import { auth } from '@/FirebaseConfig';
-// import { dispatchIsAuthenticated } from '@/states';
 import { useRouter } from 'expo-router';
 // import { signInWithEmailAndPassword } from 'firebase/auth';
+import { dispatchIsAuthenticated } from '@/states';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Field, Typography } from '../shared';
@@ -19,6 +19,7 @@ const useFormSignIn = () => {
       if (!email || !password) return setError('Preencha todos os campos');
       // const user = await signInWithEmailAndPassword(auth, email, password);
       // if (user) dispatchIsAuthenticated(true);
+      dispatchIsAuthenticated(true);
     } catch (error: any) {
       console.log('Error signing in with email and password:', error);
       if (error.message.includes('auth/invalid-email')) return setError('E-mail inválido');
