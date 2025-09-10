@@ -1,11 +1,11 @@
-import { AddIcon, LogoIcon, NotFarmIcon, SaleIcon, SearchIcon, StockIcon } from '@/components/icons';
+import { GoalIcon, LogoIcon, NotFarmIcon, ProductIcon, SaleIcon, StockIcon } from '@/components/icons';
 
 export const ICON_MAP = {
-  add: AddIcon,
+  goal: GoalIcon,
   logo: LogoIcon,
   notFarm: NotFarmIcon,
+  product: ProductIcon,
   sale: SaleIcon,
-  search: SearchIcon,
   stock: StockIcon,
 };
 

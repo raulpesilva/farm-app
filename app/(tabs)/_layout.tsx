@@ -1,4 +1,4 @@
-import { AddIcon, SaleIcon, StockIcon } from '@/components';
+import { GoalIcon, ProductIcon, SaleIcon, StockIcon } from '@/components';
 import { theme } from '@/theme';
 import { Tabs } from 'expo-router';
 import { Platform, View } from 'react-native';
@@ -39,12 +39,18 @@ export default function TabsLayout() {
         tabBarLabel: () => null,
       }}
     >
-      <Tabs.Screen name='stockDashboard' options={{ tabBarIcon: TabBarIcon(StockIcon) }} />
-      <Tabs.Screen name='add/[type]' options={{ tabBarIcon: TabBarIcon(AddIcon), title: 'add' }} />
-      <Tabs.Screen name='saleDashboard' options={{ tabBarIcon: TabBarIcon(SaleIcon) }} />
-      <Tabs.Screen name='products/[id]' options={{ href: null }} />
-      <Tabs.Screen name='products/index' options={{ href: null }} />
+      <Tabs.Screen name='stocks/index' options={{ tabBarIcon: TabBarIcon(StockIcon) }} />
+      <Tabs.Screen name='stocks/add' options={{ href: null }} />
+
+      <Tabs.Screen name='sales/index' options={{ tabBarIcon: TabBarIcon(SaleIcon) }} />
+      <Tabs.Screen name='sales/add' options={{ href: null }} />
+
+      <Tabs.Screen name='goals/index' options={{ tabBarIcon: TabBarIcon(GoalIcon) }} />
+      <Tabs.Screen name='goals/add' options={{ href: null }} />
+
+      <Tabs.Screen name='products/index' options={{ tabBarIcon: TabBarIcon(ProductIcon) }} />
       <Tabs.Screen name='products/add' options={{ href: null }} />
+      <Tabs.Screen name='products/[id]' options={{ href: null }} />
     </Tabs>
   );
 }

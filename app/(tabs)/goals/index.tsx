@@ -1,11 +1,11 @@
 import { KeyboardAvoiding, Typography } from '@/components';
 import { SafeAreaView, StyleSheet } from 'react-native';
 
-export default function Products() {
+export default function Goals() {
   return (
     <KeyboardAvoiding>
       <SafeAreaView style={styles.container}>
-        <Typography variant='heading1'>Products</Typography>
+        <Typography variant='heading1'>Goals</Typography>
       </SafeAreaView>
     </KeyboardAvoiding>
   );
