@@ -1,12 +1,27 @@
-import { GoalIcon, LogoIcon, NotFarmIcon, ProductIcon, SaleIcon, StockIcon } from '@/components/icons';
+import {
+  ConfigsIcon,
+  GoalIcon,
+  LogoIcon,
+  NotFarmIcon,
+  NotificationBellIcon,
+  NotificationIcon,
+  ProductIcon,
+  SaleIcon,
+  StockIcon,
+  VeganIcon,
+} from '@/components/icons';
 
 export const ICON_MAP = {
+  configs: ConfigsIcon,
   goal: GoalIcon,
   logo: LogoIcon,
   notFarm: NotFarmIcon,
+  notificationBell: NotificationBellIcon,
+  notification: NotificationIcon,
   product: ProductIcon,
   sale: SaleIcon,
   stock: StockIcon,
+  vegan: VeganIcon,
 };
 
 interface IconProps {

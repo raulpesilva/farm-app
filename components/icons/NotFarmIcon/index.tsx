@@ -1,8 +1,8 @@
-import Svg, { ClipPath, Defs, G, Path, Rect } from 'react-native-svg';
+import Svg, { ClipPath, Defs, G, Path, Rect, SvgProps } from 'react-native-svg';
 
-export const NotFarmIcon = () => {
+export const NotFarmIcon = ({ ...props }: SvgProps) => {
   return (
-    <Svg width='238' height='175' viewBox='0 0 238 175' fill='none'>
+    <Svg width='238' height='175' viewBox='0 0 238 175' fill='none' {...props}>
       <G clip-path='url(#clip0_64_38)'>
         <Path
           d='M19.0171 37.9297C29.5199 37.9297 38.0342 29.4389 38.0342 18.9649C38.0342 8.49086 29.5199 0 19.0171 0C8.51424 0 0 8.49086 0 18.9649C0 29.4389 8.51424 37.9297 19.0171 37.9297Z'

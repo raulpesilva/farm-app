@@ -1,7 +1,18 @@
-import { GoalIcon, ProductIcon, SaleIcon, StockIcon } from '@/components';
+import { ButtonIcon, GoalIcon, ProductIcon, SaleIcon, StockIcon, Typography } from '@/components';
+import { useUnreadNotificationsCount } from '@/hooks';
 import { theme } from '@/theme';
-import { Tabs } from 'expo-router';
+import { Router, Tabs, usePathname, useRouter } from 'expo-router';
 import { Platform, View } from 'react-native';
+
+interface NotificationProps {
+  router: Router;
+  isNotifications: boolean;
+}
+
+interface AccountProps {
+  router: Router;
+  isAccount: boolean;
+}
 
 const TabBarIcon = (Icon: React.FC<{ color: string }>) => {
   const IconElem = ({ focused }: { focused: boolean }) => (
@@ -22,8 +33,48 @@ const TabBarIcon = (Icon: React.FC<{ color: string }>) => {
   return IconElem;
 };
 
+const NotificationTab = ({ router, isNotifications }: NotificationProps) => {
+  const unreadNotificationsCount = useUnreadNotificationsCount();
+  const backgroundColor = isNotifications ? theme.colors.gray700 : undefined;
+
+  return (
+    <View style={{ position: 'relative', marginLeft: 20 }}>
+      <ButtonIcon icon='notification' onPress={() => router.push('/notifications')} style={{ backgroundColor }} />
+      {unreadNotificationsCount > 0 && (
+        <View
+          style={{
+            width: 18,
+            height: 18,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: theme.colors.primary,
+            borderRadius: 18,
+            position: 'absolute',
+            top: -2,
+            right: -2,
+          }}
+        >
+          <Typography style={{ textAlign: 'center' }}>{`${unreadNotificationsCount}`}</Typography>
+        </View>
+      )}
+    </View>
+  );
+};
+
+const AccountTab = ({ router, isAccount }: AccountProps) => {
+  const backgroundColor = isAccount ? theme.colors.gray700 : undefined;
+
+  return (
+    <ButtonIcon icon='configs' onPress={() => router.push('/account')} style={{ marginRight: 20, backgroundColor }} />
+  );
+};
+
 export default function TabsLayout() {
+  const router = useRouter();
+  const pathname = usePathname();
   const isOs = Platform.OS === 'ios';
+  const isNotifications = pathname.startsWith('/notifications');
+  const isAccount = pathname.startsWith('/account');
 
   return (
     <Tabs
@@ -36,8 +87,8 @@ export default function TabsLayout() {
         },
         tabBarItemStyle: { justifyContent: 'center', alignItems: 'center' },
         tabBarLabel: () => null,
-        headerRight: () => <StockIcon color={theme.colors.gray200} />,
-        headerLeft: () => <SaleIcon color={theme.colors.gray200} style={{ marginLeft: 24 }} />,
+        headerLeft: () => <NotificationTab router={router} isNotifications={isNotifications} />,
+        headerRight: () => <AccountTab router={router} isAccount={isAccount} />,
         headerStatusBarHeight: isOs ? 0 : 24,
         headerStyle: { backgroundColor: theme.colors.gray900, shadowColor: 'transparent' },
         title: '',
@@ -55,6 +106,9 @@ export default function TabsLayout() {
       <Tabs.Screen name='products/index' options={{ tabBarIcon: TabBarIcon(ProductIcon) }} />
       <Tabs.Screen name='products/add' options={{ href: null }} />
       <Tabs.Screen name='products/[id]' options={{ href: null }} />
+
+      <Tabs.Screen name='notifications/index' options={{ href: null }} />
+      <Tabs.Screen name='account/index' options={{ href: null }} />
     </Tabs>
   );
 }
