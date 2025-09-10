@@ -28,7 +28,6 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: false,
         tabBarStyle: {
           height: isOs ? 72 : 62,
           paddingTop: 12,
@@ -37,6 +36,11 @@ export default function TabsLayout() {
         },
         tabBarItemStyle: { justifyContent: 'center', alignItems: 'center' },
         tabBarLabel: () => null,
+        headerRight: () => <StockIcon color={theme.colors.gray200} />,
+        headerLeft: () => <SaleIcon color={theme.colors.gray200} style={{ marginLeft: 24 }} />,
+        headerStatusBarHeight: isOs ? 0 : 24,
+        headerStyle: { backgroundColor: theme.colors.gray900, shadowColor: 'transparent' },
+        title: '',
       }}
     >
       <Tabs.Screen name='stocks/index' options={{ tabBarIcon: TabBarIcon(StockIcon) }} />
