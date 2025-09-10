@@ -1,3 +1,4 @@
+export * from './FormAddProduct';
 export * from './FormFarm';
 export * from './FormSignIn';
 export * from './FormSignUp';

@@ -4,7 +4,7 @@ import { StyleSheet, Text } from 'react-native';
 
 const styles = StyleSheet.create({
   text: {
-    color: theme.colors.white,
+    color: theme.colors.gray50,
   },
 
   sizeXs: {
@@ -49,6 +49,7 @@ const variants = {
   label: [styles.medium, styles.sizeXs],
   span: [styles.regular, styles.sizeXs],
   error: [styles.regular, styles.sizeXs, { color: theme.colors.error }],
+  success: [styles.regular, styles.sizeXs, { color: theme.colors.success }],
 };
 
 interface TypographyProps extends TextProps {

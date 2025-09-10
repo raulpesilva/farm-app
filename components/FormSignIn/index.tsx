@@ -84,10 +84,10 @@ export const FormSignIn = () => {
       )}
 
       <Button onPress={handleLogin} loading={loading}>
-        <Typography>Entrar</Typography>
+        <Typography variant='label'>Entrar</Typography>
       </Button>
       <Button variant='outlined' onPress={handleRegister} loading={loading}>
-        <Typography>Criar conta</Typography>
+        <Typography variant='label'>Criar conta</Typography>
       </Button>
     </View>
   );
@@ -96,7 +96,7 @@ export const FormSignIn = () => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    gap: 16,
+    gap: 8,
     marginTop: 80,
   },
 

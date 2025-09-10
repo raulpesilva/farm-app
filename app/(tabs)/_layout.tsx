@@ -40,8 +40,11 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen name='stockDashboard' options={{ tabBarIcon: TabBarIcon(StockIcon) }} />
-      <Tabs.Screen name='add' options={{ tabBarIcon: TabBarIcon(AddIcon) }} />
+      <Tabs.Screen name='add/[type]' options={{ tabBarIcon: TabBarIcon(AddIcon), title: 'add' }} />
       <Tabs.Screen name='saleDashboard' options={{ tabBarIcon: TabBarIcon(SaleIcon) }} />
+      <Tabs.Screen name='products/[id]' options={{ href: null }} />
+      <Tabs.Screen name='products/index' options={{ href: null }} />
+      <Tabs.Screen name='products/add' options={{ href: null }} />
     </Tabs>
   );
 }

@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 12,
     paddingHorizontal: 12,
     backgroundColor: theme.colors.gray700,
-    borderRadius: 20,
+    borderRadius: 8,
   },
 
   icon: {
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamilies.inter_400,
     fontSize: 14,
     lineHeight: 17,
-    color: theme.colors.white,
+    color: theme.colors.gray50,
   },
 
   feedbackMessage: {

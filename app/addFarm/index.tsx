@@ -27,9 +27,13 @@ const styles = StyleSheet.create({
 
   title1: {
     marginTop: 80,
+    maxWidth: 288,
+    textAlign: 'center',
   },
 
   title2: {
-    marginTop: 16,
+    marginTop: 8,
+    maxWidth: 288,
+    textAlign: 'center',
   },
 });

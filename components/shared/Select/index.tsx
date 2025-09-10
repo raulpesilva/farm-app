@@ -1,62 +1,98 @@
 import { theme } from '@/theme';
-import React from 'react';
+import React, { Children, isValidElement, ReactNode, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { Icon, ICON_MAP } from '../Icon';
 import { Typography } from '../Typography';
 
-interface Option {
-  title: string;
+export interface OptionSelect {
+  displayName: string;
+  type: string;
   icon?: keyof typeof ICON_MAP;
+  color?: string;
 }
 
 interface SelectProps {
   placeholder: string;
-  options: Option[];
-  onPress: (option: string) => void;
-  value?: string;
+  options: OptionSelect[];
+  onPress: (option: OptionSelect) => void;
+  value?: OptionSelect;
+  disabled?: boolean;
+  children?: React.ReactNode;
 }
 
-export const Select = ({ placeholder, options, onPress, value }: SelectProps) => {
+const FeedbackMessage = ({ children }: { children: React.ReactNode }) => {
+  return <View style={styles.feedbackMessage}>{children}</View>;
+};
+
+const groupElements = (children: ReactNode) => {
+  const elements: Record<string, ReactNode[]> = { feedbackMessage: [], others: [] };
+
+  Children.forEach(children, (child) => {
+    if (!isValidElement(child)) return;
+    if (child.type === FeedbackMessage) return elements.feedbackMessage.push(child);
+    elements.others.push(child);
+  });
+
+  return elements;
+};
+
+export const Select = ({ placeholder, options, onPress, value, disabled, children }: SelectProps) => {
+  const { feedbackMessage } = useMemo(() => groupElements(children), [children]);
+
   return (
-    <SelectDropdown
-      data={options}
-      defaultValue={value}
-      onSelect={(selectedItem) => onPress(selectedItem)}
-      renderButton={(selectedItem) => (
-        <View style={styles.button}>
-          {selectedItem?.icon && <Icon type={selectedItem.icon} />}
-          <Typography
-            variant='heading3'
-            style={(styles.buttonText, { color: selectedItem ? theme.colors.white : theme.colors.gray200 })}
-          >
-            {selectedItem?.title || placeholder}
-          </Typography>
-        </View>
-      )}
-      renderItem={(item, index, isSelected) => {
-        return (
-          <View style={[styles.item, isSelected && { backgroundColor: theme.colors.gray500 }]}>
-            {item?.icon && <Icon type={item.icon} />}
-            <Typography>{item?.title}</Typography>
+    <View style={styles.container}>
+      <SelectDropdown
+        data={options}
+        defaultValue={value}
+        disabled={disabled}
+        onSelect={(selectedItem) => onPress(selectedItem)}
+        renderButton={(selectedItem) => (
+          <View style={styles.button}>
+            {selectedItem?.icon && <Icon type={selectedItem.icon} />}
+            {selectedItem?.color && <View style={[styles.color, { backgroundColor: selectedItem.color }]} />}
+            <Typography
+              variant='heading3'
+              style={(styles.buttonText, { color: selectedItem ? theme.colors.gray50 : theme.colors.gray200 })}
+            >
+              {!!selectedItem?.displayName ? selectedItem?.displayName : placeholder}
+            </Typography>
           </View>
-        );
-      }}
-      showsVerticalScrollIndicator={false}
-      dropdownStyle={styles.menu}
-    />
+        )}
+        renderItem={(item, index, isSelected) => {
+          return (
+            <View style={[styles.item, isSelected && { backgroundColor: theme.colors.gray500 }]}>
+              {item?.icon && <Icon type={item.icon} />}
+              {item?.color && <View style={[styles.color, { backgroundColor: item.color }]} />}
+              <Typography>{item?.displayName}</Typography>
+            </View>
+          );
+        }}
+        showsVerticalScrollIndicator={false}
+        dropdownStyle={styles.menu}
+      />
+      {feedbackMessage}
+    </View>
   );
 };
 
+Select.FeedbackMessage = FeedbackMessage;
+
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    flexDirection: 'column',
+    gap: 6,
+  },
+
   button: {
     width: '100%',
     height: 40,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 12,
     backgroundColor: theme.colors.gray700,
-    borderRadius: 20,
+    borderRadius: 8,
     paddingHorizontal: 12,
   },
 
@@ -68,14 +104,26 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 12,
     paddingVertical: 10,
     paddingHorizontal: 12,
   },
 
+  color: {
+    width: 18,
+    height: 18,
+    borderRadius: 100,
+  },
+
   menu: {
     backgroundColor: theme.colors.gray700,
-    borderRadius: 20,
+    borderRadius: 8,
     paddingVertical: 12,
+  },
+
+  feedbackMessage: {
+    width: '100%',
+    flexDirection: 'column',
+    gap: 6,
   },
 });

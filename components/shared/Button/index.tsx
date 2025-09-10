@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 10,
-    borderRadius: 20,
+    gap: 12,
+    borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
   },
@@ -44,14 +44,17 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
   },
   outlined: {
-    backgroundColor: theme.colors.gray900,
     borderColor: theme.colors.primary,
     borderWidth: 2,
     paddingHorizontal: 14,
   },
-  canceled: {
-    backgroundColor: theme.colors.gray900,
+  error: {
     borderColor: theme.colors.error,
+    borderWidth: 2,
+    paddingHorizontal: 14,
+  },
+  canceled: {
+    borderColor: theme.colors.gray200,
     borderWidth: 2,
     paddingHorizontal: 14,
   },
@@ -70,13 +73,15 @@ const styles = StyleSheet.create({
 const variants = {
   contained: [styles.contained],
   outlined: [styles.outlined],
+  error: [styles.error],
   canceled: [styles.canceled],
 };
 
 const variantsText: Record<`${keyof typeof variants}Text`, TextStyle> = {
-  containedText: { color: theme.colors.white },
+  containedText: { color: theme.colors.gray50 },
   outlinedText: { color: theme.colors.primary },
-  canceledText: { color: theme.colors.error },
+  errorText: { color: theme.colors.error },
+  canceledText: { color: theme.colors.gray200 },
 };
 
 interface ButtonProps extends TouchableOpacityProps {

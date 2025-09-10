@@ -106,10 +106,10 @@ export const FormSignUp = () => {
       )}
 
       <Button onPress={handleCreateAccount} loading={loading}>
-        <Typography>Criar conta</Typography>
+        <Typography variant='label'>Criar conta</Typography>
       </Button>
       <Button variant='outlined' onPress={router.back} loading={loading}>
-        <Typography>Voltar</Typography>
+        <Typography variant='label'>Voltar</Typography>
       </Button>
     </View>
   );
@@ -118,7 +118,7 @@ export const FormSignUp = () => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    gap: 16,
+    gap: 8,
     marginTop: 80,
   },
 

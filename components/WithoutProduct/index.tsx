@@ -11,7 +11,7 @@ export const WithoutProduct = () => {
         Você ainda não cadastrou nenhum produto
       </Typography>
       <Typography style={styles.text}>Cadastre seus produtos e mantenha tudo organizado em sua fazenda</Typography>
-      <Button style={styles.button} onPress={() => router.navigate('/add')}>
+      <Button style={styles.button} onPress={() => router.navigate('/products/add')}>
         <Typography>Cadastrar produto</Typography>
       </Button>
     </View>

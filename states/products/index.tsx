@@ -5,4 +5,5 @@ const PRODUCTS_KEY = 'products';
 const initialValue: ProductItem[] = [];
 
 const methods = createReStateMethods(PRODUCTS_KEY, initialValue);
-export const { dispatchProducts, useProductsSelect } = methods;
+
+export const { dispatchProducts, useProductsSelect, getProducts } = methods;

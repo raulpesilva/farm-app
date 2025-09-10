@@ -66,10 +66,10 @@ export const FormFarm = () => {
       )}
 
       <Button onPress={handleCreateFarm} loading={loading}>
-        <Typography>Cadastrar fazenda</Typography>
+        <Typography variant='label'>Cadastrar fazenda</Typography>
       </Button>
       <Button variant='canceled' onPress={handleSignOut} loading={loading}>
-        <Typography>Sair</Typography>
+        <Typography variant='label'>Trocar de conta</Typography>
       </Button>
     </View>
   );
@@ -78,7 +78,7 @@ export const FormFarm = () => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    gap: 16,
+    gap: 8,
     marginTop: 80,
   },
 

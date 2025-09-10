@@ -4,6 +4,7 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 
 export default function StockDashboard() {
   const products = useProductsSelect();
+  console.log(products);
 
   return (
     <KeyboardAvoiding>
