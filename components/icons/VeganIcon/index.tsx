@@ -5,7 +5,7 @@ interface VeganIconProps extends SvgProps {
   color?: string;
 }
 
-export const VeganIcon = ({ color = theme.colors.primary, ...props }: VeganIconProps) => {
+export const VeganIcon = ({ color = theme.colors.gray200, ...props }: VeganIconProps) => {
   return (
     <Svg width='24' height='24' viewBox='0 0 24 24' fill='none' {...props}>
       <Path

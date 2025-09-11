@@ -1,16 +1,52 @@
-import { EmptyProducts } from '@/components';
+import { Button, EmptyProducts, ProductCard, Typography } from '@/components';
 import { useProductsSelect } from '@/states/products';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { router } from 'expo-router';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 
 export default function Products() {
   const products = useProductsSelect();
 
-  return <SafeAreaView style={styles.container}>{!products?.length && <EmptyProducts />}</SafeAreaView>;
+  return (
+    <SafeAreaView style={styles.container}>
+      {!products?.length && <EmptyProducts />}
+
+      {!!products?.length && (
+        <View style={styles.content}>
+          <Button onPress={() => router.navigate('/products/add')}>
+            <Typography variant='label'>Cadastrar produto</Typography>
+          </Button>
+
+          <FlatList
+            data={products}
+            renderItem={({ item }) => <ProductCard id={item.id} name={item.name} icon={item.icon} color={item.color} />}
+            keyExtractor={(item) => String(item.id)}
+            contentContainerStyle={styles.listContent}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+      )}
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 24,
+  },
+
+  content: {
+    flex: 1,
+    paddingHorizontal: 24,
+    gap: 24,
+  },
+
+  listContent: {
+    paddingBottom: 8,
+  },
+
+  separator: {
+    height: 8,
   },
 });

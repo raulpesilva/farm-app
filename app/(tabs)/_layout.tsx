@@ -1,7 +1,9 @@
 import { ButtonIcon, GoalIcon, ProductIcon, SaleIcon, StockIcon, Typography } from '@/components';
 import { useUnreadNotificationsCount } from '@/hooks';
+import { useProductsSelect } from '@/states/products';
 import { theme } from '@/theme';
 import { Router, Tabs, usePathname, useRouter } from 'expo-router';
+import { useMemo } from 'react';
 import { Platform, View } from 'react-native';
 
 interface NotificationProps {
@@ -72,9 +74,17 @@ const AccountTab = ({ router, isAccount }: AccountProps) => {
 export default function TabsLayout() {
   const router = useRouter();
   const pathname = usePathname();
+  const products = useProductsSelect();
+
   const isOs = Platform.OS === 'ios';
   const isNotifications = pathname.startsWith('/notifications');
   const isAccount = pathname.startsWith('/account');
+  const hasProducts = !!products?.length;
+
+  const defaultOptions = useMemo(() => {
+    if (hasProducts) return {};
+    return { href: null };
+  }, [hasProducts]);
 
   return (
     <Tabs
@@ -82,7 +92,7 @@ export default function TabsLayout() {
         tabBarStyle: {
           height: isOs ? 72 : 62,
           paddingTop: 12,
-          backgroundColor:'transparent',
+          backgroundColor: 'transparent',
           borderTopWidth: 0,
         },
         tabBarItemStyle: { justifyContent: 'center', alignItems: 'center' },
@@ -90,20 +100,20 @@ export default function TabsLayout() {
         headerLeft: () => <NotificationTab router={router} isNotifications={isNotifications} />,
         headerRight: () => <AccountTab router={router} isAccount={isAccount} />,
         headerStatusBarHeight: isOs ? 0 : 24,
-        headerStyle: { backgroundColor:'transparent', shadowColor: 'transparent' },
+        headerStyle: { backgroundColor: 'transparent', shadowColor: 'transparent' },
         title: '',
       }}
     >
-      <Tabs.Screen name='stocks/index' options={{ tabBarIcon: TabBarIcon(StockIcon) }} />
+      <Tabs.Screen name='stocks/index' options={{ tabBarIcon: TabBarIcon(StockIcon), ...defaultOptions }} />
       <Tabs.Screen name='stocks/add' options={{ href: null }} />
 
-      <Tabs.Screen name='sales/index' options={{ tabBarIcon: TabBarIcon(SaleIcon) }} />
+      <Tabs.Screen name='sales/index' options={{ tabBarIcon: TabBarIcon(SaleIcon), ...defaultOptions }} />
       <Tabs.Screen name='sales/add' options={{ href: null }} />
 
-      <Tabs.Screen name='goals/index' options={{ tabBarIcon: TabBarIcon(GoalIcon) }} />
+      <Tabs.Screen name='goals/index' options={{ tabBarIcon: TabBarIcon(GoalIcon), ...defaultOptions }} />
       <Tabs.Screen name='goals/add' options={{ href: null }} />
 
-      <Tabs.Screen name='products/index' options={{ tabBarIcon: TabBarIcon(ProductIcon) }} />
+      <Tabs.Screen name='products/index' options={{ tabBarIcon: TabBarIcon(ProductIcon), ...defaultOptions }} />
       <Tabs.Screen name='products/add' options={{ href: null }} />
       <Tabs.Screen name='products/[id]' options={{ href: null }} />
 

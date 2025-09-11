@@ -6,6 +6,7 @@ export * from './FormSignUp';
 export * from './icons';
 export * from './KeyboardAvoiding';
 export * from './NotificationCard';
+export * from './ProductCard';
 export * from './shared';
 export * from './SplashScreenController';
 

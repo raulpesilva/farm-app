@@ -1,6 +1,5 @@
 import { SplashScreenController } from '@/components';
 import { dispatchIsFontReady, useHasFarmSelect, useIsAuthenticatedSelect } from '@/states';
-import { theme } from '@/theme';
 import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -39,7 +38,7 @@ export default function RootLayout() {
 
   return (
     <SafeAreaView style={[styles.container, StyleSheet.absoluteFill]} edges={['top', 'left', 'right']}>
-      <StatusBar backgroundColor={theme.colors.gray900} barStyle='light-content' translucent />
+      <StatusBar backgroundColor={'transparent'} barStyle='light-content' translucent />
       <SplashScreenController>
         <MainRoutes />
       </SplashScreenController>
@@ -50,6 +49,6 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.gray900,
+    backgroundColor: 'transparent',
   },
 });

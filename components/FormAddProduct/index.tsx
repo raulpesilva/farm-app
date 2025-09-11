@@ -12,24 +12,20 @@ const useFormAddProduct = () => {
   const [icon, setIcon] = useState<IconOptionSelect | undefined>();
   const [color, setColor] = useState<ColorOptionSelect | undefined>();
   const [error, setError] = useState({ name: '', icon: '', color: '' });
-  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleCreateProduct = async () => {
     try {
       setLoading(true);
-
       setError({ name: '', icon: '', color: '' });
-      setSuccess('');
-      const i = icon?.icon;
-      const c = color?.color;
-      if (!name) setError((prev) => ({ ...prev, name: 'Digite o nome do produto' }));
-      if (!i) setError((prev) => ({ ...prev, icon: 'Selecione um ícone para o produto' }));
-      if (!c) setError((prev) => ({ ...prev, color: 'Selecione uma cor para o produto' }));
-      if (!name || !i || !c) return;
 
-      // const userFarm = await createFarm(auth, farm);
-      // if (userFarm) dispatchHasFarm(true);
+      const iconElem = icon?.icon;
+      const colorElem = color?.color;
+      if (!name) setError((prev) => ({ ...prev, name: 'Digite o nome' }));
+      if (!iconElem) setError((prev) => ({ ...prev, icon: 'Selecione um ícone' }));
+      if (!colorElem) setError((prev) => ({ ...prev, color: 'Selecione uma cor' }));
+      if (!name || !iconElem || !colorElem) return;
+
       const tempId = Math.random();
       dispatchProducts((prev) => [
         ...prev,
@@ -37,15 +33,18 @@ const useFormAddProduct = () => {
           id: tempId,
           farm_id: 1,
           name,
-          icon: i,
-          color: c,
+          icon: iconElem,
+          color: colorElem,
           created_at: new Date(),
           updated_at: new Date(),
         },
       ]);
-      addProduct({ name, icon: i, color: c, farm_id: 1 }).then((newProduct) => {
+
+      addProduct({ name, icon: iconElem, color: colorElem, farm_id: 1 }).then((newProduct) => {
         dispatchProducts((prev) => [...prev.filter((p) => p.id !== tempId), newProduct]);
-        setSuccess('Produto cadastrado com sucesso');
+        setName('');
+        setIcon(undefined);
+        setColor(undefined);
       });
       router.navigate('/(tabs)/products');
     } catch (error: any) {
@@ -58,7 +57,6 @@ const useFormAddProduct = () => {
   const onChange = (setValue: React.Dispatch<React.SetStateAction<string>>, value: string) => {
     setValue(value);
     setError({ name: '', icon: '', color: '' });
-    setSuccess('');
   };
 
   return {
@@ -66,7 +64,6 @@ const useFormAddProduct = () => {
     icon,
     color,
     error,
-    success,
     loading,
     setName,
     setIcon,
@@ -77,7 +74,7 @@ const useFormAddProduct = () => {
 };
 
 export const FormAddProduct = () => {
-  const { name, icon, color, error, success, loading, setName, setIcon, setColor, handleCreateProduct, onChange } =
+  const { name, icon, color, error, loading, setName, setIcon, setColor, handleCreateProduct, onChange } =
     useFormAddProduct();
 
   return (
@@ -97,7 +94,7 @@ export const FormAddProduct = () => {
         )}
       </Field>
 
-      <Select placeholder='Selecione um ícone para o produto' options={ICONS_PRODUCT} value={icon} onPress={setIcon}>
+      <Select placeholder='Selecione o ícone' options={ICONS_PRODUCT} value={icon} onPress={setIcon}>
         {error.icon && (
           <Select.FeedbackMessage>
             <Typography variant='error'>{error.icon}</Typography>
@@ -105,7 +102,7 @@ export const FormAddProduct = () => {
         )}
       </Select>
 
-      <Select placeholder='Selecione uma cor para o produto' options={COLORS_PRODUCT} value={color} onPress={setColor}>
+      <Select placeholder='Selecione a cor' options={COLORS_PRODUCT} value={color} onPress={setColor}>
         {error.color && (
           <Select.FeedbackMessage>
             <Typography variant='error'>{error.color}</Typography>
@@ -114,21 +111,16 @@ export const FormAddProduct = () => {
       </Select>
 
       <Button onPress={handleCreateProduct} loading={loading}>
-        <Typography>Salvar</Typography>
+        <Typography variant='label'>Cadastrar produto</Typography>
       </Button>
-
-      {!!success && (
-        <Typography variant='success' style={styles.successMessage}>
-          {success}
-        </Typography>
-      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    gap: 16,
+    marginTop: 24,
+    gap: 8,
   },
 
   successMessage: {

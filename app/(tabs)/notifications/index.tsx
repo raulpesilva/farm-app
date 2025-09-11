@@ -23,6 +23,7 @@ export default function Notifications() {
           keyExtractor={(item) => String(item.id)}
           contentContainerStyle={styles.listContent}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
+          showsVerticalScrollIndicator={false}
         />
       )}
     </SafeAreaView>

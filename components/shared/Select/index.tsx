@@ -47,15 +47,15 @@ export const Select = ({ placeholder, options, onPress, value, disabled, childre
         defaultValue={value}
         disabled={disabled}
         onSelect={(selectedItem) => onPress(selectedItem)}
-        renderButton={(selectedItem) => (
+        renderButton={() => (
           <View style={styles.button}>
-            {selectedItem?.icon && <Icon type={selectedItem.icon} />}
-            {selectedItem?.color && <View style={[styles.color, { backgroundColor: selectedItem.color }]} />}
+            {value?.icon && <Icon type={value.icon} />}
+            {value?.color && <View style={[styles.color, { backgroundColor: value.color }]} />}
             <Typography
               variant='heading3'
-              style={(styles.buttonText, { color: selectedItem ? theme.colors.gray50 : theme.colors.gray200 })}
+              style={(styles.buttonText, { color: value ? theme.colors.gray50 : theme.colors.gray200 })}
             >
-              {!!selectedItem?.displayName ? selectedItem?.displayName : placeholder}
+              {!!value?.displayName ? value?.displayName : placeholder}
             </Typography>
           </View>
         )}
