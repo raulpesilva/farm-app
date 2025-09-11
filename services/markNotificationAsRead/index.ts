@@ -3,6 +3,7 @@ import { getNotifications } from '@/states/notifications';
 import { sleep } from '@/utils';
 
 export const markNotificationAsRead = async (id: number): Promise<NotificationItem | null> => {
+  // trocar pela chamada da API
   const prev = getNotifications();
   await sleep(2000);
 

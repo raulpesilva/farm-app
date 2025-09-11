@@ -1,6 +1,8 @@
 import { NotificationItem } from '@/@types/notification';
 import { createReStateMethods } from '@raulpesilva/re-state';
 
+// initialValue
+
 const NOTIFICATIONS_KEY = 'notifications';
 const initialValue: NotificationItem[] = [
   {
