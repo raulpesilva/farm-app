@@ -1,15 +1,22 @@
+import { markNotificationAsRead } from '@/services';
 import { dispatchNotifications, useNotificationsSelect } from '@/states/notifications';
 
 export const useNotificationActions = () => {
-  const notifications = useNotificationsSelect();
-
   const markAsRead = (id: number) => {
-    const updated = notifications.map((notification) =>
-      !notification.read && notification.id === id
-        ? { ...notification, read: new Date(), updated_at: new Date() }
-        : notification
-    );
-    dispatchNotifications(updated);
+    const tempId = Math.random();
+    const tempDate = new Date();
+
+    dispatchNotifications((prev) => {
+      const newNotifications = prev.map((n) => {
+        if (n.id === id && !n.read) return { ...n, read: tempDate, updated_at: tempDate, id: tempId };
+        return n;
+      });
+      return newNotifications;
+    });
+
+    markNotificationAsRead(id).then((notification) => {
+      if (notification) dispatchNotifications((prev) => [...prev.filter((n) => n.id !== tempId), notification]);
+    });
   };
 
   return { markAsRead };

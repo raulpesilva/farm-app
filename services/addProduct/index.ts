@@ -1,9 +1,8 @@
 import { ProductItem } from '@/@types/product';
 import { getProducts } from '@/states/products';
+import { sleep } from '@/utils';
 
 type AddProductPayload = Omit<ProductItem, 'id' | 'created_at' | 'updated_at'>;
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const addProduct = async (payload: AddProductPayload) => {
   const prev = getProducts();
