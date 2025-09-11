@@ -2,17 +2,19 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { Button, Typography } from '../shared';
 
-export const WithoutProduct = () => {
+export const EmptyProducts = () => {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <Typography variant='heading3' style={styles.text}>
-        Você ainda não cadastrou nenhum produto
+      <Typography variant='heading1' style={styles.text}>
+        Você ainda não cadastrou nenhum produto?
       </Typography>
-      <Typography style={styles.text}>Cadastre seus produtos e mantenha tudo organizado em sua fazenda</Typography>
+      <Typography variant='heading2' style={styles.text}>
+        Cadastre e comece a gerenciar sua fazenda
+      </Typography>
       <Button style={styles.button} onPress={() => router.navigate('/products/add')}>
-        <Typography>Cadastrar produto</Typography>
+        <Typography variant='label'>Cadastrar produto</Typography>
       </Button>
     </View>
   );
@@ -23,14 +25,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 16,
+    gap: 8,
+    paddingHorizontal: 24,
   },
 
   text: {
+    maxWidth: 288,
     textAlign: 'center',
   },
 
   button: {
-    marginTop: 32,
+    width: '100%',
   },
 });

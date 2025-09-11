@@ -82,7 +82,7 @@ export default function TabsLayout() {
         tabBarStyle: {
           height: isOs ? 72 : 62,
           paddingTop: 12,
-          backgroundColor: theme.colors.gray900,
+          backgroundColor:'transparent',
           borderTopWidth: 0,
         },
         tabBarItemStyle: { justifyContent: 'center', alignItems: 'center' },
@@ -90,7 +90,7 @@ export default function TabsLayout() {
         headerLeft: () => <NotificationTab router={router} isNotifications={isNotifications} />,
         headerRight: () => <AccountTab router={router} isAccount={isAccount} />,
         headerStatusBarHeight: isOs ? 0 : 24,
-        headerStyle: { backgroundColor: theme.colors.gray900, shadowColor: 'transparent' },
+        headerStyle: { backgroundColor:'transparent', shadowColor: 'transparent' },
         title: '',
       }}
     >

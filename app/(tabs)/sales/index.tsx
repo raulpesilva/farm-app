@@ -1,20 +1,16 @@
-import { KeyboardAvoiding, Typography } from '@/components';
+import { EmptyProducts } from '@/components';
+import { useProductsSelect } from '@/states/products';
 import { SafeAreaView, StyleSheet } from 'react-native';
 
 export default function Sales() {
-  return (
-    <KeyboardAvoiding>
-      <SafeAreaView style={styles.container}>
-        <Typography variant='heading1'>Sales</Typography>
-      </SafeAreaView>
-    </KeyboardAvoiding>
-  );
+  const products = useProductsSelect();
+
+  return <SafeAreaView style={styles.container}>{!products?.length && <EmptyProducts />}</SafeAreaView>;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 24,
-    gap: 24,
   },
 });
