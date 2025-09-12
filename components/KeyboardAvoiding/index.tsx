@@ -18,6 +18,5 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'transparent',
-    paddingHorizontal: 24,
   },
 });

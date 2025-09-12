@@ -1,10 +1,10 @@
 import { FormFarm, KeyboardAvoiding, NotFarmIcon, Typography } from '@/components';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export default function AddFarm() {
   return (
     <KeyboardAvoiding>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <NotFarmIcon />
         <Typography variant='heading1' style={styles.title1}>
           Você ainda não cadastrou nenhuma fazenda?
@@ -13,7 +13,7 @@ export default function AddFarm() {
           Cadastre sua fazenda e facilite sua rotina
         </Typography>
         <FormFarm />
-      </SafeAreaView>
+      </View>
     </KeyboardAvoiding>
   );
 }
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 24,
   },
 
   title1: {

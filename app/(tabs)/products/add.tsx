@@ -1,13 +1,13 @@
 import { FormAddProduct, KeyboardAvoiding, Typography } from '@/components';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export default function ProductAdd() {
   return (
     <KeyboardAvoiding>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Typography variant='heading1'>Cadastrar produto</Typography>
         <FormAddProduct />
-      </SafeAreaView>
+      </View>
     </KeyboardAvoiding>
   );
 }
@@ -16,5 +16,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 24,
+    paddingHorizontal: 24,
   },
 });

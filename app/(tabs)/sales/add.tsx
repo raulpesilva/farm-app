@@ -1,13 +1,11 @@
-import { KeyboardAvoiding, Typography } from '@/components';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { Typography } from '@/components';
+import { StyleSheet, View } from 'react-native';
 
 export default function SalesAdd() {
   return (
-    <KeyboardAvoiding>
-      <SafeAreaView style={styles.container}>
-        <Typography variant='heading1'>Cadastrar venda</Typography>
-      </SafeAreaView>
-    </KeyboardAvoiding>
+    <View style={styles.container}>
+      <Typography variant='heading1'>Cadastrar venda</Typography>
+    </View>
   );
 }
 
@@ -15,6 +13,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 24,
-    gap: 24,
+    paddingHorizontal: 24,
   },
 });

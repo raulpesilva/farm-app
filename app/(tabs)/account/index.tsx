@@ -1,10 +1,10 @@
-import { Button, KeyboardAvoiding, Typography } from '@/components';
+import { Button, Typography } from '@/components';
 // import { auth } from '@/FirebaseConfig';
 import { dispatchIsAuthenticated } from '@/states';
 import { theme } from '@/theme';
 import { useRouter } from 'expo-router';
 // import { signOut } from 'firebase/auth';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const useAccount = () => {
   const router = useRouter();
@@ -23,27 +23,25 @@ export default function Account() {
   const { handleGoBack, handleSignOut } = useAccount();
 
   return (
-    <KeyboardAvoiding>
-      <SafeAreaView style={styles.container}>
-        <Typography variant='heading1'>Minha conta</Typography>
-        <Typography variant='heading3' style={styles.text1}>
-          {/* Seja bem-vindo, {auth.currentUser?.displayName || auth.currentUser?.email}! */}
-          Seja bem-vindo, Fulano!
-        </Typography>
-        <Typography variant='heading3' style={styles.text2}>
-          Página em desenvolvimento. Em breve, novidades por aqui!
-        </Typography>
+    <View style={styles.container}>
+      <Typography variant='heading1'>Minha conta</Typography>
+      <Typography variant='heading3' style={styles.text1}>
+        {/* Seja bem-vindo, {auth.currentUser?.displayName || auth.currentUser?.email}! */}
+        Seja bem-vindo, Fulano!
+      </Typography>
+      <Typography variant='heading3' style={styles.text2}>
+        Página em desenvolvimento. Em breve, novidades por aqui!
+      </Typography>
 
-        <View style={styles.actionsContainer}>
-          <Button onPress={handleGoBack}>
-            <Typography variant='label'>Voltar para o dashboard</Typography>
-          </Button>
-          <Button variant='canceled' onPress={handleSignOut}>
-            <Typography variant='label'>Trocar de conta</Typography>
-          </Button>
-        </View>
-      </SafeAreaView>
-    </KeyboardAvoiding>
+      <View style={styles.actionsContainer}>
+        <Button onPress={handleGoBack}>
+          <Typography variant='label'>Voltar para o dashboard</Typography>
+        </Button>
+        <Button variant='canceled' onPress={handleSignOut}>
+          <Typography variant='label'>Trocar de conta</Typography>
+        </Button>
+      </View>
+    </View>
   );
 }
 
@@ -51,6 +49,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 24,
+    paddingHorizontal: 24,
   },
 
   text1: {

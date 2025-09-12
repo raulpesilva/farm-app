@@ -1,6 +1,6 @@
 import { FormEditProduct, KeyboardAvoiding, TabProps, TabsProduct, Typography } from '@/components';
 import { useLocalSearchParams } from 'expo-router';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const TABS: TabProps[] = [
   {
@@ -24,11 +24,11 @@ export default function ProductDetail() {
 
   return (
     <KeyboardAvoiding>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Typography variant='heading1'>Produto</Typography>
         <FormEditProduct id={Number(id)} />
         <TabsProduct tabs={TABS} />
-      </SafeAreaView>
+      </View>
     </KeyboardAvoiding>
   );
 }
@@ -37,5 +37,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 24,
+    paddingHorizontal: 24,
   },
 });

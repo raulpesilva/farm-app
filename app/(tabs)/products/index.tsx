@@ -1,13 +1,13 @@
 import { Button, EmptyProducts, ProductCard, Typography } from '@/components';
 import { useProductsSelect } from '@/states';
 import { router } from 'expo-router';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 
 export default function Products() {
   const products = useProductsSelect();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {!products?.length && <EmptyProducts />}
 
       {!!products?.length && (
@@ -26,7 +26,7 @@ export default function Products() {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 24,
+    paddingHorizontal: 24,
   },
 
   content: {
     flex: 1,
-    paddingHorizontal: 24,
     gap: 24,
   },
 

@@ -1,13 +1,13 @@
 import { NotificationCard, Typography } from '@/components';
 import { useSortedNotifications } from '@/hooks';
 import React from 'react';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 
 export default function Notifications() {
   const sortedNotifications = useSortedNotifications();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {!sortedNotifications?.length && (
         <Typography variant='heading1' style={styles.withoutNotifications}>
           Você ainda não tem notificações
@@ -26,7 +26,7 @@ export default function Notifications() {
           showsVerticalScrollIndicator={false}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -34,15 +34,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 24,
+    paddingHorizontal: 24,
   },
 
   withoutNotifications: {
     margin: 'auto',
-    paddingHorizontal: 24,
   },
 
   listContent: {
-    paddingHorizontal: 24,
     paddingBottom: 8,
   },
 
