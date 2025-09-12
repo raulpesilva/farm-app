@@ -1,5 +1,5 @@
 import { markNotificationAsRead } from '@/services';
-import { dispatchNotifications, useNotificationsSelect } from '@/states/notifications';
+import { dispatchNotifications, useNotificationsSelect } from '@/states';
 
 export const useNotificationActions = () => {
   const markAsRead = (id: number) => {

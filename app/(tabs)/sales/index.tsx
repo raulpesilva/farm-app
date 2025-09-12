@@ -1,5 +1,5 @@
 import { EmptyProducts } from '@/components';
-import { useProductsSelect } from '@/states/products';
+import { useProductsSelect } from '@/states';
 import { SafeAreaView, StyleSheet } from 'react-native';
 
 export default function Sales() {

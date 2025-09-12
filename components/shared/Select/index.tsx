@@ -49,7 +49,7 @@ export const Select = ({ placeholder, options, onPress, value, disabled, childre
         onSelect={(selectedItem) => onPress(selectedItem)}
         renderButton={() => (
           <View style={styles.button}>
-            {value?.icon && <Icon type={value.icon} />}
+            {value?.icon && <Icon type={value.icon} color={theme.colors.gray50} />}
             {value?.color && <View style={[styles.color, { backgroundColor: value.color }]} />}
             <Typography
               variant='heading3'
@@ -62,9 +62,9 @@ export const Select = ({ placeholder, options, onPress, value, disabled, childre
         renderItem={(item, index, isSelected) => {
           return (
             <View style={[styles.item, isSelected && { backgroundColor: theme.colors.gray500 }]}>
-              {item?.icon && <Icon type={item.icon} />}
+              {item?.icon && <Icon type={item.icon} color={theme.colors.gray200} />}
               {item?.color && <View style={[styles.color, { backgroundColor: item.color }]} />}
-              <Typography>{item?.displayName}</Typography>
+              <Typography style={styles.itemText}>{item?.displayName}</Typography>
             </View>
           );
         }}
@@ -107,6 +107,10 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 10,
     paddingHorizontal: 12,
+  },
+
+  itemText: {
+    color: theme.colors.gray200,
   },
 
   color: {

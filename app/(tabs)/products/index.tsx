@@ -1,5 +1,5 @@
 import { Button, EmptyProducts, ProductCard, Typography } from '@/components';
-import { useProductsSelect } from '@/states/products';
+import { useProductsSelect } from '@/states';
 import { router } from 'expo-router';
 import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 

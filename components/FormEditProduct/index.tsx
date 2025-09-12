@@ -1,0 +1,66 @@
+import { COLORS_PRODUCT, ICONS_PRODUCT } from '@/@types/product';
+import { useFormEditProduct } from '@/hooks';
+import { StyleSheet, View } from 'react-native';
+import { ButtonIcon, Field, Select, Typography } from '../shared';
+
+interface FormEditProductProps {
+  id: number;
+}
+
+export const FormEditProduct = ({ id }: FormEditProductProps) => {
+  const {
+    name,
+    icon,
+    color,
+    error,
+    loading,
+    edited,
+    setName,
+    setIcon,
+    setColor,
+    onChange,
+    handleUpdateProduct,
+    handleDeleteProduct,
+  } = useFormEditProduct(id);
+
+  return (
+    <View style={styles.container}>
+      {edited && <ButtonIcon icon='edit' variant='outlined' onPress={handleUpdateProduct} loading={loading} />}
+      {!edited && <ButtonIcon icon='trash' variant='error' onPress={handleDeleteProduct} loading={loading} />}
+
+      <Field style={styles.field}>
+        <Field.TextInput
+          placeholder='Digite o nome do produto'
+          value={name}
+          onChangeText={(value) => onChange(setName, value)}
+          textContentType='name'
+          keyboardType='default'
+        />
+        {error.name && (
+          <Field.FeedbackMessage>
+            <Typography variant='error'>{error.name}</Typography>
+          </Field.FeedbackMessage>
+        )}
+      </Field>
+
+      <Select placeholder='Selecione o ícone' options={ICONS_PRODUCT} value={icon} onPress={setIcon} />
+      <Select placeholder='Selecione a cor' options={COLORS_PRODUCT} value={color} onPress={setColor} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: -30,
+    gap: 8,
+    alignItems: 'flex-end',
+  },
+
+  field: {
+    marginTop: 8,
+  },
+
+  successMessage: {
+    textAlign: 'center',
+  },
+});

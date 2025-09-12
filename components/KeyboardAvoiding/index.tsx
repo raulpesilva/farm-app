@@ -1,4 +1,3 @@
-import { theme } from '@/theme';
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 interface KeyboardAvoidingProps {
@@ -18,7 +17,7 @@ export const KeyboardAvoiding = ({ children }: KeyboardAvoidingProps) => {
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.gray900,
+    backgroundColor: 'transparent',
     paddingHorizontal: 24,
   },
 });

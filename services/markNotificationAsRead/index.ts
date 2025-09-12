@@ -1,5 +1,5 @@
 import { NotificationItem } from '@/@types/notification';
-import { getNotifications } from '@/states/notifications';
+import { getNotifications } from '@/states';
 import { sleep } from '@/utils';
 
 export const markNotificationAsRead = async (id: number): Promise<NotificationItem | null> => {

@@ -1,6 +1,6 @@
 import { ButtonIcon, GoalIcon, ProductIcon, SaleIcon, StockIcon, Typography } from '@/components';
 import { useUnreadNotificationsCount } from '@/hooks';
-import { useProductsSelect } from '@/states/products';
+import { useProductsSelect } from '@/states';
 import { theme } from '@/theme';
 import { Router, Tabs, usePathname, useRouter } from 'expo-router';
 import { useMemo } from 'react';
@@ -104,21 +104,13 @@ export default function TabsLayout() {
         title: '',
       }}
     >
-      <Tabs.Screen name='stocks/index' options={{ tabBarIcon: TabBarIcon(StockIcon), ...defaultOptions }} />
-      <Tabs.Screen name='stocks/add' options={{ href: null }} />
+      <Tabs.Screen name='stocks' options={{ tabBarIcon: TabBarIcon(StockIcon), ...defaultOptions }} />
+      <Tabs.Screen name='sales' options={{ tabBarIcon: TabBarIcon(SaleIcon), ...defaultOptions }} />
+      <Tabs.Screen name='goals' options={{ tabBarIcon: TabBarIcon(GoalIcon), ...defaultOptions }} />
+      <Tabs.Screen name='products' options={{ tabBarIcon: TabBarIcon(ProductIcon), ...defaultOptions }} />
 
-      <Tabs.Screen name='sales/index' options={{ tabBarIcon: TabBarIcon(SaleIcon), ...defaultOptions }} />
-      <Tabs.Screen name='sales/add' options={{ href: null }} />
-
-      <Tabs.Screen name='goals/index' options={{ tabBarIcon: TabBarIcon(GoalIcon), ...defaultOptions }} />
-      <Tabs.Screen name='goals/add' options={{ href: null }} />
-
-      <Tabs.Screen name='products/index' options={{ tabBarIcon: TabBarIcon(ProductIcon), ...defaultOptions }} />
-      <Tabs.Screen name='products/add' options={{ href: null }} />
-      <Tabs.Screen name='products/[id]' options={{ href: null }} />
-
-      <Tabs.Screen name='notifications/index' options={{ href: null }} />
-      <Tabs.Screen name='account/index' options={{ href: null }} />
+      <Tabs.Screen name='notifications' options={{ href: null }} />
+      <Tabs.Screen name='account' options={{ href: null }} />
     </Tabs>
   );
 }

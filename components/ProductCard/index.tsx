@@ -1,13 +1,16 @@
 import { ProductItem } from '@/@types/product';
 import { theme } from '@/theme';
+import { useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Icon, Typography } from '../shared';
 
 type ProductCardProps = Pick<ProductItem, 'id' | 'name' | 'icon' | 'color'>;
 
 export const ProductCard = ({ id, name, icon, color }: ProductCardProps) => {
+  const router = useRouter();
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => router.push(`/products/${id}`)}>
       <View style={styles.iconContent}>
         <Icon type={icon} color={color} />
       </View>

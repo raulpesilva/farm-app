@@ -1,5 +1,5 @@
 import { ProductItem } from '@/@types/product';
-import { getProducts } from '@/states/products';
+import { getProducts } from '@/states';
 import { sleep } from '@/utils';
 
 type AddProductPayload = Omit<ProductItem, 'id' | 'created_at' | 'updated_at'>;

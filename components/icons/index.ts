@@ -4,6 +4,7 @@ export * from './CarrotIcon';
 export * from './CherryIcon';
 export * from './CitrusIcon';
 export * from './ConfigsIcon';
+export * from './EditIcon';
 export * from './EggIcon';
 export * from './GoalIcon';
 export * from './GrapeIcon';
@@ -16,5 +17,6 @@ export * from './ProductIcon';
 export * from './SaleIcon';
 export * from './SproutIcon';
 export * from './StockIcon';
+export * from './TrashIcon';
 export * from './VeganIcon';
 

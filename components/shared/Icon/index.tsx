@@ -5,6 +5,7 @@ import {
   CherryIcon,
   CitrusIcon,
   ConfigsIcon,
+  EditIcon,
   EggIcon,
   GoalIcon,
   GrapeIcon,
@@ -17,6 +18,7 @@ import {
   SaleIcon,
   SproutIcon,
   StockIcon,
+  TrashIcon,
   VeganIcon,
 } from '@/components/icons';
 import { SvgProps } from 'react-native-svg';
@@ -28,6 +30,7 @@ export const ICON_MAP = {
   cherry: CherryIcon,
   citrus: CitrusIcon,
   configs: ConfigsIcon,
+  edit: EditIcon,
   egg: EggIcon,
   goal: GoalIcon,
   grape: GrapeIcon,
@@ -40,6 +43,7 @@ export const ICON_MAP = {
   sale: SaleIcon,
   sprout: SproutIcon,
   stock: StockIcon,
+  trash: TrashIcon,
   vegan: VeganIcon,
 };
 

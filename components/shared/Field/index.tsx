@@ -1,6 +1,6 @@
 import { theme } from '@/theme';
 import React, { Children, isValidElement, ReactNode, useMemo } from 'react';
-import { StyleSheet, TextInput, TextInputProps, TextProps, View } from 'react-native';
+import { StyleProp, StyleSheet, TextInput, TextInputProps, TextProps, View, ViewStyle } from 'react-native';
 import { Typography } from '../Typography';
 
 interface LabelProps extends TextProps {
@@ -40,11 +40,11 @@ const groupElements = (children: ReactNode) => {
   return elements;
 };
 
-export const Field = ({ children }: { children: React.ReactNode }) => {
+export const Field = ({ children, style }: { children: React.ReactNode; style?: StyleProp<ViewStyle> }) => {
   const { label, feedbackMessage, others } = useMemo(() => groupElements(children), [children]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {label}
       <View style={styles.content}>{others}</View>
       {feedbackMessage}
