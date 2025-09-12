@@ -10,4 +10,6 @@ export * from './NotificationCard';
 export * from './ProductCard';
 export * from './shared';
 export * from './SplashScreenController';
+export * from './TabItem';
+export * from './TabsProduct';
 
