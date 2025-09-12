@@ -1,4 +1,4 @@
-import { Button, EmptyProducts, Typography } from '@/components';
+import { Button, Empty, Typography } from '@/components';
 import { useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
@@ -9,7 +9,9 @@ export default function Sales() {
 
   return (
     <View style={styles.container}>
-      {!products?.length && <EmptyProducts />}
+      {!products?.length && (
+        <Empty text='Você ainda não cadastrou nenhum produto?' button='Cadastrar produto' link='/products/add' />
+      )}
 
       {!!products?.length && (
         <View style={styles.content}>

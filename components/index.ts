@@ -1,4 +1,4 @@
-export * from './EmptyProducts';
+export * from './Empty';
 export * from './FormAddProduct';
 export * from './FormEditProduct';
 export * from './FormFarm';

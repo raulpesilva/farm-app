@@ -1,17 +1,25 @@
-import { Button, EmptyProducts, Typography } from '@/components';
+import { Button, Empty, Typography } from '@/components';
 import { useProductsSelect } from '@/states';
+import { useStocksSelect } from '@/states/stocks';
 import { useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 export default function Stocks() {
   const router = useRouter();
   const products = useProductsSelect();
+  const stocks = useStocksSelect();
 
   return (
     <View style={styles.container}>
-      {!products?.length && <EmptyProducts />}
+      {!products?.length && (
+        <Empty text='Você ainda não cadastrou nenhum produto?' button='Cadastrar produto' link='/products/add' />
+      )}
 
-      {!!products?.length && (
+      {!stocks?.length && (
+        <Empty text=' Vocês ainda não cadastrou nenhum estoque?' button='Cadastrar estoque' link='/stocks/add' />
+      )}
+
+      {!!stocks?.length && (
         <View style={styles.content}>
           <Button onPress={() => router.navigate('/stocks/add')}>
             <Typography variant='label'>Cadastrar estoque</Typography>

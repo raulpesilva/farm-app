@@ -1,20 +1,26 @@
-import { useRouter } from 'expo-router';
+import { Href, useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { Button, Typography } from '../shared';
 
-export const EmptyProducts = () => {
+interface EmptyProps {
+  text: string;
+  button: string;
+  link: Href;
+}
+
+export const Empty = ({ text, button, link }: EmptyProps) => {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
       <Typography variant='heading1' style={styles.text}>
-        Você ainda não cadastrou nenhum produto?
+        {text}
       </Typography>
       <Typography variant='heading2' style={styles.text}>
         Cadastre e comece a gerenciar sua fazenda
       </Typography>
-      <Button style={styles.button} onPress={() => router.navigate('/products/add')}>
-        <Typography variant='label'>Cadastrar produto</Typography>
+      <Button style={styles.button} onPress={() => router.navigate(link)}>
+        <Typography variant='label'>{button}</Typography>
       </Button>
     </View>
   );
