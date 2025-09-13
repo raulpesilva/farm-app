@@ -1,6 +1,5 @@
 import { Button, Empty, Typography } from '@/components';
-import { useProductsSelect } from '@/states';
-import { useStocksSelect } from '@/states/stocks';
+import { useProductsSelect, useStocksSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
