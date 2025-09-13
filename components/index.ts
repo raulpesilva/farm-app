@@ -1,4 +1,5 @@
 export * from './Empty';
+export * from './FormAddGoal';
 export * from './FormAddProduct';
 export * from './FormEditProduct';
 export * from './FormFarm';

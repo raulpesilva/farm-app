@@ -22,14 +22,14 @@ export const COLOR_MAP: Record<string, string> = {
 };
 
 export const COLORS_PRODUCT: OptionSelect[] = [
-  { displayName: 'Vermelho', type: 'red', color: '#FF6467' },
-  { displayName: 'Laranja', type: 'orange', color: '#FF8906' },
-  { displayName: 'Amarelo', type: 'yellow', color: '#FEC745' },
-  { displayName: 'Verde', type: 'green', color: '#06DF73' },
-  { displayName: 'Azul', type: 'blue', color: '#52A2FF' },
-  { displayName: 'Roxo', type: 'purple', color: '#A685FF' },
-  { displayName: 'Rosa', type: 'pink', color: '#FEA5D5' },
-  { displayName: 'Marrom', type: 'brown', color: '#D1872E' },
+  { displayName: 'Vermelho', type: 'red', color: COLOR_MAP['red'] },
+  { displayName: 'Laranja', type: 'orange', color: COLOR_MAP['orange'] },
+  { displayName: 'Amarelo', type: 'yellow', color: COLOR_MAP['yellow'] },
+  { displayName: 'Verde', type: 'green', color: COLOR_MAP['green'] },
+  { displayName: 'Azul', type: 'blue', color: COLOR_MAP['blue'] },
+  { displayName: 'Roxo', type: 'purple', color: COLOR_MAP['purple'] },
+  { displayName: 'Rosa', type: 'pink', color: COLOR_MAP['pink'] },
+  { displayName: 'Marrom', type: 'brown', color: COLOR_MAP['brown'] },
 ];
 
 export type ColorOptionSelect = (typeof COLORS_PRODUCT)[number];

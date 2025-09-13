@@ -31,7 +31,9 @@ export default function Goals() {
               return (
                 <GoalCard
                   product={product?.name || ''}
+                  productIcon={product?.icon || 'goal'}
                   title={item.title}
+                  measure={item.measure}
                   type={item.type}
                   value={item.value}
                   target={item.target}

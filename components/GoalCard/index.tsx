@@ -1,24 +1,25 @@
-import { GoalItem, TYPE_GOAL } from '@/@types/goal';
+import { COLORS_GOAL, GoalItem, MEASURE_GOAL } from '@/@types/goal';
 import { theme } from '@/theme';
 import { formatCurrency } from '@/utils';
 import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Icon, Typography } from '../shared';
+import { Icon, ICON_MAP, Typography } from '../shared';
 
-interface GoalCardProps extends Pick<GoalItem, 'title' | 'type' | 'value' | 'target'> {
+interface GoalCardProps extends Pick<GoalItem, 'title' | 'measure' | 'type' | 'value' | 'target'> {
   product: string;
+  productIcon: keyof typeof ICON_MAP;
 }
 
-export const GoalCard = ({ product, title, type, value, target }: GoalCardProps) => {
-  const color = type === 'amount' ? theme.colors.success : theme.colors.primary;
+export const GoalCard = ({ product, productIcon, title, measure, type, value, target }: GoalCardProps) => {
+  const color = COLORS_GOAL[type];
 
-  const formattedValue = useMemo(() => {
-    return type === 'amount' ? formatCurrency(value) : String(value);
-  }, [type, value]);
+  const formattedTarget = useMemo(() => {
+    return measure === 'amount' ? formatCurrency(target) : String(target);
+  }, [measure, target]);
 
   const percentageCompleted = useMemo(() => {
     if (!target || value === 0) return 0;
-    const percentage = (target / value) * 100;
+    const percentage = (value / target) * 100;
     return percentage > 100 ? 100 : Math.round(percentage);
   }, [target, value]);
 
@@ -26,7 +27,7 @@ export const GoalCard = ({ product, title, type, value, target }: GoalCardProps)
     <View style={styles.container}>
       <View style={styles.infoContent}>
         <View style={styles.iconContent}>
-          <Icon type='goal' color={color} />
+          <Icon type={productIcon} color={color} />
         </View>
 
         <View style={styles.names}>
@@ -35,8 +36,8 @@ export const GoalCard = ({ product, title, type, value, target }: GoalCardProps)
         </View>
 
         <View style={styles.values}>
-          <Typography variant='label'>{formattedValue}</Typography>
-          <Typography style={styles.text}>{TYPE_GOAL[type]}</Typography>
+          <Typography variant='label'>{formattedTarget}</Typography>
+          <Typography style={styles.text}>{MEASURE_GOAL[measure]}</Typography>
         </View>
       </View>
 

@@ -7,7 +7,7 @@ import { Typography } from '../Typography';
 
 export interface OptionSelect {
   displayName: string;
-  type: string;
+  type?: string;
   icon?: keyof typeof ICON_MAP;
   color?: string;
 }

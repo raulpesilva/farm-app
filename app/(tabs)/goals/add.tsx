@@ -1,11 +1,14 @@
-import { Typography } from '@/components';
+import { FormAddGoal, KeyboardAvoiding, Typography } from '@/components';
 import { StyleSheet, View } from 'react-native';
 
 export default function GoalAdd() {
   return (
-    <View style={styles.container}>
-      <Typography variant='heading1'>Cadastrar meta</Typography>
-    </View>
+    <KeyboardAvoiding>
+      <View style={styles.container}>
+        <Typography variant='heading1'>Cadastrar meta</Typography>
+        <FormAddGoal />
+      </View>
+    </KeyboardAvoiding>
   );
 }
 
