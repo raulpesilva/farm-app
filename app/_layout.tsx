@@ -1,5 +1,6 @@
 import { SplashScreenController } from '@/components';
 import { dispatchIsFontReady, useHasFarmSelect, useIsAuthenticatedSelect } from '@/states';
+import { theme } from '@/theme';
 import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -13,7 +14,7 @@ const MainRoutes = () => {
   const hasFarm = useHasFarmSelect();
 
   return (
-    <ThemeProvider value={DarkTheme}>
+    <ThemeProvider value={{ ...DarkTheme, colors: { ...DarkTheme.colors, background: theme.colors.gray900 } }}>
       <Stack screenOptions={{ headerShown: false, animation: 'none' }}>
         <Stack.Protected guard={!isAuthenticated}>
           <Stack.Screen name='(public)' />
@@ -49,6 +50,6 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: theme.colors.gray900,
   },
 });

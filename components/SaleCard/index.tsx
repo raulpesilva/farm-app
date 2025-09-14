@@ -1,0 +1,68 @@
+import { COLOR_MAP } from '@/@types/product';
+import { SaleItem } from '@/@types/sale';
+import { theme } from '@/theme';
+import { formatCurrency } from '@/utils';
+import { StyleSheet, View } from 'react-native';
+import { Icon, ICON_MAP, Typography } from '../shared';
+
+interface SaleCardProps extends Pick<SaleItem, 'value' | 'amount'> {
+  product: string;
+  productIcon: keyof typeof ICON_MAP;
+  productColor: keyof typeof COLOR_MAP;
+}
+
+export const SaleCard = ({ product, productIcon, productColor, value, amount }: SaleCardProps) => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.iconContent}>
+        <Icon type={productIcon} color={productColor} />
+      </View>
+
+      <View style={styles.names}>
+        <Typography variant='heading3'>{product}</Typography>
+        <Typography style={styles.text}>{`${formatCurrency(amount / value)}/un.`}</Typography>
+      </View>
+
+      <View style={styles.values}>
+        <Typography variant='label'>{`${value}`}</Typography>
+        <Typography variant='label'>{formatCurrency(amount)}</Typography>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 12,
+    backgroundColor: theme.colors.gray700,
+    borderRadius: 8,
+    gap: 12,
+    marginVertical: 4,
+  },
+
+  iconContent: {
+    width: 32,
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    backgroundColor: theme.colors.gray900,
+  },
+
+  names: {
+    flex: 1,
+    gap: 2,
+  },
+
+  values: {
+    gap: 2,
+    alignItems: 'flex-end',
+  },
+
+  text: {
+    color: theme.colors.gray200,
+  },
+});

@@ -10,6 +10,8 @@ export * from './icons';
 export * from './KeyboardAvoiding';
 export * from './NotificationCard';
 export * from './ProductCard';
+export * from './SaleCard';
+export * from './SaleChart';
 export * from './shared';
 export * from './SplashScreenController';
 export * from './TabItem';
