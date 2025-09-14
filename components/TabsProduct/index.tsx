@@ -7,26 +7,37 @@ import { TabItem } from '../TabItem';
 
 export interface TabProps {
   label: string;
-  link: Href;
+  link?: Href;
 }
 
-interface TabsProductProps {
-  tabs: TabProps[];
-}
+const TABS_PRODUCT: TabProps[] = [
+  {
+    label: 'Estoque',
+    link: '/stocks/add',
+  },
+  {
+    label: 'Meta',
+    link: '/goals/add',
+  },
+  {
+    label: 'Venda',
+    link: '/sales/add',
+  },
+];
 
-export const TabsProduct = ({ tabs }: TabsProductProps) => {
+export const TabsProduct = () => {
   const router = useRouter();
-  const [active, setActive] = useState(tabs[1]);
+  const [active, setActive] = useState(TABS_PRODUCT[1]);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        {tabs.map((tab, i) => (
-          <TabItem key={`tab-${tab.label}-${i}`} item={tab} active={active} setActive={setActive} />
+        {TABS_PRODUCT.map((tab) => (
+          <TabItem key={tab.label} item={tab} active={active} setActive={setActive} />
         ))}
       </View>
 
-      <Button variant='contained' onPress={() => router.push(active.link)}>
+      <Button variant='contained' onPress={() => router.push(active.link || '/products/add')}>
         <Typography variant='label'>Cadastrar</Typography>
       </Button>
     </View>

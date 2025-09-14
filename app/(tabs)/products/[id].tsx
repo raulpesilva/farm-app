@@ -1,21 +1,6 @@
-import { FormEditProduct, KeyboardAvoiding, TabProps, TabsProduct, Typography } from '@/components';
+import { FormEditProduct, KeyboardAvoiding, TabsProduct, Typography } from '@/components';
 import { useLocalSearchParams } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
-
-const TABS: TabProps[] = [
-  {
-    label: 'Estoque',
-    link: '/stocks/add',
-  },
-  {
-    label: 'Meta',
-    link: '/goals/add',
-  },
-  {
-    label: 'Venda',
-    link: '/sales/add',
-  },
-];
 
 export default function ProductDetail() {
   const searchParams = useLocalSearchParams();
@@ -27,7 +12,7 @@ export default function ProductDetail() {
       <View style={styles.container}>
         <Typography variant='heading1'>Produto</Typography>
         <FormEditProduct id={Number(id)} />
-        <TabsProduct tabs={TABS} />
+        <TabsProduct />
       </View>
     </KeyboardAvoiding>
   );

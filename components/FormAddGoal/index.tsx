@@ -1,18 +1,23 @@
 import { useFormAddGoal } from '@/hooks';
+import { maskCurrency, maskDecimal } from '@/utils';
 import { StyleSheet, View } from 'react-native';
-import { Button, Field, Typography } from '../shared';
+import { Button, Field, Select, Typography } from '../shared';
+import { TabsGoal } from '../TabsGoal';
 
 export const FormAddGoal = () => {
   const {
+    products,
     title,
     product,
-    objective,
+    target,
+    measure,
     error,
     loading,
     setTitle,
     setProduct,
-    setObjective,
-    products,
+    setTarget,
+    setMeasure,
+    setType,
     handleCreateGoal,
     onChange,
   } = useFormAddGoal();
@@ -24,8 +29,6 @@ export const FormAddGoal = () => {
           placeholder='Digite o nome da meta'
           value={title}
           onChangeText={(value) => onChange(setTitle, value)}
-          textContentType='name'
-          keyboardType='default'
         />
         {error.title && (
           <Field.FeedbackMessage>
@@ -34,7 +37,7 @@ export const FormAddGoal = () => {
         )}
       </Field>
 
-      {/* <Select placeholder='Selecione o produto ' options={products} value={product} onPress={setProduct}>
+      <Select placeholder='Selecione o produto' options={products} value={product} onPress={setProduct}>
         {error.product && (
           <Select.FeedbackMessage>
             <Typography variant='error'>{error.product}</Typography>
@@ -42,20 +45,24 @@ export const FormAddGoal = () => {
         )}
       </Select>
 
+      <TabsGoal setMeasure={setMeasure} setType={setType} />
+
       <Field>
         <Field.TextInput
           placeholder='Digite o objetivo'
-          value={objective}
-          onChangeText={(value) => onChange(setObjective, value)}
-          textContentType='name'
+          value={target}
+          onChangeText={(value) => {
+            const formatted = measure === 'quantity' ? maskDecimal(value) : maskCurrency(value);
+            onChange(setTarget, formatted);
+          }}
           keyboardType='default'
         />
-        {error.objective && (
+        {error.target && (
           <Field.FeedbackMessage>
-            <Typography variant='error'>{error.objective}</Typography>
+            <Typography variant='error'>{error.target}</Typography>
           </Field.FeedbackMessage>
         )}
-      </Field> */}
+      </Field>
 
       <Button onPress={handleCreateGoal} loading={loading}>
         <Typography variant='label'>Cadastrar meta</Typography>

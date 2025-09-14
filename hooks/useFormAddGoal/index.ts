@@ -1,15 +1,24 @@
-import { ProductItem } from '@/@types/product';
+import { GoalItem } from '@/@types/goal';
+import { OptionSelect } from '@/components';
+import { addGoal } from '@/services';
 import { dispatchGoals, useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
 export const useFormAddGoal = () => {
   const router = useRouter();
-  const products = useProductsSelect();
+  const productsSelect = useProductsSelect();
+
+  const products: OptionSelect[] = productsSelect.map((product) => ({
+    displayName: product.name,
+    type: String(product.id),
+  }));
 
   const [title, setTitle] = useState('');
-  const [product, setProduct] = useState<Pick<ProductItem, 'id' | 'name'> | null>(null);
-  const [target, setTarget] = useState(0);
+  const [product, setProduct] = useState<OptionSelect | undefined>(undefined);
+  const [target, setTarget] = useState('');
+  const [measure, setMeasure] = useState<GoalItem['measure']>('quantity');
+  const [type, setType] = useState<GoalItem['type']>('buy');
   const [error, setError] = useState({ title: '', product: '', target: '' });
   const [loading, setLoading] = useState(false);
 
@@ -23,17 +32,22 @@ export const useFormAddGoal = () => {
       if (!target) setError((prev) => ({ ...prev, target: 'Digite o objetivo' }));
       if (!title || !product || !target) return;
 
+      const targetFormatted =
+        measure === 'quantity'
+          ? Number(target.replace(/\D/g, ''))
+          : Number(target.replace(/[^\d,-]/g, '').replace(',', '.'));
+
       const tempId = Math.random();
       dispatchGoals((prev) => [
         ...prev,
         {
           id: tempId,
-          product_id: product.id,
+          product_id: Number(product.type),
           title,
-          measure: 'quantity',
-          type: 'buy',
+          measure,
+          type,
           value: 0,
-          target,
+          target: targetFormatted,
           completed: null,
           notified: null,
           created_at: new Date(),
@@ -41,12 +55,14 @@ export const useFormAddGoal = () => {
         },
       ]);
 
-      // addProduct({ title: title, icon: iconElem, color: colorElem, farm_id: 1 }).then((newProduct) => {
-      //   dispatchProducts((prev) => [...prev.filter((p) => p.id !== tempId), newProduct]);
-      //   setTitle('');
-      //   setIcon(undefined);
-      //   setColor(undefined);
-      // });
+      addGoal({ product_id: Number(product.type), title, measure, type, target: targetFormatted }).then((newGoal) => {
+        dispatchGoals((prev) => [...prev.filter((p) => p.id !== tempId), newGoal]);
+        setTitle('');
+        setProduct(undefined);
+        setTarget('');
+        setMeasure('quantity');
+        setType('buy');
+      });
       router.navigate('/(tabs)/goals');
     } catch (error: any) {
       console.log('Error creating goal:', error);
@@ -60,28 +76,20 @@ export const useFormAddGoal = () => {
     setError({ title: '', product: '', target: '' });
   };
 
-  //  title,
-  //   product,
-  //   objective,
-  //   error,
-  //   loading,
-  //   setTitle,
-  //   setProduct,
-  //   setObjective,
-  //   products,
-  //   handleCreateGoal,
-  //   onChange,
-
   return {
+    products,
     title,
     product,
-    objective: target,
+    target,
+    measure,
+    type,
     error,
     loading,
     setTitle,
     setProduct,
-    setObjective: setTarget,
-    products,
+    setTarget,
+    setMeasure,
+    setType,
     handleCreateGoal,
     onChange,
   };

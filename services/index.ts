@@ -1,3 +1,4 @@
+export * from './addGoal';
 export * from './addProduct';
 export * from './deleteProduct';
 export * from './markNotificationAsRead';
