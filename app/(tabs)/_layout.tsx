@@ -1,9 +1,10 @@
 import { ButtonIcon, GoalIcon, ProductIcon, SaleIcon, StockIcon, Typography } from '@/components';
 import { useUnreadNotificationsCount } from '@/hooks';
-import { useProductsSelect } from '@/states';
+import { getProducts } from '@/services';
+import { dispatchProducts, useProductsSelect } from '@/states';
 import { theme } from '@/theme';
 import { Router, Tabs, usePathname, useRouter } from 'expo-router';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Platform, View } from 'react-native';
 
 interface NotificationProps {
@@ -75,6 +76,14 @@ export default function TabsLayout() {
   const router = useRouter();
   const pathname = usePathname();
   const products = useProductsSelect();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await getProducts();
+      dispatchProducts(data);
+    };
+    fetchProducts();
+  }, []);
 
   const isOs = Platform.OS === 'ios';
   const isNotifications = pathname.startsWith('/notifications');

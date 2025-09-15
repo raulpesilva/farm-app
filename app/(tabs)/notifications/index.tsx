@@ -4,7 +4,17 @@ import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
 export default function Notifications() {
-  const sortedNotifications = useSortedNotifications();
+  const { sortedNotifications, loading } = useSortedNotifications();
+
+  if (loading && !sortedNotifications?.length) {
+    return (
+      <View style={styles.container}>
+        <Typography style={styles.loading} variant='heading3'>
+          Carregando notificações...
+        </Typography>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -35,6 +45,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 24,
     paddingHorizontal: 24,
+  },
+
+  loading: {
+    margin: 'auto',
+    textAlign: 'center',
   },
 
   withoutNotifications: {

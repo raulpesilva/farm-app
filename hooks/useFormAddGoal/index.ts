@@ -55,14 +55,18 @@ export const useFormAddGoal = () => {
         },
       ]);
 
-      addGoal({ product_id: Number(product.type), title, measure, type, target: targetFormatted }).then((newGoal) => {
-        dispatchGoals((prev) => [...prev.filter((p) => p.id !== tempId), newGoal]);
-        setTitle('');
-        setProduct(undefined);
-        setTarget('');
-        setMeasure('quantity');
-        setType('buy');
-      });
+      addGoal({ product_id: Number(product.type), title, measure, type, target: targetFormatted })
+        .then((newGoal) => {
+          dispatchGoals((prev) => [...prev.filter((p) => p.id !== tempId), newGoal]);
+          setTitle('');
+          setProduct(undefined);
+          setTarget('');
+          setMeasure('quantity');
+          setType('buy');
+        })
+        .catch(() => {
+          dispatchGoals((prev) => prev.filter((p) => p.id !== tempId));
+        });
       router.navigate('/(tabs)/goals');
     } catch (error: any) {
       console.log('Error creating goal:', error);

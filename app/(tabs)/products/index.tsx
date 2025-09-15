@@ -1,10 +1,38 @@
 import { Button, Empty, ProductCard, Typography } from '@/components';
-import { useProductsSelect } from '@/states';
-import { router } from 'expo-router';
+import { getProducts } from '@/services';
+import { dispatchProducts, useProductsSelect } from '@/states';
+import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import sales from '../sales';
 
 export default function Products() {
+  const router = useRouter();
   const products = useProductsSelect();
+  const [loading, setLoading] = useState(sales.length === 0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const productsData = await getProducts();
+        dispatchProducts(productsData);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading && !products?.length) {
+    return (
+      <View style={styles.container}>
+        <Typography style={styles.loading} variant='heading3'>
+          Carregando produtos...
+        </Typography>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -37,6 +65,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 24,
     paddingHorizontal: 24,
+  },
+
+  loading: {
+    margin: 'auto',
+    textAlign: 'center',
   },
 
   content: {

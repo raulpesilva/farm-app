@@ -1,11 +1,10 @@
 import { NotificationItem } from '@/@types/notification';
-import { getNotifications } from '@/states';
 import { sleep } from '@/utils';
+import { getNotifications } from '../getNotifications';
 
 export const markNotificationAsRead = async (id: number): Promise<NotificationItem | null> => {
-  // trocar pela chamada da API
-  const prev = getNotifications();
-  await sleep(2000);
+  await sleep(150);
+  const prev = await getNotifications();
 
   const notification = prev.find((notification) => notification.id === id);
   if (!notification) return null;

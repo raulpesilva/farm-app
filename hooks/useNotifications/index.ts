@@ -1,5 +1,6 @@
-import { markNotificationAsRead } from '@/services';
+import { getNotifications, markNotificationAsRead } from '@/services';
 import { dispatchNotifications, useNotificationsSelect } from '@/states';
+import { useEffect, useState } from 'react';
 
 export const useNotificationActions = () => {
   const markAsRead = (id: number) => {
@@ -24,9 +25,22 @@ export const useNotificationActions = () => {
 
 export const useSortedNotifications = () => {
   const notifications = useNotificationsSelect();
-  if (!notifications?.length) return [];
+  const [loading, setLoading] = useState(notifications.length === 0);
 
-  return notifications.slice().sort((a, b) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const notificationsData = await getNotifications();
+        dispatchNotifications(notificationsData);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const sortedNotifications = notifications.slice().sort((a, b) => {
     if (a.read === null && b.read !== null) return -1;
     if (a.read !== null && b.read === null) return 1;
 
@@ -40,6 +54,8 @@ export const useSortedNotifications = () => {
 
     return 0;
   });
+
+  return { sortedNotifications, loading };
 };
 
 export const useUnreadNotificationsCount = () => {

@@ -6,4 +6,4 @@ const initialValue: StockItem[] = [];
 
 const methods = createReStateMethods(STOCKS_KEY, initialValue);
 
-export const { dispatchStocks, useStocksSelect, getStocks } = methods;
+export const { dispatchStocks, useStocksSelect } = methods;

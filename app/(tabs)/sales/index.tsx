@@ -1,8 +1,10 @@
 import { Button, Empty, SaleCard, SaleChart, Typography } from '@/components';
-import { useProductsSelect, useSalesSelect } from '@/states';
+import { getProducts, getSales } from '@/services';
+import { dispatchProducts, dispatchSales, useProductsSelect, useSalesSelect } from '@/states';
 import { theme } from '@/theme';
 import { groupByDate } from '@/utils';
 import { useRouter } from 'expo-router';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SectionList, StyleSheet, View } from 'react-native';
 
 const SaleHeader = ({ title }: { title: string }) => {
@@ -17,6 +19,33 @@ export default function Sales() {
   const router = useRouter();
   const products = useProductsSelect();
   const sales = useSalesSelect();
+  const [loading, setLoading] = useState(sales.length === 0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [productsData, salesData] = await Promise.all([getProducts(), getSales()]);
+        dispatchProducts(productsData);
+        dispatchSales(salesData);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const group = useMemo(() => groupByDate(sales), [sales]);
+
+  if (loading && !sales?.length) {
+    return (
+      <View style={styles.container}>
+        <Typography style={styles.loading} variant='heading3'>
+          Carregando vendas...
+        </Typography>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -24,18 +53,18 @@ export default function Sales() {
         <Empty text='Você ainda não cadastrou nenhum produto?' button='Cadastrar produto' link='/products/add' />
       )}
 
-      {!sales?.length && (
+      {!!products?.length && !sales?.length && (
         <Empty text=' Vocês ainda não cadastrou nenhuma venda?' button='Cadastrar venda' link='/sales/add' />
       )}
 
-      {!!sales?.length && (
+      {!!products?.length && !!sales?.length && (
         <View style={styles.content}>
           <Button onPress={() => router.navigate('/sales/add')}>
             <Typography variant='label'>Cadastrar venda</Typography>
           </Button>
 
           <SectionList
-            sections={groupByDate(sales)}
+            sections={group}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item, i) => `${item.id}-${i}`}
             ListHeaderComponent={() => <SaleChart />}
@@ -64,6 +93,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 24,
     paddingHorizontal: 24,
+  },
+
+  loading: {
+    margin: 'auto',
+    textAlign: 'center',
   },
 
   content: {

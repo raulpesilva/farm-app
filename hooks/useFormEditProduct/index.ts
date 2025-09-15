@@ -27,7 +27,7 @@ export const useFormEditProduct = (id: number) => {
 
   const edited = product?.name !== name || product?.icon !== icon?.icon || product?.color !== color?.color;
 
-  const handleUpdateProduct = async () => {
+  const handleUpdateProduct = () => {
     try {
       setLoading(true);
       setError({ name: '' });
@@ -36,17 +36,21 @@ export const useFormEditProduct = (id: number) => {
       const colorElem = color?.color;
       if (!name) setError((prev) => ({ ...prev, name: 'Digite o nome' }));
       if (!name || !iconElem || !colorElem) return;
+      if (!product) return;
 
-      const tempId = Math.random();
-      dispatchProducts((prev) =>
-        prev.map((p) =>
-          p.id === id ? { ...p, id: tempId, name, icon: iconElem, color: colorElem, updated_at: new Date() } : p
-        )
-      );
+      const updatedProduct = {
+        ...product,
+        name,
+        icon: iconElem,
+        color: colorElem,
+        updated_at: new Date(),
+      };
 
-      updateProduct(id, { name, icon: iconElem, color: colorElem }).then((newProducts) =>
-        dispatchProducts(newProducts)
-      );
+      dispatchProducts((prev) => prev.map((p) => (p.id === id ? updatedProduct : p)));
+
+      updateProduct(id, { name, icon: iconElem, color: colorElem }).catch(() => {
+        dispatchProducts((prev) => prev.map((p) => (p.id === id ? product : p)));
+      });
       router.navigate('/(tabs)/products');
     } catch (error: any) {
       console.log('Error editing product:', error);
@@ -56,11 +60,14 @@ export const useFormEditProduct = (id: number) => {
   };
 
   const handleDeleteProduct = async () => {
+    if (!product) return;
     try {
       setLoading(true);
       dispatchProducts((prev) => prev.filter((p) => p.id !== id));
 
-      deleteProduct(id).then((newProducts) => dispatchProducts(newProducts));
+      deleteProduct(id).catch(() => {
+        dispatchProducts((prev) => [...prev, product]);
+      });
       router.navigate('/(tabs)/products');
     } catch (error: any) {
       console.log('Error deleting product:', error);

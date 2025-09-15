@@ -38,12 +38,16 @@ export const useFormAddProduct = () => {
         },
       ]);
 
-      addProduct({ name, icon: iconElem, color: colorElem, farm_id: 1 }).then((newProduct) => {
-        dispatchProducts((prev) => [...prev.filter((p) => p.id !== tempId), newProduct]);
-        setName('');
-        setIcon(undefined);
-        setColor(undefined);
-      });
+      addProduct({ name, icon: iconElem, color: colorElem, farm_id: 1 })
+        .then((newProduct) => {
+          dispatchProducts((prev) => [...prev.filter((p) => p.id !== tempId), newProduct]);
+          setName('');
+          setIcon(undefined);
+          setColor(undefined);
+        })
+        .catch(() => {
+          dispatchProducts((prev) => prev.filter((p) => p.id !== tempId));
+        });
       router.navigate('/(tabs)/products');
     } catch (error: any) {
       console.log('Error creating product:', error);
