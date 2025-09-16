@@ -59,8 +59,4 @@ const styles = StyleSheet.create({
   field: {
     marginTop: 8,
   },
-
-  successMessage: {
-    textAlign: 'center',
-  },
 });

@@ -1,11 +1,14 @@
-import { Typography } from '@/components';
+import { FormAddSale, KeyboardAvoiding, Typography } from '@/components';
 import { StyleSheet, View } from 'react-native';
 
 export default function SalesAdd() {
   return (
-    <View style={styles.container}>
-      <Typography variant='heading1'>Cadastrar venda</Typography>
-    </View>
+    <KeyboardAvoiding>
+      <View style={styles.container}>
+        <Typography variant='heading1'>Cadastrar venda</Typography>
+        <FormAddSale />
+      </View>
+    </KeyboardAvoiding>
   );
 }
 

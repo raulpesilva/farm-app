@@ -52,8 +52,4 @@ const styles = StyleSheet.create({
     marginTop: 24,
     gap: 8,
   },
-
-  successMessage: {
-    textAlign: 'center',
-  },
 });

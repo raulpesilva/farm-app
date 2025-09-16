@@ -55,7 +55,7 @@ export const FormAddGoal = () => {
             const formatted = measure === 'quantity' ? maskDecimal(value) : maskCurrency(value);
             onChange(setTarget, formatted);
           }}
-          keyboardType='default'
+          keyboardType='numeric'
         />
         {error.target && (
           <Field.FeedbackMessage>
@@ -75,9 +75,5 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 24,
     gap: 8,
-  },
-
-  successMessage: {
-    textAlign: 'center',
   },
 });
