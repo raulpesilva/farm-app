@@ -1,10 +1,11 @@
-import { Typography } from '@/components';
+import { FormAddStock, Typography } from '@/components';
 import { StyleSheet, View } from 'react-native';
 
 export default function StockAdd() {
   return (
     <View style={styles.container}>
       <Typography variant='heading1'>Cadastrar estoque</Typography>
+      <FormAddStock />
     </View>
   );
 }

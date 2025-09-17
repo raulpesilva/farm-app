@@ -12,7 +12,7 @@ export const StockChart = () => {
   const stockByProduct = useMemo(() => {
     const items = products
       .map((product) => {
-        const total = stocks.filter((s) => s.product_id === product.id).reduce((acc, s) => acc + s.amount, 0);
+        const total = stocks.filter((s) => s.product_id === product.id).reduce((acc, s) => acc + s.value, 0);
 
         return {
           value: total,

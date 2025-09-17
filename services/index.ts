@@ -1,6 +1,7 @@
 export * from './addGoal';
 export * from './addProduct';
 export * from './addSale';
+export * from './addStock';
 export * from './deleteProduct';
 export * from './getGoals';
 export * from './getNotifications';

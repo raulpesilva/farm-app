@@ -2,6 +2,7 @@ export * from './Empty';
 export * from './FormAddGoal';
 export * from './FormAddProduct';
 export * from './FormAddSale';
+export * from './FormAddStock';
 export * from './FormEditProduct';
 export * from './FormFarm';
 export * from './FormSignIn';
