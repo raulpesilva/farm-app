@@ -1,4 +1,4 @@
-import { Button, Empty, Typography } from '@/components';
+import { Button, Empty, StockCard, StockChart, Typography } from '@/components';
 import { getGoals, getNotifications, getProducts, getSales, getStocks } from '@/services';
 import {
   dispatchGoals,
@@ -9,9 +9,10 @@ import {
   useProductsSelect,
   useStocksSelect,
 } from '@/states';
+import { groupByStock } from '@/utils';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
+import { SectionList, StyleSheet, View } from 'react-native';
 
 export default function Stocks() {
   const router = useRouter();
@@ -42,6 +43,8 @@ export default function Stocks() {
     fetchData();
   }, []);
 
+  const group = useMemo(() => groupByStock(stocks), [stocks]);
+
   if (loading && !stocks?.length) {
     return (
       <View style={styles.container}>
@@ -67,6 +70,26 @@ export default function Stocks() {
           <Button onPress={() => router.navigate('/stocks/add')}>
             <Typography variant='label'>Cadastrar estoque</Typography>
           </Button>
+
+          <SectionList
+            sections={group}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(item, i) => `${item.id}-${i}`}
+            ListHeaderComponent={() => <StockChart />}
+            renderItem={({ item }) => {
+              const product = products.find((product) => product.id === item.product_id);
+              return (
+                <StockCard
+                  product={product?.name || ''}
+                  productIcon={product?.icon || 'sale'}
+                  productColor={product?.color || ''}
+                  buy={item.buy}
+                  plant={item.plant}
+                  harvest={item.harvest}
+                />
+              );
+            }}
+          />
         </View>
       )}
     </View>

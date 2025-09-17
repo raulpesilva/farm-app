@@ -15,6 +15,7 @@ export const useFormAddSale = () => {
 
   const products: OptionSelect[] = productsSelect.map((product) => ({
     displayName: product.name,
+    icon: product.icon,
     type: String(product.id),
   }));
 

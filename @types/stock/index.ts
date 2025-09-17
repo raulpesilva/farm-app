@@ -1,8 +1,10 @@
 export interface StockItem {
   id: number;
+  farm_id: number;
   product_id: number;
-  quantity: number;
-  type: 'bought' | 'planted' | 'harvested'; // comprado, plantado, colhidoI
+  type: 'buy' | 'plant' | 'harvest';
+  value: number;
+  amount: number;
   created_at: Date;
   updated_at: Date;
 }

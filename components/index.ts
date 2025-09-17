@@ -15,6 +15,8 @@ export * from './SaleCard';
 export * from './SaleChart';
 export * from './shared';
 export * from './SplashScreenController';
+export * from './StockCard';
+export * from './StockChart';
 export * from './TabItem';
 export * from './TabsGoal';
 export * from './TabsProduct';
