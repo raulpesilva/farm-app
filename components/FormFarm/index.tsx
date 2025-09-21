@@ -1,22 +1,22 @@
 // import { auth } from '@/FirebaseConfig';
 // import { signOut } from 'firebase/auth';
-import { dispatchHasFarm, dispatchIsAuthenticated } from '@/states';
+import { createFarm } from '@/services';
+import { dispatchFarm, dispatchToken } from '@/states';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Field, Typography } from '../shared';
 
 const useFormFarm = () => {
-  const [farm, setFarm] = useState('');
+  const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleCreateFarm = async () => {
     try {
       setLoading(true);
-      if (!farm) return setError('Preencha o campo com o nome da fazenda');
-      // const userFarm = await createFarm(auth, farm);
-      // if (userFarm) dispatchHasFarm(true);
-      dispatchHasFarm(true);
+      if (!name) return setError('Preencha o campo com o nome da fazenda');
+      const farm = await createFarm({ name });
+      dispatchFarm(farm);
     } catch (error: any) {
       console.log('Error creating farm:', error);
       setError('Farm in failed: ' + error.message);
@@ -30,14 +30,16 @@ const useFormFarm = () => {
     setError('');
   };
 
-  // const handleSignOut = async () => await signOut(auth);
-  const handleSignOut = () => dispatchIsAuthenticated(false);
+  const handleSignOut = () => {
+    dispatchToken(null);
+    dispatchFarm({} as any);
+  };
 
   return {
-    farm,
+    name,
     error,
     loading,
-    setFarm,
+    setName,
     handleCreateFarm,
     onChange,
     handleSignOut,
@@ -45,15 +47,15 @@ const useFormFarm = () => {
 };
 
 export const FormFarm = () => {
-  const { farm, error, loading, setFarm, handleCreateFarm, onChange, handleSignOut } = useFormFarm();
+  const { name, error, loading, setName, handleCreateFarm, onChange, handleSignOut } = useFormFarm();
 
   return (
     <View style={styles.container}>
       <Field>
         <Field.TextInput
           placeholder='Digite o nome da sua fazenda'
-          value={farm}
-          onChangeText={(value) => onChange(setFarm, value)}
+          value={name}
+          onChangeText={(value) => onChange(setName, value)}
           textContentType='name'
           keyboardType='default'
         />

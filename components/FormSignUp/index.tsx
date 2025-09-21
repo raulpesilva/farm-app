@@ -1,7 +1,6 @@
-// import { auth } from '@/FirebaseConfig';
-// import { dispatchIsAuthenticated } from '@/states';
+import { signUp } from '@/services';
+import { dispatchToken } from '@/states';
 import { useRouter } from 'expo-router';
-// import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Field, Typography } from '../shared';
@@ -17,9 +16,10 @@ const useFormSignUp = () => {
     if (password !== confirmPassword) return setError('As senhas não coincidem');
     try {
       setLoading(true);
+      if (!email.includes('@')) return setError('E-mail inválido');
       if (!email || !password || !confirmPassword) return setError('Preencha todos os campos');
-      // const user = await createUserWithEmailAndPassword(auth, email, password);
-      // if (user) dispatchIsAuthenticated(true);
+      const response = await signUp({ email, password, name: email.split('@')[0] });
+      dispatchToken(response.token);
     } catch (error: any) {
       console.log('Error creating account:', error);
       if (error.message.includes('auth/invalid-email')) return setError('E-mail inválido');

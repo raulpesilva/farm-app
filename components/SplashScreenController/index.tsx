@@ -1,6 +1,8 @@
-import { useIsFontReadySelect } from '@/states';
+import { getMyFarm } from '@/services';
+import { dispatchFarm, dispatchToken, useIsFontReadySelect } from '@/states';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SplashScreen } from 'expo-router';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -10,23 +12,31 @@ interface SplashScreenControllerProps {
 
 export const SplashScreenController = ({ children }: SplashScreenControllerProps) => {
   const isFontReady = useIsFontReadySelect();
-  // const [isAuthReady, setIsAuthReady] = useState(false);
-  // const isReady = useMemo(() => [isFontReady, isAuthReady].every(Boolean), [isFontReady, isAuthReady]);
-  const isReady = useMemo(() => [isFontReady].every(Boolean), [isFontReady]);
+  const [isRestored, setIsRestored] = useState(false);
+  const isReady = useMemo(() => [isFontReady, isRestored].every(Boolean), [isFontReady, isRestored]);
 
   useEffect(() => {
     if (isReady) SplashScreen.hideAsync();
   }, [isReady]);
 
-  // useEffect(() => {
-  //   const unSub = onAuthStateChanged(auth, (user) => {
-  //     dispatchUser(user);
-  //     dispatchIsAuthenticated(!!user);
-  //     setIsAuthReady(true);
-  //   });
+  useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+          dispatchToken(token);
+          const farm = await getMyFarm();
+          if (farm) dispatchFarm(farm);
+        }
+      } catch (e) {
+        console.warn('Error restoring token and farm from AsyncStorage', e);
+      } finally {
+        setIsRestored(true);
+      }
+    };
 
-  //   return unSub;
-  // }, []);
+    restoreState();
+  }, []);
 
   return <>{children}</>;
 };
