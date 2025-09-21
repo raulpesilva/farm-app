@@ -37,7 +37,7 @@ export default function Sales() {
 
   const group = useMemo(() => groupByDate(sales), [sales]);
 
-  if (loading && !sales?.length) {
+  if (loading && !sales?.length && !products?.length) {
     return (
       <View style={styles.container}>
         <Typography style={styles.loading} variant='heading3'>
@@ -71,6 +71,7 @@ export default function Sales() {
             renderSectionHeader={({ section: { title } }) => <SaleHeader title={title} />}
             renderItem={({ item }) => {
               const product = products.find((product) => product.id === item.product_id);
+              if(!product) return null;
               return (
                 <SaleCard
                   product={product?.name || ''}

@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
 const tabs = [
-  { label: 'Comprado', value: 'storage' as const },
+  { label: 'Estoque', value: 'storage' as const },
   { label: 'Plantado', value: 'plant' as const },
   { label: 'Colhido', value: 'harvest' as const },
 ] as const;
@@ -20,7 +20,7 @@ export const useFormAddStock = () => {
     type: String(product.id),
   }));
 
-  const [type, setType] = useState<(typeof tabs)[number]>(tabs[0]);
+  const [selectedType, setSelectedType] = useState<(typeof tabs)[number]>(tabs[0]);
   const [product, setProduct] = useState<OptionSelect | undefined>(undefined);
   const [value, setValue] = useState('');
   const [date, setDate] = useState<Date | undefined>(undefined);
@@ -48,7 +48,7 @@ export const useFormAddStock = () => {
           id: tempId,
           farm_id: farm.id,
           product_id: Number(product.type),
-          type: type.value,
+          type: selectedType.value,
           quantity: valueFormatted,
           date: date.toISOString(),
           created_at: new Date().toISOString(),
@@ -60,7 +60,7 @@ export const useFormAddStock = () => {
         product_id: Number(product.type),
         quantity: valueFormatted,
         date: date.toISOString(),
-        type: type.value,
+        type: selectedType.value,
       })
         .then((newStock) => {
           dispatchTransactions((prev) => [...prev.filter((p) => p.id !== tempId), newStock]);
@@ -88,14 +88,14 @@ export const useFormAddStock = () => {
   return {
     tabs,
     products,
-    type,
+    selectedType,
     product,
     value,
     date,
     discountPreviousStep,
     error,
     loading,
-    setType,
+    setSelectedType,
     setProduct,
     setValue,
     setDate,

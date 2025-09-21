@@ -23,7 +23,7 @@ export const StockCard = ({ product, productIcon, productColor, storage, plant, 
         <Typography style={styles.title} variant='heading3'>
           {product}
         </Typography>
-        <Typography style={styles.text}>Comprado</Typography>
+        <Typography style={styles.text}>Estoque</Typography>
         <Typography style={styles.text}>Plantado</Typography>
         <Typography style={styles.text}>Colhido</Typography>
       </View>

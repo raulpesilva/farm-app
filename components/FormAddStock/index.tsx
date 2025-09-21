@@ -8,14 +8,14 @@ export const FormAddStock = () => {
   const {
     tabs,
     products,
-    type,
+    selectedType,
     product,
     value,
     date,
     discountPreviousStep,
     error,
     loading,
-    setType,
+    setSelectedType,
     setProduct,
     setValue,
     setDate,
@@ -28,7 +28,7 @@ export const FormAddStock = () => {
     <View style={styles.container}>
       <View style={styles.tabsContainer}>
         {tabs.map((tab) => (
-          <TabItem key={tab.label} item={tab} active={type} setActive={() => setType(tab)} />
+          <TabItem key={tab.label} item={tab} active={selectedType} setActive={() => setSelectedType(tab)} />
         ))}
       </View>
 
