@@ -1,6 +1,5 @@
 import { NotificationCard, Typography } from '@/components';
 import { useSortedNotifications } from '@/hooks';
-import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
 export default function Notifications() {
@@ -28,7 +27,13 @@ export default function Notifications() {
         <FlatList
           data={sortedNotifications}
           renderItem={({ item }) => (
-            <NotificationCard id={item.id} type={item.type} content={item.content} read={item.read} />
+            <NotificationCard
+              id={item.id}
+              type={item.type}
+              title={item.title}
+              message={item.message}
+              read={item.read}
+            />
           )}
           keyExtractor={(item) => String(item.id)}
           contentContainerStyle={styles.listContent}

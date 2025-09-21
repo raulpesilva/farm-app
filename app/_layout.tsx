@@ -20,11 +20,11 @@ const MainRoutes = () => {
           <Stack.Screen name='(public)' />
         </Stack.Protected>
 
-        <Stack.Protected guard={!!token && !farm.id}>
+        <Stack.Protected guard={!!token && !farm}>
           <Stack.Screen name='addFarm' />
         </Stack.Protected>
 
-        <Stack.Protected guard={!!token && !!farm.id}>
+        <Stack.Protected guard={!!token && !!farm}>
           <Stack.Screen name='(tabs)' />
         </Stack.Protected>
       </Stack>

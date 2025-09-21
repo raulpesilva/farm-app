@@ -1,5 +1,5 @@
 import { ButtonIcon, GoalIcon, ProductIcon, SaleIcon, StockIcon, Typography } from '@/components';
-import { useUnreadNotificationsCount } from '@/hooks';
+import { useUnreadNotificationsCount, useWebSocket } from '@/hooks';
 import { getProducts } from '@/services';
 import { dispatchProducts, useProductsSelect } from '@/states';
 import { theme } from '@/theme';
@@ -73,6 +73,7 @@ const AccountTab = ({ router, isAccount }: AccountProps) => {
 };
 
 export default function TabsLayout() {
+  useWebSocket();
   const router = useRouter();
   const pathname = usePathname();
   const products = useProductsSelect();

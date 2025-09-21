@@ -1,17 +1,16 @@
 import { Button, Typography } from '@/components';
-// import { auth } from '@/FirebaseConfig';
-import { dispatchIsAuthenticated } from '@/states';
+import { logout } from '@/functions';
 import { theme } from '@/theme';
 import { useRouter } from 'expo-router';
-// import { signOut } from 'firebase/auth';
 import { StyleSheet, View } from 'react-native';
 
 const useAccount = () => {
   const router = useRouter();
 
   const handleGoBack = () => router.push('/stocks');
-  // const handleSignOut = async () => await signOut(auth);
-  const handleSignOut = () => dispatchIsAuthenticated(false);
+  const handleSignOut = () => {
+    logout();
+  };
 
   return {
     handleGoBack,
