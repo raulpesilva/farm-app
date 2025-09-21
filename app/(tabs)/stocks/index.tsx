@@ -10,7 +10,7 @@ export default function Stocks() {
   const router = useRouter();
   const products = useProductsSelect();
   const transactions = useTransactionsSelect();
-  const [loading, setLoading] = useState(transactions.length === 0);
+  const [loading, setLoading] = useState(transactions?.length === 0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +37,7 @@ export default function Stocks() {
   }, []);
 
   const group = useMemo(() => {
-    const grouped = groupByStock(transactions);
+    const grouped = groupByStock(transactions.filter((t) => products.some((p) => p.id === t.product_id)));
     const mapped = grouped.map((group) => ({
       data: group.data.map((item) => ({ ...item, productData: products.find((p) => p.id === item.product_id) })),
     }));

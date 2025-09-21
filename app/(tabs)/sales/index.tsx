@@ -35,7 +35,10 @@ export default function Sales() {
     fetchData();
   }, []);
 
-  const group = useMemo(() => groupByDate(sales), [sales]);
+  const group = useMemo(
+    () => groupByDate(sales.filter((sale) => products.some((product) => product.id === sale.product_id))),
+    [sales, products]
+  );
 
   if (loading && !sales?.length && !products?.length) {
     return (
@@ -71,7 +74,7 @@ export default function Sales() {
             renderSectionHeader={({ section: { title } }) => <SaleHeader title={title} />}
             renderItem={({ item }) => {
               const product = products.find((product) => product.id === item.product_id);
-              if(!product) return null;
+              if (!product) return null;
               return (
                 <SaleCard
                   product={product?.name || ''}

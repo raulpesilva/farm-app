@@ -21,6 +21,11 @@ export const COLOR_MAP: Record<string, string> = {
   brown: '#D1872E',
 };
 
+export const getColorByName = (name: string) => {
+  if (name?.startsWith('#') || typeof name !== 'string' ) return name;
+  return COLOR_MAP[name] || COLOR_MAP['red'];
+};
+
 export const COLORS_PRODUCT: OptionSelect[] = [
   { displayName: 'Vermelho', type: 'red', color: COLOR_MAP['red'] },
   { displayName: 'Laranja', type: 'orange', color: COLOR_MAP['orange'] },
