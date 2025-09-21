@@ -1,19 +1,16 @@
 import { GoalItem } from '@/@types/goal';
-import { sleep } from '@/utils';
-import { getGoals } from '../getGoals';
+import { coreApi } from '@/api';
 
 type AddGoalPayload = Omit<GoalItem, 'id' | 'value' | 'completed' | 'notified' | 'created_at' | 'updated_at'>;
 
-export const addGoal = async (payload: AddGoalPayload) => {
-  await sleep(150);
-  const prev = await getGoals();
-  return {
-    id: prev.length + 1,
-    value: 0,
-    completed: null,
-    notified: null,
-    created_at: new Date(),
-    updated_at: new Date(),
-    ...payload,
+export const addGoal = async (content: AddGoalPayload) => {
+  const payload = {
+    product_id: content.product_id,
+    name: content.name,
+    type: content.type,
+    measure: content.measure,
+    target: content.target,
   };
+  const response = await coreApi.post<GoalItem>(`/goals/${content.farm_id}`, payload);
+  return response.data;
 };

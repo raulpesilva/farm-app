@@ -1,13 +1,14 @@
 import { GoalItem } from '@/@types/goal';
 import { OptionSelect } from '@/components';
 import { addGoal } from '@/services';
-import { dispatchGoals, useProductsSelect } from '@/states';
+import { dispatchGoals, useFarmSelect, useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
 export const useFormAddGoal = () => {
   const router = useRouter();
   const productsSelect = useProductsSelect();
+  const farm = useFarmSelect();
 
   const products: OptionSelect[] = productsSelect.map((product) => ({
     displayName: product.name,
@@ -15,23 +16,23 @@ export const useFormAddGoal = () => {
     type: String(product.id),
   }));
 
-  const [title, setTitle] = useState('');
+  const [name, setName] = useState('');
   const [product, setProduct] = useState<OptionSelect | undefined>(undefined);
   const [target, setTarget] = useState('');
   const [measure, setMeasure] = useState<GoalItem['measure']>('quantity');
-  const [type, setType] = useState<GoalItem['type']>('buy');
-  const [error, setError] = useState({ title: '', product: '', target: '' });
+  const [type, setType] = useState<GoalItem['type']>('storage');
+  const [error, setError] = useState({ name: '', product: '', target: '' });
   const [loading, setLoading] = useState(false);
 
   const handleCreateGoal = async () => {
     try {
       setLoading(true);
-      setError({ title: '', product: '', target: '' });
+      setError({ name: '', product: '', target: '' });
 
-      if (!title) setError((prev) => ({ ...prev, title: 'Digite o nome' }));
+      if (!name) setError((prev) => ({ ...prev, name: 'Digite o nome' }));
       if (!product) setError((prev) => ({ ...prev, product: 'Selecione um produto' }));
       if (!target) setError((prev) => ({ ...prev, target: 'Digite o objetivo' }));
-      if (!title || !product || !target) return;
+      if (!name || !product || !target) return;
 
       const targetFormatted =
         measure === 'quantity'
@@ -44,26 +45,32 @@ export const useFormAddGoal = () => {
         {
           id: tempId,
           product_id: Number(product.type),
-          title,
+          farm_id: farm.id,
+          name: name,
           measure,
           type,
           value: 0,
           target: targetFormatted,
-          completed: null,
-          notified: null,
-          created_at: new Date(),
-          updated_at: new Date(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         },
       ]);
 
-      addGoal({ product_id: Number(product.type), title, measure, type, target: targetFormatted })
+      addGoal({
+        product_id: Number(product.type),
+        farm_id: farm.id,
+        name,
+        measure,
+        type,
+        target: targetFormatted,
+      })
         .then((newGoal) => {
           dispatchGoals((prev) => [...prev.filter((p) => p.id !== tempId), newGoal]);
-          setTitle('');
+          setName('');
           setProduct(undefined);
           setTarget('');
           setMeasure('quantity');
-          setType('buy');
+          setType('storage');
         })
         .catch(() => {
           dispatchGoals((prev) => prev.filter((p) => p.id !== tempId));
@@ -78,19 +85,19 @@ export const useFormAddGoal = () => {
 
   const onChange = (setValue: React.Dispatch<React.SetStateAction<string>>, value: string) => {
     setValue(value);
-    setError({ title: '', product: '', target: '' });
+    setError({ name: '', product: '', target: '' });
   };
 
   return {
     products,
-    title,
+    name,
     product,
     target,
     measure,
     type,
     error,
     loading,
-    setTitle,
+    setName,
     setProduct,
     setTarget,
     setMeasure,

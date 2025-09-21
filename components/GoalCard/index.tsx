@@ -5,16 +5,16 @@ import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Icon, ICON_MAP, Typography } from '../shared';
 
-interface GoalCardProps extends Pick<GoalItem, 'title' | 'measure' | 'type' | 'value' | 'target'> {
+interface GoalCardProps extends Pick<GoalItem, 'name' | 'measure' | 'type' | 'value' | 'target'> {
   product: string;
   productIcon: keyof typeof ICON_MAP;
 }
 
-export const GoalCard = ({ product, productIcon, title, measure, type, value, target }: GoalCardProps) => {
+export const GoalCard = ({ product, productIcon, name, measure, type, value, target }: GoalCardProps) => {
   const color = COLORS_GOAL[type];
 
   const formattedTarget = useMemo(() => {
-    return measure === 'amount' ? formatCurrency(target) : String(target);
+    return measure === 'price' ? formatCurrency(target) : String(target);
   }, [measure, target]);
 
   const percentageCompleted = useMemo(() => {
@@ -31,7 +31,7 @@ export const GoalCard = ({ product, productIcon, title, measure, type, value, ta
         </View>
 
         <View style={styles.names}>
-          <Typography variant='label'>{title}</Typography>
+          <Typography variant='label'>{name}</Typography>
           <Typography style={styles.text}>{product}</Typography>
         </View>
 

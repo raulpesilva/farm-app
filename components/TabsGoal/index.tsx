@@ -1,3 +1,4 @@
+import { GoalItem } from '@/@types/goal';
 import { theme } from '@/theme';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -5,24 +6,24 @@ import { TabItem } from '../TabItem';
 
 const TABS_MEASURE = [
   { label: 'Meta de quantidade', value: 'quantity' } as const,
-  { label: 'Meta de valor', value: 'amount' } as const,
+  { label: 'Meta de valor', value: 'price' } as const,
 ];
 
 const TABS_TYPE = {
   quantity: [
-    { label: 'Comprar', value: 'buy' },
+    { label: 'Comprar', value: 'storage' },
     { label: 'Plantar', value: 'plant' },
     { label: 'Colher', value: 'harvest' },
-    { label: 'Vender', value: 'sell' },
+    { label: 'Vender', value: 'sale' },
   ],
-  amount: [{ label: 'Vender', value: 'sell' }],
+  price: [{ label: 'Vender', value: 'sale' }],
 } as const;
 
 type TabOption = (typeof TABS_TYPE)[keyof typeof TABS_TYPE][number];
 
 interface TabsGoalProps {
-  setMeasure: React.Dispatch<React.SetStateAction<'quantity' | 'amount'>>;
-  setType: React.Dispatch<React.SetStateAction<'buy' | 'plant' | 'harvest' | 'sell'>>;
+  setMeasure: React.Dispatch<React.SetStateAction<GoalItem['measure']>>;
+  setType: React.Dispatch<React.SetStateAction<GoalItem['type']>>;
 }
 
 export const TabsGoal = ({ setMeasure, setType }: TabsGoalProps) => {

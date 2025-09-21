@@ -3,32 +3,36 @@ import { COLOR_MAP } from '../product';
 export interface GoalItem {
   id: number;
   product_id: number;
-  title: string;
-  measure: 'quantity' | 'amount';
-  type: 'buy' | 'plant' | 'harvest' | 'sell';
+  farm_id: number;
+
+  name: string;
+  measure: 'quantity' | 'price';
+  type: 'storage' | 'plant' | 'harvest' | 'sale';
+
   value: number;
   target: number;
-  completed: Date | null;
-  notified: Date | null;
-  created_at: Date;
-  updated_at: Date;
+  completed?: string; // ISO date string when completed
+  notified?: string; // ISO date string when notified
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
 }
+
 
 export const MEASURE_GOAL: Record<GoalItem['measure'], string> = {
   quantity: 'Quantidade',
-  amount: 'Valor',
+  price: 'Valor',
 };
 
 export const TYPE_GOAL: Record<GoalItem['type'], string> = {
-  buy: 'Comprar',
+  storage: 'Armazenar',
   plant: 'Plantar',
   harvest: 'Colher',
-  sell: 'Vender',
+  sale: 'Vender',
 };
 
 export const COLORS_GOAL: Record<GoalItem['type'], string> = {
-  buy: COLOR_MAP['red'],
+  storage: COLOR_MAP['red'],
   plant: COLOR_MAP['yellow'],
   harvest: COLOR_MAP['blue'],
-  sell: COLOR_MAP['green'],
+  sale: COLOR_MAP['green'],
 };

@@ -7,13 +7,13 @@ import { TabsGoal } from '../TabsGoal';
 export const FormAddGoal = () => {
   const {
     products,
-    title,
+    name,
     product,
     target,
     measure,
     error,
     loading,
-    setTitle,
+    setName,
     setProduct,
     setTarget,
     setMeasure,
@@ -27,12 +27,12 @@ export const FormAddGoal = () => {
       <Field>
         <Field.TextInput
           placeholder='Digite o nome da meta'
-          value={title}
-          onChangeText={(value) => onChange(setTitle, value)}
+          value={name}
+          onChangeText={(value) => onChange(setName, value)}
         />
-        {error.title && (
+        {error.name && (
           <Field.FeedbackMessage>
-            <Typography variant='error'>{error.title}</Typography>
+            <Typography variant='error'>{error.name}</Typography>
           </Field.FeedbackMessage>
         )}
       </Field>
