@@ -5,20 +5,20 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { NotificationBellIcon, VeganIcon } from '../icons';
 import { Typography } from '../shared';
 
-type NotificationCardProps = Pick<NotificationItem, 'id' | 'type' | 'content' | 'read'>;
+type NotificationCardProps = Pick<NotificationItem, 'id' | 'type' | 'title' | 'message' | 'read'>;
 
-export const NotificationCard = ({ id, type, content: { title, product }, read }: NotificationCardProps) => {
+export const NotificationCard = ({ id, type, title, message, read }: NotificationCardProps) => {
   const { markAsRead } = useNotificationActions();
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => markAsRead(id)}>
       <View style={styles.iconContent}>
-        <VeganIcon color={type === 'amount' ? theme.colors.success : theme.colors.primary} />
+        <VeganIcon color={type === 'goal' ? theme.colors.success : theme.colors.primary} />
       </View>
 
       <View style={styles.infoContent}>
         <Typography variant='label'>{title}</Typography>
-        <Typography style={styles.productName}>{product}</Typography>
+        <Typography style={styles.productName}>{message}</Typography>
       </View>
 
       {!read && <NotificationBellIcon />}

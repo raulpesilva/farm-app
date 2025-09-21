@@ -1,7 +1,8 @@
 // import { auth } from '@/FirebaseConfig';
 // import { signOut } from 'firebase/auth';
+import { logout } from '@/functions';
 import { createFarm } from '@/services';
-import { dispatchFarm, dispatchToken } from '@/states';
+import { dispatchFarm } from '@/states';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Field, Typography } from '../shared';
@@ -31,8 +32,7 @@ const useFormFarm = () => {
   };
 
   const handleSignOut = () => {
-    dispatchToken(null);
-    dispatchFarm({} as any);
+    logout();
   };
 
   return {
