@@ -1,6 +1,15 @@
 import { Button, Empty, StockCard, StockChart, Typography } from '@/components';
+import { getGoals, getNotifications, getProducts, getSales } from '@/services';
 import { getTransactionsRequest } from '@/services/getTransactions';
-import { dispatchTransactions, useProductsSelect, useTransactionsSelect } from '@/states';
+import {
+  dispatchGoals,
+  dispatchNotifications,
+  dispatchProducts,
+  dispatchSales,
+  dispatchTransactions,
+  useProductsSelect,
+  useTransactionsSelect,
+} from '@/states';
 import { groupByStock } from '@/utils';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
@@ -17,18 +26,18 @@ export default function Stocks() {
       try {
         setLoading(true);
 
-        const transactions = await getTransactionsRequest();
+        const [transactions, productsData, salesData, goalsData, notificationsData] = await Promise.all([
+          getTransactionsRequest(),
+          getProducts(),
+          getSales(),
+          getGoals(),
+          getNotifications(),
+        ]);
         dispatchTransactions(transactions);
-        // const [productsData, salesData, goalsData, notificationsData] = await Promise.all([
-        //   getProducts(),
-        //   getSales(),
-        //   getGoals(),
-        //   getNotifications(),
-        // ]);
-        // dispatchProducts(productsData);
-        // dispatchSales(salesData);
-        // dispatchGoals(goalsData);
-        // dispatchNotifications(notificationsData);
+        dispatchProducts(productsData);
+        dispatchSales(salesData);
+        dispatchGoals(goalsData);
+        dispatchNotifications(notificationsData);
       } finally {
         setLoading(false);
       }
