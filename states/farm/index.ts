@@ -10,7 +10,7 @@ interface Farm {
   updated_at: string;
 }
 
-const initialValue = {} as Farm;
+const initialValue = null as Farm | null;
 
 const methods = createReStateMethods(FARM_KEY, initialValue);
 export const { dispatchFarm, useFarmSelect, getFarm } = methods;

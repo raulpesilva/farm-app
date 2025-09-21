@@ -1,7 +1,10 @@
-import { NOTIFICATIONS_MOCK } from '@/mocks';
-import { sleep } from '@/utils';
+import { NotificationItem } from '@/@types/notification';
+import { coreApi } from '@/api';
+import { getFarm } from '@/states';
 
 export const getNotifications = async () => {
-  await sleep(150);
-  return NOTIFICATIONS_MOCK;
+  const farm = getFarm();
+  if (!farm) throw new Error('Farm not found');
+  const response = await coreApi.get<NotificationItem[]>(`/notifications/${farm.id}`);
+  return response.data;
 };
