@@ -14,6 +14,7 @@ export const StockChart = () => {
       .map((product) => {
         const total = transactions.reduce((acc, item) => {
           if (item.product_id !== product.id) return acc;
+          if (item.type === 'sale') return acc; // Ignore sales
           return acc + item.quantity;
         }, 0);
 
@@ -23,7 +24,7 @@ export const StockChart = () => {
           color: product.color || theme.colors.primary,
         };
       })
-      .filter((item) => !!item.value);
+      .filter((item) => item.value > 0); // Remove products with zero stock
 
     const totalStock = items.reduce((acc, item) => acc + item.value, 0);
 

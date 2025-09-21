@@ -1,10 +1,6 @@
 import { Button, Empty, StockCard, StockChart, Typography } from '@/components';
 import { getTransactionsRequest } from '@/services/getTransactions';
-import {
-  dispatchTransactions,
-  useProductsSelect,
-  useTransactionsSelect
-} from '@/states';
+import { dispatchTransactions, useProductsSelect, useTransactionsSelect } from '@/states';
 import { groupByStock } from '@/utils';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
@@ -40,7 +36,13 @@ export default function Stocks() {
     fetchData();
   }, []);
 
-  const group = useMemo(() => groupByStock(transactions), [transactions]);
+  const group = useMemo(() => {
+    const grouped = groupByStock(transactions);
+    const mapped = grouped.map((group) => ({
+      data: group.data.map((item) => ({ ...item, productData: products.find((p) => p.id === item.product_id) })),
+    }));
+    return mapped;
+  }, [transactions, products]);
 
   if (loading && !transactions?.length) {
     return (
@@ -74,12 +76,11 @@ export default function Stocks() {
             keyExtractor={(item, i) => `${item.id}-${i}`}
             ListHeaderComponent={() => <StockChart />}
             renderItem={({ item }) => {
-              const product = products.find((product) => product.id === item.product_id);
               return (
                 <StockCard
-                  product={product?.name || ''}
-                  productIcon={product?.icon || 'sale'}
-                  productColor={product?.color || ''}
+                  product={item?.productData?.name || ''}
+                  productIcon={item?.productData?.icon || 'sale'}
+                  productColor={item?.productData?.color || ''}
                   storage={item.storage}
                   plant={item.plant}
                   harvest={item.harvest}
