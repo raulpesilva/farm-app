@@ -1,13 +1,9 @@
 import { Button, Empty, StockCard, StockChart, Typography } from '@/components';
-import { getGoals, getNotifications, getProducts, getSales, getStocks } from '@/services';
+import { getTransactionsRequest } from '@/services/getTransactions';
 import {
-  dispatchGoals,
-  dispatchNotifications,
-  dispatchProducts,
-  dispatchSales,
   dispatchStocks,
   useProductsSelect,
-  useStocksSelect,
+  useStocksSelect
 } from '@/states';
 import { groupByStock } from '@/utils';
 import { useRouter } from 'expo-router';
@@ -17,25 +13,26 @@ import { SectionList, StyleSheet, View } from 'react-native';
 export default function Stocks() {
   const router = useRouter();
   const products = useProductsSelect();
-  const stocks = useStocksSelect();
-  const [loading, setLoading] = useState(stocks.length === 0);
+  const transactions = useStocksSelect();
+  const [loading, setLoading] = useState(transactions.length === 0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [productsData, stocksData, salesData, goalsData, notificationsData] = await Promise.all([
-          getProducts(),
-          getStocks(),
-          getSales(),
-          getGoals(),
-          getNotifications(),
-        ]);
-        dispatchProducts(productsData);
-        dispatchStocks(stocksData);
-        dispatchSales(salesData);
-        dispatchGoals(goalsData);
-        dispatchNotifications(notificationsData);
+
+        const transactions = await getTransactionsRequest();
+        dispatchStocks(transactions);
+        // const [productsData, salesData, goalsData, notificationsData] = await Promise.all([
+        //   getProducts(),
+        //   getSales(),
+        //   getGoals(),
+        //   getNotifications(),
+        // ]);
+        // dispatchProducts(productsData);
+        // dispatchSales(salesData);
+        // dispatchGoals(goalsData);
+        // dispatchNotifications(notificationsData);
       } finally {
         setLoading(false);
       }
@@ -43,9 +40,9 @@ export default function Stocks() {
     fetchData();
   }, []);
 
-  const group = useMemo(() => groupByStock(stocks), [stocks]);
+  const group = useMemo(() => groupByStock(transactions), [transactions]);
 
-  if (loading && !stocks?.length) {
+  if (loading && !transactions?.length) {
     return (
       <View style={styles.container}>
         <Typography style={styles.loading} variant='heading3'>
@@ -61,11 +58,11 @@ export default function Stocks() {
         <Empty text='Você ainda não cadastrou nenhum produto?' button='Cadastrar produto' link='/products/add' />
       )}
 
-      {!!products?.length && !stocks?.length && (
+      {!!products?.length && !transactions?.length && (
         <Empty text=' Vocês ainda não cadastrou nenhum estoque?' button='Cadastrar estoque' link='/stocks/add' />
       )}
 
-      {!!products?.length && !!stocks?.length && (
+      {!!products?.length && !!transactions?.length && (
         <View style={styles.content}>
           <Button onPress={() => router.navigate('/stocks/add')}>
             <Typography variant='label'>Cadastrar estoque</Typography>
@@ -83,7 +80,7 @@ export default function Stocks() {
                   product={product?.name || ''}
                   productIcon={product?.icon || 'sale'}
                   productColor={product?.color || ''}
-                  buy={item.buy}
+                  storage={item.storage}
                   plant={item.plant}
                   harvest={item.harvest}
                 />

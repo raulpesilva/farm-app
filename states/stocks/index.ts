@@ -1,8 +1,8 @@
-import { StockItem } from '@/@types/stock';
+import { Transaction } from '@/@types/transactions';
 import { createReStateMethods } from '@raulpesilva/re-state';
 
 const STOCKS_KEY = 'stocks';
-const initialValue: StockItem[] = [];
+const initialValue: Transaction[] = [];
 
 const methods = createReStateMethods(STOCKS_KEY, initialValue);
 

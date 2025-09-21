@@ -1,13 +1,14 @@
-import { StockItem } from '@/@types/stock';
+import { Transaction } from '@/@types/transactions';
 
-type GroupType = Pick<StockItem, 'id' | 'farm_id' | 'product_id' | 'created_at' | 'updated_at'> & {
-  buy: number;
+type GroupType = Pick<Transaction, 'id' | 'farm_id' | 'product_id' | 'created_at' | 'updated_at'> & {
+  storage: number;
   plant: number;
   harvest: number;
 };
 
-export const groupByStock = (stocks: StockItem[]) => {
+export const groupByStock = (stocks: Transaction[]) => {
   const group = stocks.reduce((acc, stock) => {
+    if (stock.type === 'sale') return acc; // Ignore sales
     const key = stock.product_id;
 
     if (!acc[key]) {
@@ -15,7 +16,7 @@ export const groupByStock = (stocks: StockItem[]) => {
         id: stock.id,
         farm_id: stock.farm_id,
         product_id: stock.product_id,
-        buy: 0,
+        storage: 0,
         plant: 0,
         harvest: 0,
         created_at: stock.created_at,
@@ -23,7 +24,7 @@ export const groupByStock = (stocks: StockItem[]) => {
       };
     }
 
-    acc[key][stock.type] += stock.value;
+    acc[key][stock.type] += stock.quantity;
 
     return acc;
   }, {} as Record<number, GroupType>);

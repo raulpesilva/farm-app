@@ -4,7 +4,7 @@ import { dispatchProducts, dispatchSales, useProductsSelect, useSalesSelect } fr
 import { theme } from '@/theme';
 import { groupByDate } from '@/utils';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SectionList, StyleSheet, View } from 'react-native';
 
 const SaleHeader = ({ title }: { title: string }) => {
@@ -76,8 +76,9 @@ export default function Sales() {
                   product={product?.name || ''}
                   productIcon={product?.icon || 'sale'}
                   productColor={product?.color || ''}
-                  value={item.value}
-                  amount={item.amount}
+                  price={item.price}
+                  quantity={item.quantity}
+                  total_price={item.total_price}
                 />
               );
             }}

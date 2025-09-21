@@ -1,17 +1,17 @@
 import { COLOR_MAP } from '@/@types/product';
-import { SaleItem } from '@/@types/sale';
+import { Sale } from '@/@types/transactions';
 import { theme } from '@/theme';
 import { formatCurrency } from '@/utils';
 import { StyleSheet, View } from 'react-native';
 import { Icon, ICON_MAP, Typography } from '../shared';
 
-interface SaleCardProps extends Pick<SaleItem, 'value' | 'amount'> {
+interface SaleCardProps extends Pick<Sale, 'price' | 'quantity' | 'total_price'> {
   product: string;
   productIcon: keyof typeof ICON_MAP;
   productColor: keyof typeof COLOR_MAP;
 }
 
-export const SaleCard = ({ product, productIcon, productColor, value, amount }: SaleCardProps) => {
+export const SaleCard = ({ product, productIcon, productColor, price, quantity, total_price }: SaleCardProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconContent}>
@@ -20,12 +20,12 @@ export const SaleCard = ({ product, productIcon, productColor, value, amount }: 
 
       <View style={styles.names}>
         <Typography variant='heading3'>{product}</Typography>
-        <Typography style={styles.text}>{`${formatCurrency(amount / value)}/un.`}</Typography>
+        <Typography style={styles.text}>{`${formatCurrency(price)}/un.`}</Typography>
       </View>
 
       <View style={styles.values}>
-        <Typography variant='label'>{`${value}`}</Typography>
-        <Typography variant='label'>{formatCurrency(amount)}</Typography>
+        <Typography variant='label'>{`${price}`}</Typography>
+        <Typography variant='label'>{formatCurrency(total_price)}</Typography>
       </View>
     </View>
   );

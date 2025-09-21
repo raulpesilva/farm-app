@@ -1,7 +1,10 @@
-import { SALES_MOCK } from '@/mocks';
-import { sleep } from '@/utils';
+import { Sale } from '@/@types/transactions';
+import { getFarm } from '@/states';
+import { getTransactionsRequest } from '../getTransactions';
 
 export const getSales = async () => {
-  await sleep(150);
-  return SALES_MOCK;
+  const farm = getFarm();
+  if (!farm) throw new Error('Farm not found');
+  const response = await getTransactionsRequest<Sale[]>({ filter: 'sale' });
+  return response;
 };

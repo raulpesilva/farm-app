@@ -1,10 +1,10 @@
-import { SaleItem } from '@/@types/sale';
+import { Sale } from '@/@types/transactions';
 
-export const groupByDate = (items: SaleItem[]) => {
-  const groups: Record<string, SaleItem[]> = {};
+export const groupByDate = (items: Sale[]) => {
+  const groups: Record<string, Sale[]> = {};
 
   items.forEach((item) => {
-    const dateKey = item.date.toLocaleDateString('pt-BR');
+    const dateKey = item.date;
     if (!groups[dateKey]) groups[dateKey] = [];
     groups[dateKey].push(item);
   });

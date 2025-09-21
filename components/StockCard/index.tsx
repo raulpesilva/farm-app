@@ -7,12 +7,12 @@ interface StockCardProps {
   product: string;
   productIcon: keyof typeof ICON_MAP;
   productColor: keyof typeof COLOR_MAP;
-  buy: number;
+  storage: number;
   plant: number;
   harvest: number;
 }
 
-export const StockCard = ({ product, productIcon, productColor, buy, plant, harvest }: StockCardProps) => {
+export const StockCard = ({ product, productIcon, productColor, storage, plant, harvest }: StockCardProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconContent}>
@@ -29,7 +29,7 @@ export const StockCard = ({ product, productIcon, productColor, buy, plant, harv
       </View>
 
       <View style={styles.values}>
-        <Typography variant='label'>{`${buy} un.`}</Typography>
+        <Typography variant='label'>{`${storage} un.`}</Typography>
         <Typography variant='label'>{`${plant} un.`}</Typography>
         <Typography variant='label'>{`${harvest} un.`}</Typography>
       </View>

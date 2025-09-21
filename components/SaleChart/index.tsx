@@ -14,7 +14,7 @@ export const SaleChart = () => {
     return products.map((product) => {
       const totalValue = sales
         .filter((sale) => sale.product_id === product.id)
-        .reduce((acc, sale) => acc + sale.amount, 0);
+        .reduce((acc, sale) => acc + sale.total_price, 0);
 
       return {
         value: totalValue,
