@@ -30,7 +30,9 @@ export const useFormAddProduct = () => {
       setName('');
       setIcon(undefined);
       setColor(undefined);
-      router.replace('/(tabs)/products');
+
+      if (router.canGoBack()) router.back();
+      else router.navigate('/(tabs)/products');
     } catch (error: any) {
       console.log('Error creating product:', error);
     } finally {

@@ -59,7 +59,9 @@ export const useFormAddSale = () => {
       setValue('');
       setAmount('');
       setDate(undefined);
-      router.replace('/(tabs)/sales');
+
+      if (router.canGoBack()) router.back();
+      else router.navigate('/(tabs)/sales');
     } catch (error: any) {
       console.log('Error creating sale:', error);
     } finally {

@@ -53,7 +53,9 @@ export const useFormAddGoal = () => {
       setTarget('');
       setMeasure('quantity');
       setType('storage');
-      router.replace('/(tabs)/goals');
+
+      if (router.canGoBack()) router.back();
+      else router.navigate('/(tabs)/goals');
     } catch (error: any) {
       console.log('Error creating goal:', error);
     } finally {

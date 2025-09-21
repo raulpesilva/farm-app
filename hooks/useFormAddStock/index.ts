@@ -51,8 +51,8 @@ export const useFormAddStock = () => {
       setValue('');
       setDate(undefined);
       setDiscountPreviousStep(true);
-
-      router.replace('/(tabs)/stocks');
+      if (router.canGoBack()) router.back();
+      else router.navigate('/(tabs)/stocks');
     } catch (error: any) {
       console.log('Error creating stock:', error);
     } finally {
