@@ -1,3 +1,4 @@
+import { logout } from '@/functions';
 import { getMyFarm } from '@/services';
 import { dispatchFarm, dispatchToken, useIsFontReadySelect } from '@/states';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -30,6 +31,7 @@ export const SplashScreenController = ({ children }: SplashScreenControllerProps
         }
       } catch (e) {
         console.warn('Error restoring token and farm from AsyncStorage', e);
+        logout();
       } finally {
         setIsRestored(true);
       }

@@ -1,5 +1,5 @@
-import { signIn } from '@/services';
-import { dispatchToken } from '@/states';
+import { getMyFarm, signIn } from '@/services';
+import { dispatchFarm, dispatchToken } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -18,6 +18,12 @@ const useFormSignIn = () => {
       if (!email || !password) return setError('Preencha todos os campos');
       const response = await signIn({ email, password });
       dispatchToken(response.token);
+      try {
+        const farm = await getMyFarm();
+        dispatchFarm(farm);
+      } catch {
+        dispatchFarm(null);
+      }
     } catch (error: any) {
       console.log('Error signing in with email and password:', error);
       if (error.message.includes('auth/invalid-email')) return setError('E-mail inválido');
