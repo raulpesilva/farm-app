@@ -9,5 +9,5 @@ export const markNotificationAsRead = async (id: number): Promise<NotificationIt
   const notification = prev.find((notification) => notification.id === id);
   if (!notification) return null;
 
-  return { ...notification, read: new Date(), updated_at: new Date() };
+  return { ...notification, read: new Date().toISOString(), updated_at: new Date().toISOString() };
 };
