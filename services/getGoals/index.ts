@@ -1,7 +1,10 @@
-import { GOALS_MOCK } from '@/mocks';
-import { sleep } from '@/utils';
+import { GoalItem } from '@/@types/goal';
+import { coreApi } from '@/api';
+import { getFarm } from '@/states';
 
 export const getGoals = async () => {
-  await sleep(150);
-  return GOALS_MOCK;
+  const farm = getFarm();
+  if (!farm) throw new Error('Farm not found');
+  const response = await coreApi.get<GoalItem[]>(`/goals/${farm.id}`);
+  return response.data;
 };
