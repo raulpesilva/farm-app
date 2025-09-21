@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 export const useNotificationActions = () => {
   const markAsRead = (id: number) => {
     const tempId = Math.random();
-    const tempDate = new Date();
+    const tempDate = new Date().toISOString();
 
     dispatchNotifications((prev) => {
       const newNotifications = prev.map((n) => {
@@ -62,5 +62,5 @@ export const useUnreadNotificationsCount = () => {
   const notifications = useNotificationsSelect();
   if (!notifications?.length) return 0;
 
-  return notifications.filter((notification) => notification.read === null).length;
+  return notifications.filter((notification) => !notification.read).length;
 };

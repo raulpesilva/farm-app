@@ -32,7 +32,7 @@ export const useFormAddGoal = () => {
       if (!name) setError((prev) => ({ ...prev, name: 'Digite o nome' }));
       if (!product) setError((prev) => ({ ...prev, product: 'Selecione um produto' }));
       if (!target) setError((prev) => ({ ...prev, target: 'Digite o objetivo' }));
-      if (!name || !product || !target) return;
+      if (!name || !product || !target || !farm) return;
 
       const targetFormatted =
         measure === 'quantity'
