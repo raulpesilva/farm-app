@@ -19,7 +19,7 @@ export const useFormAddProduct = () => {
       setError({ name: '', icon: '', color: '' });
 
       const iconElem = icon?.icon;
-      const colorElem = color?.color;
+      const colorElem = color?.type;
       if (!name) setError((prev) => ({ ...prev, name: 'Digite o nome' }));
       if (!iconElem) setError((prev) => ({ ...prev, icon: 'Selecione um ícone' }));
       if (!colorElem) setError((prev) => ({ ...prev, color: 'Selecione uma cor' }));
