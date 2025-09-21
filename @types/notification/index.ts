@@ -1,8 +1,10 @@
 export interface NotificationItem {
   id: number;
-  read: Date | null;
-  type: 'quantity' | 'amount';
-  content: { title: string; product: string };
-  created_at: Date;
-  updated_at: Date;
+  farm_id: number;
+  read: string | null;
+  type: 'goal';
+  title: string;
+  message: string;
+  created_at: string;
+  updated_at: string;
 }
