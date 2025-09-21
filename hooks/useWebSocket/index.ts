@@ -16,7 +16,6 @@ export const useWebSocket = () => {
   useEffect(() => {
     const socket = createSocket();
     console.log('Connecting to WebSocket...');
-    console.log(farm);
     socket.connect();
     socket.on('connect', () => {
       if (!farm?.id) return;
