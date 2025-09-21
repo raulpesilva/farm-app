@@ -1,3 +1,4 @@
+import { getColorByName } from '@/@types/product';
 import {
   AppleIcon,
   BananaIcon,
@@ -55,5 +56,5 @@ export const Icon = ({ type, color, ...props }: IconProps) => {
   const IconComponent = ICON_MAP[type] || ICON_MAP['apple'];
   if (!IconComponent) return null;
 
-  return <IconComponent color={color as string} {...props} />;
+  return <IconComponent color={getColorByName(color as string)} {...props} />;
 };

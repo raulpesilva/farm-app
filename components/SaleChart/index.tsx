@@ -1,3 +1,4 @@
+import { getColorByName } from '@/@types/product';
 import { useProductsSelect, useSalesSelect } from '@/states';
 import { theme } from '@/theme';
 import { useMemo } from 'react';
@@ -11,6 +12,7 @@ export const SaleChart = () => {
   const { width } = useWindowDimensions();
 
   const salesByProduct = useMemo(() => {
+    if (!products.length || !sales.length) return [];
     return products.map((product) => {
       const totalValue = sales
         .filter((sale) => sale.product_id === product.id)
@@ -19,7 +21,7 @@ export const SaleChart = () => {
       return {
         value: totalValue,
         label: product.name,
-        frontColor: product.color || theme.colors.primary,
+        frontColor: getColorByName(product.color) || theme.colors.primary,
       };
     });
   }, [products, sales]);

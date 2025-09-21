@@ -37,7 +37,7 @@ export const TabsProduct = () => {
         ))}
       </View>
 
-      <Button variant='contained' onPress={() => router.push(active.link || '/products/add')}>
+      <Button variant='outlined' onPress={() => router.push(active.link || '/products/add')}>
         <Typography variant='label'>Cadastrar</Typography>
       </Button>
     </View>
@@ -47,6 +47,7 @@ export const TabsProduct = () => {
 const styles = StyleSheet.create({
   container: {
     gap: 8,
+    marginTop: 24,
   },
 
   content: {

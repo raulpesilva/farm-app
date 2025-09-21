@@ -1,3 +1,4 @@
+import { getColorByName } from '@/@types/product';
 import { useProductsSelect, useTransactionsSelect } from '@/states';
 import { theme } from '@/theme';
 import { useMemo } from 'react';
@@ -10,6 +11,7 @@ export const StockChart = () => {
   const transactions = useTransactionsSelect();
 
   const stockByProduct = useMemo(() => {
+    if (!products.length || !transactions.length) return [];
     const items = products
       .map((product) => {
         const total = transactions.reduce((acc, item) => {
@@ -21,11 +23,11 @@ export const StockChart = () => {
         return {
           value: total,
           text: product.name,
-          color: product.color || theme.colors.primary,
+          color: getColorByName(product.color) || theme.colors.primary,
         };
       })
       .filter((item) => item.value > 0); // Remove products with zero stock
-
+    if (items.length === 0) return [];
     const totalStock = items.reduce((acc, item) => acc + item.value, 0);
 
     return items.map((item) => ({
@@ -33,6 +35,8 @@ export const StockChart = () => {
       percentage: `${((item.value / totalStock) * 100).toFixed(2).replace('.', ',')}%`,
     }));
   }, [products, transactions]);
+
+  if (stockByProduct.length === 0) return null;
 
   return (
     <View style={styles.container}>
