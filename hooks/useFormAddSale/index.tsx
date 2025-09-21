@@ -1,6 +1,6 @@
 import { OptionSelect } from '@/components';
 import { addSale } from '@/services';
-import { dispatchSales, useFarmSelect, useProductsSelect } from '@/states';
+import { useFarmSelect, useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -46,42 +46,20 @@ export const useFormAddSale = () => {
           ? Number(amount.replace(/[^\d,-]/g, '').replace(',', '.'))
           : Number(amount.replace(/[^\d,-]/g, '').replace(',', '.')) * Number(value);
 
-      const tempId = Math.random();
-      dispatchSales((prev) => [
-        ...prev,
-        {
-          id: tempId,
-          farm_id: farm.id,
-          product_id: Number(product.type),
-          type: 'sale',
-          price: valueFormatted,
-          total_price: valueFormatted * amountFormatted,
-          quantity: amountFormatted,
-          date: date.toISOString(),
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-      ]);
-
-      addSale({
+      await addSale({
         farm_id: farm.id,
         product_id: Number(product.type),
         price: valueFormatted,
         quantity: amountFormatted,
         total_price: valueFormatted * amountFormatted,
         date: date.toISOString(),
-      })
-        .then((newSale) => {
-          dispatchSales((prev) => [...prev.filter((p) => p.id !== tempId), newSale]);
-          setProduct(undefined);
-          setValue('');
-          setAmount('');
-          setDate(undefined);
-        })
-        .catch(() => {
-          dispatchSales((prev) => prev.filter((p) => p.id !== tempId));
-        });
-      router.navigate('/(tabs)/sales');
+      });
+
+      setProduct(undefined);
+      setValue('');
+      setAmount('');
+      setDate(undefined);
+      router.replace('/(tabs)/sales');
     } catch (error: any) {
       console.log('Error creating sale:', error);
     } finally {
