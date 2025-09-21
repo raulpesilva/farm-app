@@ -4,12 +4,11 @@ import { dispatchProducts, useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import sales from '../sales';
 
 export default function Products() {
   const router = useRouter();
   const products = useProductsSelect();
-  const [loading, setLoading] = useState(sales.length === 0);
+  const [loading, setLoading] = useState(products.length === 0);
 
   useEffect(() => {
     const fetchData = async () => {

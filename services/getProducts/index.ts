@@ -1,7 +1,10 @@
-import { PRODUCTS_MOCK } from '@/mocks';
-import { sleep } from '@/utils';
+import { ProductItem } from '@/@types/product';
+import { coreApi } from '@/api';
+import { getFarm } from '@/states';
 
 export const getProducts = async () => {
-  await sleep(150);
-  return PRODUCTS_MOCK;
+  const farm = getFarm();
+  if (!farm) throw new Error('Farm not found');
+  const response = await coreApi.get<ProductItem[]>(`/products/${farm.id}`);
+  return response.data;
 };

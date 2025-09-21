@@ -52,7 +52,7 @@ interface IconProps extends SvgProps {
 }
 
 export const Icon = ({ type, color, ...props }: IconProps) => {
-  const IconComponent = ICON_MAP[type];
+  const IconComponent = ICON_MAP[type] || ICON_MAP['apple'];
   if (!IconComponent) return null;
 
   return <IconComponent color={color as string} {...props} />;
