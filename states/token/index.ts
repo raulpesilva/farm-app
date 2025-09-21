@@ -8,7 +8,7 @@ const TOKEN_KEY = 'token';
 const initialValue = null as string | null;
 
 const methods = createReStateMethods(TOKEN_KEY, initialValue);
-export const { dispatchToken, useTokenSelect, getToken } = methods;
+export const { dispatchToken, useTokenSelect, getToken, resetToken } = methods;
 
 onReStateChange(async () => {
   try {

@@ -1,6 +1,6 @@
-import { dispatchFarm, dispatchToken } from '@/states';
+import { resetFarm, resetToken } from '@/states';
 
 export const logout = () => {
-  dispatchToken(null);
-  dispatchFarm(null);
+  resetToken();
+  resetFarm();
 };
