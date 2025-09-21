@@ -7,12 +7,15 @@ import { Typography } from '../shared';
 
 export const StockChart = () => {
   const products = useProductsSelect();
-  const stocks = useTransactionsSelect();
+  const transactions = useTransactionsSelect();
 
   const stockByProduct = useMemo(() => {
     const items = products
       .map((product) => {
-        const total = stocks.filter((s) => s.product_id === product.id).reduce((acc, s) => acc + s.quantity, 0);
+        const total = transactions.reduce((acc, item) => {
+          if (item.product_id !== product.id) return acc;
+          return acc + item.quantity;
+        }, 0);
 
         return {
           value: total,
@@ -28,7 +31,7 @@ export const StockChart = () => {
       ...item,
       percentage: `${((item.value / totalStock) * 100).toFixed(2).replace('.', ',')}%`,
     }));
-  }, [products, stocks]);
+  }, [products, transactions]);
 
   return (
     <View style={styles.container}>
