@@ -7,6 +7,7 @@ type GroupType = Pick<Transaction, 'id' | 'farm_id' | 'product_id' | 'created_at
 };
 
 export const groupByStock = (stocks: Transaction[]) => {
+  if (stocks.length === 0) return [{ data: [] }];
   const group = stocks.reduce((acc, stock) => {
     if (stock.type === 'sale') return acc; // Ignore sales
     const key = stock.product_id;

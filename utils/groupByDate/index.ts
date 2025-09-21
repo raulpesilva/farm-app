@@ -8,5 +8,7 @@ export const groupByDate = (items: Sale[]) => {
     if (!groups[dateKey]) groups[dateKey] = [];
     groups[dateKey].push(item);
   });
-  return Object.entries(groups).map(([date, data]) => ({ title: date, data }));
+  return Object.entries(groups)
+    .map(([date, data]) => ({ title: date, data }))
+    .filter((group) => group.data.length > 0);
 };
