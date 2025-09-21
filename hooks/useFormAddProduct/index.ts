@@ -1,6 +1,6 @@
 import { ColorOptionSelect, IconOptionSelect } from '@/@types/product';
 import { addProduct } from '@/services';
-import { dispatchProducts, useFarmSelect } from '@/states';
+import { useFarmSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -25,30 +25,11 @@ export const useFormAddProduct = () => {
       if (!colorElem) setError((prev) => ({ ...prev, color: 'Selecione uma cor' }));
       if (!name || !iconElem || !colorElem || !farm) return;
 
-      const tempId = Math.random();
-      dispatchProducts((prev) => [
-        ...prev,
-        {
-          id: tempId,
-          farm_id: farm.id,
-          name,
-          icon: iconElem,
-          color: colorElem,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-      ]);
+      await addProduct({ name, icon: iconElem, color: colorElem });
 
-      addProduct({ name, icon: iconElem, color: colorElem })
-        .then((newProduct) => {
-          dispatchProducts((prev) => [...prev.filter((p) => p.id !== tempId), newProduct]);
-          setName('');
-          setIcon(undefined);
-          setColor(undefined);
-        })
-        .catch(() => {
-          dispatchProducts((prev) => prev.filter((p) => p.id !== tempId));
-        });
+      setName('');
+      setIcon(undefined);
+      setColor(undefined);
       router.replace('/(tabs)/products');
     } catch (error: any) {
       console.log('Error creating product:', error);
