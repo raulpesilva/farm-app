@@ -1,7 +1,7 @@
 import { GoalItem } from '@/@types/goal';
 import { OptionSelect } from '@/components';
 import { addGoal } from '@/services';
-import { dispatchGoals, useFarmSelect, useProductsSelect } from '@/states';
+import { useFarmSelect, useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -39,43 +39,21 @@ export const useFormAddGoal = () => {
           ? Number(target.replace(/\D/g, ''))
           : Number(target.replace(/[^\d,-]/g, '').replace(',', '.'));
 
-      const tempId = Math.random();
-      dispatchGoals((prev) => [
-        ...prev,
-        {
-          id: tempId,
-          product_id: Number(product.type),
-          farm_id: farm.id,
-          name: name,
-          measure,
-          type,
-          value: 0,
-          target: targetFormatted,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-      ]);
-
-      addGoal({
+      await addGoal({
         product_id: Number(product.type),
         farm_id: farm.id,
         name,
         measure,
         type,
         target: targetFormatted,
-      })
-        .then((newGoal) => {
-          dispatchGoals((prev) => [...prev.filter((p) => p.id !== tempId), newGoal]);
-          setName('');
-          setProduct(undefined);
-          setTarget('');
-          setMeasure('quantity');
-          setType('storage');
-        })
-        .catch(() => {
-          dispatchGoals((prev) => prev.filter((p) => p.id !== tempId));
-        });
-      router.navigate('/(tabs)/goals');
+      });
+
+      setName('');
+      setProduct(undefined);
+      setTarget('');
+      setMeasure('quantity');
+      setType('storage');
+      router.replace('/(tabs)/goals');
     } catch (error: any) {
       console.log('Error creating goal:', error);
     } finally {
