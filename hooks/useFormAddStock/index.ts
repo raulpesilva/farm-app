@@ -1,6 +1,6 @@
 import { OptionSelect } from '@/components';
 import { addStock } from '@/services';
-import { dispatchTransactions, useFarmSelect, useProductsSelect } from '@/states';
+import { useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -27,7 +27,6 @@ export const useFormAddStock = () => {
   const [discountPreviousStep, setDiscountPreviousStep] = useState(true);
   const [error, setError] = useState({ product: '', value: '', date: '' });
   const [loading, setLoading] = useState(false);
-  const farm = useFarmSelect();
 
   const handleCreateStock = async () => {
     try {
@@ -37,42 +36,23 @@ export const useFormAddStock = () => {
       if (!product) setError((prev) => ({ ...prev, product: 'Selecione um produto' }));
       if (!value) setError((prev) => ({ ...prev, value: 'Digite a quantidade' }));
       if (!date) setError((prev) => ({ ...prev, date: 'Selecione a data' }));
-      if (!product || !value || !date || !farm) return;
+      if (!product || !value || !date) return;
 
       const valueFormatted = Number(value.replace(/[^\d,-]/g, '').replace(',', '.'));
 
-      const tempId = Math.random();
-      dispatchTransactions((prev) => [
-        ...prev,
-        {
-          id: tempId,
-          farm_id: farm.id,
-          product_id: Number(product.type),
-          type: selectedType.value,
-          quantity: valueFormatted,
-          date: date.toISOString(),
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-      ]);
-
-      addStock({
+      await addStock({
         product_id: Number(product.type),
         quantity: valueFormatted,
         date: date.toISOString(),
         type: selectedType.value,
-      })
-        .then((newStock) => {
-          dispatchTransactions((prev) => [...prev.filter((p) => p.id !== tempId), newStock]);
-          setProduct(undefined);
-          setValue('');
-          setDate(undefined);
-          setDiscountPreviousStep(true);
-        })
-        .catch(() => {
-          dispatchTransactions((prev) => prev.filter((p) => p.id !== tempId));
-        });
-      router.navigate('/(tabs)/stocks');
+      });
+
+      setProduct(undefined);
+      setValue('');
+      setDate(undefined);
+      setDiscountPreviousStep(true);
+
+      router.replace('/(tabs)/stocks');
     } catch (error: any) {
       console.log('Error creating stock:', error);
     } finally {
