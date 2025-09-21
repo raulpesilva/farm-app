@@ -1,16 +1,17 @@
 import { ProductItem } from '@/@types/product';
-import { sleep } from '@/utils';
-import { getProducts } from '../getProducts';
+import { coreApi } from '@/api';
+import { getFarm } from '@/states';
 
-type AddProductPayload = Omit<ProductItem, 'id' | 'created_at' | 'updated_at'>;
+type AddProductPayload = Omit<ProductItem, 'id' | 'created_at' | 'updated_at' | 'farm_id'>;
 
-export const addProduct = async (payload: AddProductPayload) => {
-  await sleep(150);
-  const prev = await getProducts();
-  return {
-    id: prev.length + 1,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    ...payload,
+export const addProduct = async (content: AddProductPayload) => {
+  const farm = getFarm();
+  if (!farm) throw new Error('Farm not found');
+  const payload = {
+    name: content.name,
+    icon: content.icon,
+    color: content.color,
   };
+  const response = await coreApi.post<ProductItem>(`/product/${farm.id}`, payload);
+  return response.data;
 };

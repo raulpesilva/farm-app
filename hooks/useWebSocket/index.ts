@@ -34,6 +34,11 @@ export const useWebSocket = () => {
       const notificationsData = await getNotifications();
       dispatchNotifications(notificationsData);
     });
+    socket.on('notification:update', async (data) => {
+      console.log('Notification updated', data);
+      const notificationsData = await getNotifications();
+      dispatchNotifications(notificationsData);
+    });
     socket.on('goal:updated', async (data) => {
       console.log('Goal updated', data);
       const goals = await getGoals();
