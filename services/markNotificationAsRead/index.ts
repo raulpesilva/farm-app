@@ -1,13 +1,11 @@
 import { NotificationItem } from '@/@types/notification';
-import { sleep } from '@/utils';
-import { getNotifications } from '../getNotifications';
+import { coreApi } from '@/api';
+import { getFarm } from '@/states';
 
-export const markNotificationAsRead = async (id: number): Promise<NotificationItem | null> => {
-  await sleep(150);
-  const prev = await getNotifications();
+export const markNotificationAsRead = async (id: number) => {
+  const farm = getFarm();
+  if (!farm) throw new Error('Farm not found');
 
-  const notification = prev.find((notification) => notification.id === id);
-  if (!notification) return null;
-
-  return { ...notification, read: new Date().toISOString(), updated_at: new Date().toISOString() };
+  const response = await coreApi.post<NotificationItem>(`/transactions/${farm.id}/${id}`);
+  return response.data;
 };

@@ -3,21 +3,8 @@ import { dispatchNotifications, useNotificationsSelect } from '@/states';
 import { useEffect, useState } from 'react';
 
 export const useNotificationActions = () => {
-  const markAsRead = (id: number) => {
-    const tempId = Math.random();
-    const tempDate = new Date().toISOString();
-
-    dispatchNotifications((prev) => {
-      const newNotifications = prev.map((n) => {
-        if (n.id === id && !n.read) return { ...n, read: tempDate, updated_at: tempDate, id: tempId };
-        return n;
-      });
-      return newNotifications;
-    });
-
-    markNotificationAsRead(id).then((notification) => {
-      if (notification) dispatchNotifications((prev) => [...prev.filter((n) => n.id !== tempId), notification]);
-    });
+  const markAsRead = async (id: number) => {
+    await markNotificationAsRead(id);
   };
 
   return { markAsRead };
