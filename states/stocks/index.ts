@@ -6,4 +6,6 @@ const initialValue: Transaction[] = [];
 
 const methods = createReStateMethods(STOCKS_KEY, initialValue);
 
-export const { dispatchStocks, useStocksSelect } = methods;
+export const { dispatchStocks: dispatch, useStocksSelect: useSelect } = methods;
+export const dispatchTransactions = methods.dispatchStocks;
+export const useTransactionsSelect = methods.useStocksSelect;

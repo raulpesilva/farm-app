@@ -1,4 +1,4 @@
-import { useProductsSelect, useStocksSelect } from '@/states';
+import { useProductsSelect, useTransactionsSelect } from '@/states';
 import { theme } from '@/theme';
 import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -7,7 +7,7 @@ import { Typography } from '../shared';
 
 export const StockChart = () => {
   const products = useProductsSelect();
-  const stocks = useStocksSelect();
+  const stocks = useTransactionsSelect();
 
   const stockByProduct = useMemo(() => {
     const items = products

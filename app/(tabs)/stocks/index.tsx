@@ -1,9 +1,9 @@
 import { Button, Empty, StockCard, StockChart, Typography } from '@/components';
 import { getTransactionsRequest } from '@/services/getTransactions';
 import {
-  dispatchStocks,
+  dispatchTransactions,
   useProductsSelect,
-  useStocksSelect
+  useTransactionsSelect
 } from '@/states';
 import { groupByStock } from '@/utils';
 import { useRouter } from 'expo-router';
@@ -13,7 +13,7 @@ import { SectionList, StyleSheet, View } from 'react-native';
 export default function Stocks() {
   const router = useRouter();
   const products = useProductsSelect();
-  const transactions = useStocksSelect();
+  const transactions = useTransactionsSelect();
   const [loading, setLoading] = useState(transactions.length === 0);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function Stocks() {
         setLoading(true);
 
         const transactions = await getTransactionsRequest();
-        dispatchStocks(transactions);
+        dispatchTransactions(transactions);
         // const [productsData, salesData, goalsData, notificationsData] = await Promise.all([
         //   getProducts(),
         //   getSales(),

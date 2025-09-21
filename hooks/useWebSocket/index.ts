@@ -5,7 +5,7 @@ import {
   dispatchNotifications,
   dispatchProducts,
   dispatchSales,
-  dispatchStocks,
+  dispatchTransactions,
   useFarmSelect,
 } from '@/states';
 import { useEffect } from 'react';
@@ -47,7 +47,7 @@ export const useWebSocket = () => {
     socket.on('transaction:new', (data) => {
       console.log('New transaction', data);
       if (data.type === 'sale') dispatchSales((prev) => [data, ...prev]);
-      if (data.type !== 'sale') dispatchStocks((prev) => [data, ...prev]);
+      if (data.type !== 'sale') dispatchTransactions((prev) => [data, ...prev]);
     });
 
     socket.on('disconnect', () => {

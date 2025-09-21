@@ -1,6 +1,6 @@
 import { OptionSelect } from '@/components';
 import { addStock } from '@/services';
-import { dispatchStocks, useFarmSelect, useProductsSelect } from '@/states';
+import { dispatchTransactions, useFarmSelect, useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -42,7 +42,7 @@ export const useFormAddStock = () => {
       const valueFormatted = Number(value.replace(/[^\d,-]/g, '').replace(',', '.'));
 
       const tempId = Math.random();
-      dispatchStocks((prev) => [
+      dispatchTransactions((prev) => [
         ...prev,
         {
           id: tempId,
@@ -63,14 +63,14 @@ export const useFormAddStock = () => {
         type: type.value,
       })
         .then((newStock) => {
-          dispatchStocks((prev) => [...prev.filter((p) => p.id !== tempId), newStock]);
+          dispatchTransactions((prev) => [...prev.filter((p) => p.id !== tempId), newStock]);
           setProduct(undefined);
           setValue('');
           setDate(undefined);
           setDiscountPreviousStep(true);
         })
         .catch(() => {
-          dispatchStocks((prev) => prev.filter((p) => p.id !== tempId));
+          dispatchTransactions((prev) => prev.filter((p) => p.id !== tempId));
         });
       router.navigate('/(tabs)/stocks');
     } catch (error: any) {
