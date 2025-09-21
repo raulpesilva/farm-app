@@ -1,6 +1,6 @@
 import { ColorOptionSelect, IconOptionSelect } from '@/@types/product';
 import { addProduct } from '@/services';
-import { dispatchProducts } from '@/states';
+import { dispatchProducts, useFarmSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -11,6 +11,7 @@ export const useFormAddProduct = () => {
   const [color, setColor] = useState<ColorOptionSelect | undefined>();
   const [error, setError] = useState({ name: '', icon: '', color: '' });
   const [loading, setLoading] = useState(false);
+  const farm = useFarmSelect();
 
   const handleCreateProduct = async () => {
     try {
@@ -22,23 +23,23 @@ export const useFormAddProduct = () => {
       if (!name) setError((prev) => ({ ...prev, name: 'Digite o nome' }));
       if (!iconElem) setError((prev) => ({ ...prev, icon: 'Selecione um ícone' }));
       if (!colorElem) setError((prev) => ({ ...prev, color: 'Selecione uma cor' }));
-      if (!name || !iconElem || !colorElem) return;
+      if (!name || !iconElem || !colorElem || !farm) return;
 
       const tempId = Math.random();
       dispatchProducts((prev) => [
         ...prev,
         {
           id: tempId,
-          farm_id: 1,
+          farm_id: farm.id,
           name,
           icon: iconElem,
           color: colorElem,
-          created_at: new Date(),
-          updated_at: new Date(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         },
       ]);
 
-      addProduct({ name, icon: iconElem, color: colorElem, farm_id: 1 })
+      addProduct({ name, icon: iconElem, color: colorElem, farm_id: farm.id })
         .then((newProduct) => {
           dispatchProducts((prev) => [...prev.filter((p) => p.id !== tempId), newProduct]);
           setName('');

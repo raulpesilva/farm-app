@@ -1,6 +1,6 @@
 import { OptionSelect } from '@/components';
 import { addSale } from '@/services';
-import { dispatchSales, useProductsSelect } from '@/states';
+import { dispatchSales, useFarmSelect, useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -26,6 +26,7 @@ export const useFormAddSale = () => {
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [error, setError] = useState({ product: '', value: '', amount: '', date: '' });
   const [loading, setLoading] = useState(false);
+  const farm = useFarmSelect();
 
   const handleCreateSale = async () => {
     try {
@@ -36,7 +37,7 @@ export const useFormAddSale = () => {
       if (!value) setError((prev) => ({ ...prev, value: 'Digite a quantidade' }));
       if (!amount) setError((prev) => ({ ...prev, amount: 'Digite o valor' }));
       if (!date) setError((prev) => ({ ...prev, date: 'Selecione a data' }));
-      if (!product || !value || !amount || !date) return;
+      if (!product || !value || !amount || !date || !farm) return;
 
       const valueFormatted = Number(value.replace(/[^\d,-]/g, '').replace(',', '.'));
 
@@ -50,18 +51,26 @@ export const useFormAddSale = () => {
         ...prev,
         {
           id: tempId,
-          farm_id: 1,
+          farm_id: farm.id,
           product_id: Number(product.type),
-          type: 'sell',
-          value: valueFormatted,
-          amount: amountFormatted,
-          date,
-          created_at: new Date(),
-          updated_at: new Date(),
+          type: 'sale',
+          price: valueFormatted,
+          total_price: valueFormatted * amountFormatted,
+          quantity: amountFormatted,
+          date: date.toISOString(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         },
       ]);
 
-      addSale({ farm_id: 1, product_id: Number(product.type), value: valueFormatted, amount: amountFormatted, date })
+      addSale({
+        farm_id: farm.id,
+        product_id: Number(product.type),
+        price: valueFormatted,
+        quantity: amountFormatted,
+        total_price: valueFormatted * amountFormatted,
+        date: date.toISOString(),
+      })
         .then((newSale) => {
           dispatchSales((prev) => [...prev.filter((p) => p.id !== tempId), newSale]);
           setProduct(undefined);

@@ -1,13 +1,13 @@
 import { OptionSelect } from '@/components';
 import { addStock } from '@/services';
-import { dispatchStocks, useProductsSelect } from '@/states';
+import { dispatchStocks, useFarmSelect, useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
 const tabs = [
-  { label: 'Comprado', value: 'buy' },
-  { label: 'Plantado', value: 'plant' },
-  { label: 'Colhido', value: 'harvest' },
+  { label: 'Comprado', value: 'storage' as const },
+  { label: 'Plantado', value: 'plant' as const },
+  { label: 'Colhido', value: 'harvest' as const },
 ] as const;
 
 export const useFormAddStock = () => {
@@ -27,6 +27,7 @@ export const useFormAddStock = () => {
   const [discountPreviousStep, setDiscountPreviousStep] = useState(true);
   const [error, setError] = useState({ product: '', value: '', date: '' });
   const [loading, setLoading] = useState(false);
+  const farm = useFarmSelect();
 
   const handleCreateStock = async () => {
     try {
@@ -36,7 +37,7 @@ export const useFormAddStock = () => {
       if (!product) setError((prev) => ({ ...prev, product: 'Selecione um produto' }));
       if (!value) setError((prev) => ({ ...prev, value: 'Digite a quantidade' }));
       if (!date) setError((prev) => ({ ...prev, date: 'Selecione a data' }));
-      if (!product || !value || !date) return;
+      if (!product || !value || !date || !farm) return;
 
       const valueFormatted = Number(value.replace(/[^\d,-]/g, '').replace(',', '.'));
 
@@ -45,25 +46,21 @@ export const useFormAddStock = () => {
         ...prev,
         {
           id: tempId,
-          farm_id: 1,
+          farm_id: farm.id,
           product_id: Number(product.type),
           type: type.value,
-          value: valueFormatted,
-          amount: 0,
-          date,
-          created_at: new Date(),
-          updated_at: new Date(),
-          discountPreviousStep,
+          quantity: valueFormatted,
+          date: date.toISOString(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         },
       ]);
 
       addStock({
-        farm_id: 1,
         product_id: Number(product.type),
+        quantity: valueFormatted,
+        date: date.toISOString(),
         type: type.value,
-        value: valueFormatted,
-        date,
-        discountPreviousStep,
       })
         .then((newStock) => {
           dispatchStocks((prev) => [...prev.filter((p) => p.id !== tempId), newStock]);

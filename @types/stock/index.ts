@@ -2,11 +2,11 @@ export interface StockItem {
   id: number;
   farm_id: number;
   product_id: number;
-  type: 'buy' | 'plant' | 'harvest';
+  type: 'storage' | 'plant' | 'harvest';
   value: number;
   amount: number;
-  date: Date;
-  created_at: Date;
-  updated_at: Date;
+  date: string;
+  created_at: string;
+  updated_at: string;
   discountPreviousStep: boolean;
 }

@@ -6,8 +6,8 @@ export interface ProductItem {
   name: string;
   icon: keyof typeof ICON_MAP;
   color: keyof typeof COLOR_MAP;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
 }
 
 export const COLOR_MAP: Record<string, string> = {
