@@ -11,7 +11,6 @@ export const addSale = async (content: AddSalePayload) => {
     date: content.date,
     type: 'sale' as const,
   };
-  console.log('Adding sale with payload:', payload);
   const response = await addStock(payload);
   return response;
 };
