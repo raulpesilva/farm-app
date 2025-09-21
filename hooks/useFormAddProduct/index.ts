@@ -39,7 +39,7 @@ export const useFormAddProduct = () => {
         },
       ]);
 
-      addProduct({ name, icon: iconElem, color: colorElem, farm_id: farm.id })
+      addProduct({ name, icon: iconElem, color: colorElem })
         .then((newProduct) => {
           dispatchProducts((prev) => [...prev.filter((p) => p.id !== tempId), newProduct]);
           setName('');
@@ -49,7 +49,7 @@ export const useFormAddProduct = () => {
         .catch(() => {
           dispatchProducts((prev) => prev.filter((p) => p.id !== tempId));
         });
-      router.navigate('/(tabs)/products');
+      router.replace('/(tabs)/products');
     } catch (error: any) {
       console.log('Error creating product:', error);
     } finally {
