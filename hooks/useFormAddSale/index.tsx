@@ -1,6 +1,6 @@
 import { OptionSelect } from '@/components';
 import { addSale } from '@/services';
-import { useFarmSelect, useProductsSelect } from '@/states';
+import { useProductsSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -26,7 +26,6 @@ export const useFormAddSale = () => {
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [error, setError] = useState({ product: '', value: '', amount: '', date: '' });
   const [loading, setLoading] = useState(false);
-  const farm = useFarmSelect();
 
   const handleCreateSale = async () => {
     try {
@@ -37,7 +36,7 @@ export const useFormAddSale = () => {
       if (!value) setError((prev) => ({ ...prev, value: 'Digite a quantidade' }));
       if (!amount) setError((prev) => ({ ...prev, amount: 'Digite o valor' }));
       if (!date) setError((prev) => ({ ...prev, date: 'Selecione a data' }));
-      if (!product || !value || !amount || !date || !farm) return;
+      if (!product || !value || !amount || !date) return;
 
       const valueFormatted = Number(value.replace(/[^\d,-]/g, '').replace(',', '.'));
 
@@ -47,9 +46,7 @@ export const useFormAddSale = () => {
           : Number(amount.replace(/[^\d,-]/g, '').replace(',', '.')) * Number(value);
 
       await addSale({
-        farm_id: farm.id,
         product_id: Number(product.type),
-        price: valueFormatted,
         quantity: amountFormatted,
         total_price: valueFormatted * amountFormatted,
         date: date.toISOString(),

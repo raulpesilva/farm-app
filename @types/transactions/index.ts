@@ -28,7 +28,7 @@ export interface Harvest extends TransactionBase {
 
 export type Transaction = Storage | Sale | Plant | Harvest;
 
-type RemoveCommon<T> = Omit<T, 'id' | 'created_at' | 'updated_at' | 'farm_id'>;
+type RemoveCommon<T> = Omit<T, 'id' | 'created_at' | 'updated_at' | 'farm_id' | 'price'>;
 
 export type TransactionPayload =
   | RemoveCommon<Storage>

@@ -1,19 +1,17 @@
 import { Sale } from '@/@types/transactions';
-import { sleep } from '@/utils';
-import { getSales } from '../getSales';
+import { addStock } from '../addStock';
 
-type AddSalePayload = Omit<Sale, 'id' | 'type' | 'created_at' | 'updated_at'>;
+type AddSalePayload = Omit<Sale, 'id' | 'farm_id' | 'created_at' | 'updated_at' | 'price' | 'type'>;
 
-export const addSale = async (payload: AddSalePayload) => {
-  await sleep(150);
-  const prev = await getSales();
-  const type: Sale['type'] = 'sale';
-
-  return {
-    id: prev.length + 1,
-    type,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    ...payload,
+export const addSale = async (content: AddSalePayload) => {
+  const payload = {
+    product_id: content.product_id,
+    quantity: content.quantity,
+    total_price: content.total_price,
+    date: content.date,
+    type: 'sale' as const,
   };
+  console.log('Adding sale with payload:', payload);
+  const response = await addStock(payload);
+  return response;
 };
