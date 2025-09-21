@@ -6,6 +6,6 @@ export const markNotificationAsRead = async (id: number) => {
   const farm = getFarm();
   if (!farm) throw new Error('Farm not found');
 
-  const response = await coreApi.post<NotificationItem>(`/transactions/${farm.id}/${id}`);
+  const response = await coreApi.post<NotificationItem>(`/notifications/read/${farm.id}/${id}`);
   return response.data;
 };
