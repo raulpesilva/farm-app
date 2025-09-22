@@ -1,7 +1,7 @@
 import { COLORS_PRODUCT, ICONS_PRODUCT } from '@/@types/product';
 import { useFormEditProduct } from '@/hooks';
 import { StyleSheet, View } from 'react-native';
-import { ButtonIcon, Field, Select, Typography } from '../shared';
+import { Button, Field, Icon, Select, Typography } from '../shared';
 
 interface FormEditProductProps {
   id: number;
@@ -25,9 +25,6 @@ export const FormEditProduct = ({ id }: FormEditProductProps) => {
 
   return (
     <View style={styles.container}>
-      {edited && <ButtonIcon icon='edit' variant='outlined' onPress={handleUpdateProduct} loading={loading} />}
-      {!edited && <ButtonIcon icon='trash' variant='error' onPress={handleDeleteProduct} loading={loading} />}
-
       <Field style={styles.field}>
         <Field.TextInput
           placeholder='Digite o nome do produto'
@@ -45,6 +42,18 @@ export const FormEditProduct = ({ id }: FormEditProductProps) => {
 
       <Select placeholder='Selecione o ícone' options={ICONS_PRODUCT} value={icon} onPress={setIcon} />
       <Select placeholder='Selecione a cor' options={COLORS_PRODUCT} value={color} onPress={setColor} />
+      {edited && (
+        <Button variant='contained' onPress={handleUpdateProduct} loading={loading} style={styles.button}>
+          <Icon type='edit' />
+          <Typography variant='label'>Salvar alterações</Typography>
+        </Button>
+      )}
+      {!edited && (
+        <Button variant='error' onPress={handleDeleteProduct} loading={loading} style={styles.button}>
+          <Icon type='trash' />
+          <Typography variant='label'>Excluir produto</Typography>
+        </Button>
+      )}
     </View>
   );
 };
@@ -58,5 +67,9 @@ const styles = StyleSheet.create({
 
   field: {
     marginTop: 8,
+  },
+
+  button: {
+    width: '100%',
   },
 });
