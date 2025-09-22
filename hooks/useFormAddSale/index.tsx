@@ -48,7 +48,7 @@ export const useFormAddSale = () => {
       await addSale({
         product_id: Number(product.type),
         quantity: amountFormatted,
-        total_price: valueFormatted * amountFormatted,
+        total_price: valueFormatted,
         date: date.toISOString(),
       });
 

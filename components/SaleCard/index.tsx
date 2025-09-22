@@ -24,7 +24,7 @@ export const SaleCard = ({ product, productIcon, productColor, price, quantity, 
       </View>
 
       <View style={styles.values}>
-        <Typography variant='label'>{`${price}`}</Typography>
+        <Typography variant='label'>{`${quantity}`}</Typography>
         <Typography variant='label'>{formatCurrency(total_price)}</Typography>
       </View>
     </View>
