@@ -1,6 +1,5 @@
 import { ColorOptionSelect, IconOptionSelect } from '@/@types/product';
 import { addProduct } from '@/services';
-import { useFarmSelect } from '@/states';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -11,7 +10,6 @@ export const useFormAddProduct = () => {
   const [color, setColor] = useState<ColorOptionSelect | undefined>();
   const [error, setError] = useState({ name: '', icon: '', color: '' });
   const [loading, setLoading] = useState(false);
-  const farm = useFarmSelect();
 
   const handleCreateProduct = async () => {
     try {
@@ -23,7 +21,7 @@ export const useFormAddProduct = () => {
       if (!name) setError((prev) => ({ ...prev, name: 'Digite o nome' }));
       if (!iconElem) setError((prev) => ({ ...prev, icon: 'Selecione um ícone' }));
       if (!colorElem) setError((prev) => ({ ...prev, color: 'Selecione uma cor' }));
-      if (!name || !iconElem || !colorElem || !farm) return;
+      if (!name || !iconElem || !colorElem) return;
 
       await addProduct({ name, icon: iconElem, color: colorElem });
 
