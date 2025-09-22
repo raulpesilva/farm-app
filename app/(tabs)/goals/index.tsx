@@ -38,7 +38,7 @@ export default function Goals() {
   return (
     <View style={styles.container}>
       {!products?.length && (
-        <Empty text='Você ainda não cadastrou nenhum produto?' button='Cadastrar produto' link='/products/add' />
+        <Empty text='Você ainda não cadastrou nenhum produto?' button='Cadastrar produto' link='/products' />
       )}
 
       {!!products?.length && !goals?.length && (
@@ -55,6 +55,7 @@ export default function Goals() {
             data={goals}
             renderItem={({ item }) => {
               const product = products.find((product) => product.id === item.product_id);
+              if (!product) return null;
               return (
                 <GoalCard
                   product={product?.name || ''}

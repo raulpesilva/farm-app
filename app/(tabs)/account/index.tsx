@@ -1,5 +1,6 @@
 import { Button, Typography } from '@/components';
 import { logout } from '@/functions';
+import { useUserSelect } from '@/states';
 import { theme } from '@/theme';
 import { useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
@@ -20,13 +21,13 @@ const useAccount = () => {
 
 export default function Account() {
   const { handleGoBack, handleSignOut } = useAccount();
+  const user = useUserSelect();
 
   return (
     <View style={styles.container}>
       <Typography variant='heading1'>Minha conta</Typography>
       <Typography variant='heading3' style={styles.text1}>
-        {/* Seja bem-vindo, {auth.currentUser?.displayName || auth.currentUser?.email}! */}
-        Seja bem-vindo, Fulano!
+        Seja bem-vindo, {`${user?.name || user?.email}`}!
       </Typography>
       <Typography variant='heading3' style={styles.text2}>
         Página em desenvolvimento. Em breve, novidades por aqui!

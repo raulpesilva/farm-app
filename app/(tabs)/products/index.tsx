@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
 
   listContent: {
     paddingBottom: 8,
+    height: '100%',
   },
 
   separator: {
