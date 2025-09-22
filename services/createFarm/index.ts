@@ -7,6 +7,6 @@ export const createFarm = async (content: CreateFarmPayload) => {
   const payload = {
     name: content.name,
   };
-  const response = await coreApi.post<Farm>('/farms', payload);
+  const response = await coreApi.post<Farm>('/farm', payload);
   return response.data;
 };
