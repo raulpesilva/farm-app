@@ -6,4 +6,4 @@ const initialValue: GoalItem[] = [];
 
 const methods = createReStateMethods(GOALS_KEY, initialValue);
 
-export const { dispatchGoals, useGoalsSelect } = methods;
+export const { dispatchGoals, useGoalsSelect, resetGoals } = methods;

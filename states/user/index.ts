@@ -5,4 +5,4 @@ const USER_KEY = 'user';
 
 const initialValue = {} as PublicUser;
 const methods = createReStateMethods(USER_KEY, initialValue);
-export const { dispatchUser, useUserSelect, getUser } = methods;
+export const { dispatchUser, useUserSelect, getUser, resetUser } = methods;

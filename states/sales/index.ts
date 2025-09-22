@@ -6,4 +6,4 @@ const initialValue: Sale[] = [];
 
 const methods = createReStateMethods(SALES_KEY, initialValue);
 
-export const { dispatchSales, useSalesSelect } = methods;
+export const { dispatchSales, useSalesSelect, resetSales } = methods;
