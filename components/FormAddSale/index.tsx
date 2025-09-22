@@ -1,6 +1,6 @@
 import { useFormAddSale } from '@/hooks';
 import { theme } from '@/theme';
-import { maskCurrency } from '@/utils';
+import { formatBRLCurrencyInput } from '@/utils';
 import { StyleSheet, View } from 'react-native';
 import { Button, DatePicker, Field, Select, Typography } from '../shared';
 import { TabItem } from '../TabItem';
@@ -10,16 +10,16 @@ export const FormAddSale = () => {
     tabs,
     products,
     product,
-    value,
+    quantity,
     tabActive,
-    amount,
+    price,
     date,
     error,
     loading,
     setProduct,
-    setValue,
+    setQuantity,
     setTabActive,
-    setAmount,
+    setPrice,
     setDate,
     handleCreateSale,
     onChange,
@@ -38,9 +38,9 @@ export const FormAddSale = () => {
       <Field>
         <Field.TextInput
           placeholder='Digite a quantidade'
-          value={value}
+          value={quantity}
           keyboardType='numeric'
-          onChangeText={(value) => onChange(setValue, value)}
+          onChangeText={(value) => onChange(setQuantity, value)}
         />
         {error.value && (
           <Field.FeedbackMessage>
@@ -49,7 +49,7 @@ export const FormAddSale = () => {
         )}
       </Field>
 
-      <View style={[styles.tabsContainer, error.amount && styles.tabsError]}>
+      <View style={[styles.tabsContainer, error.price && styles.tabsError]}>
         <View style={styles.tabsContent}>
           {tabs.map((tab) => (
             <TabItem key={tab.value} item={tab} active={tabActive} setActive={() => setTabActive(tab)} />
@@ -59,16 +59,16 @@ export const FormAddSale = () => {
         <Field>
           <Field.TextInput
             placeholder={tabActive.value === 'total' ? 'Digite o valor total' : 'Digite o valor por unidade'}
-            value={amount}
+            value={price}
             keyboardType='numeric'
             onChangeText={(valueInput) => {
-              const formatted = maskCurrency(valueInput);
-              onChange(setAmount, formatted);
+              const formatted = formatBRLCurrencyInput(valueInput);
+              onChange(setPrice, formatted);
             }}
           />
-          {error.amount && (
+          {error.price && (
             <Field.FeedbackMessage>
-              <Typography variant='error'>{error.amount}</Typography>
+              <Typography variant='error'>{error.price}</Typography>
             </Field.FeedbackMessage>
           )}
         </Field>

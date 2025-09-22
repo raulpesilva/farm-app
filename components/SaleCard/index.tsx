@@ -1,7 +1,7 @@
 import { COLOR_MAP } from '@/@types/product';
 import { Sale } from '@/@types/transactions';
 import { theme } from '@/theme';
-import { formatCurrency } from '@/utils';
+import { formatBRLCurrencyDisplay } from '@/utils';
 import { StyleSheet, View } from 'react-native';
 import { Icon, ICON_MAP, Typography } from '../shared';
 
@@ -20,12 +20,12 @@ export const SaleCard = ({ product, productIcon, productColor, price, quantity, 
 
       <View style={styles.names}>
         <Typography variant='heading3'>{product}</Typography>
-        <Typography style={styles.text}>{`${formatCurrency(price)}/un.`}</Typography>
+        <Typography style={styles.text}>{`${formatBRLCurrencyDisplay(price)}/un.`}</Typography>
       </View>
 
       <View style={styles.values}>
         <Typography variant='label'>{`${quantity}`}</Typography>
-        <Typography variant='label'>{formatCurrency(total_price)}</Typography>
+        <Typography variant='label'>{formatBRLCurrencyDisplay(total_price)}</Typography>
       </View>
     </View>
   );

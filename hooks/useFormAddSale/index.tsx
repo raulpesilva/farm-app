@@ -1,6 +1,7 @@
 import { OptionSelect } from '@/components';
 import { addSale } from '@/services';
 import { useProductsSelect } from '@/states';
+import { formatBRLCurrencyPayload, onlyNumbers, unformatBRLCurrencyInput } from '@/utils';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -20,41 +21,39 @@ export const useFormAddSale = () => {
   }));
 
   const [product, setProduct] = useState<OptionSelect | undefined>(undefined);
-  const [value, setValue] = useState('');
+  const [quantity, setQuantity] = useState('');
   const [tabActive, setTabActive] = useState(tabs[0]);
-  const [amount, setAmount] = useState('');
+  const [price, setPrice] = useState('');
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [error, setError] = useState({ product: '', value: '', amount: '', date: '' });
+  const [error, setError] = useState({ product: '', value: '', price: '', date: '' });
   const [loading, setLoading] = useState(false);
 
   const handleCreateSale = async () => {
     try {
       setLoading(true);
-      setError({ product: '', value: '', amount: '', date: '' });
+      setError({ product: '', value: '', price: '', date: '' });
 
       if (!product) setError((prev) => ({ ...prev, product: 'Selecione um produto' }));
-      if (!value) setError((prev) => ({ ...prev, value: 'Digite a quantidade' }));
-      if (!amount) setError((prev) => ({ ...prev, amount: 'Digite o valor' }));
+      if (!quantity) setError((prev) => ({ ...prev, value: 'Digite a quantidade' }));
+      if (!price) setError((prev) => ({ ...prev, price: 'Digite o valor' }));
       if (!date) setError((prev) => ({ ...prev, date: 'Selecione a data' }));
-      if (!product || !value || !amount || !date) return;
+      if (!product || !quantity || !price || !date) return;
 
-      const valueFormatted = Number(value.replace(/[^\d,-]/g, '').replace(',', '.'));
+      const formattedQuantity = Number(onlyNumbers(quantity));
 
-      const amountFormatted =
-        tabActive.value === 'total'
-          ? Number(amount.replace(/[^\d,-]/g, '').replace(',', '.'))
-          : Number(amount.replace(/[^\d,-]/g, '').replace(',', '.')) * Number(value);
+      let pricePayload = formatBRLCurrencyPayload(unformatBRLCurrencyInput(price));
+      if (tabActive.value !== 'total') pricePayload *= formattedQuantity;
 
       await addSale({
         product_id: Number(product.type),
-        quantity: amountFormatted,
-        total_price: valueFormatted,
+        quantity: formattedQuantity,
+        total_price: pricePayload,
         date: date.toISOString(),
       });
 
       setProduct(undefined);
-      setValue('');
-      setAmount('');
+      setQuantity('');
+      setPrice('');
       setDate(undefined);
 
       if (router.canGoBack()) router.back();
@@ -68,23 +67,23 @@ export const useFormAddSale = () => {
 
   const onChange = (setValue: React.Dispatch<React.SetStateAction<string>>, value: string) => {
     setValue(value);
-    setError({ product: '', value: '', amount: '', date: '' });
+    setError({ product: '', value: '', price: '', date: '' });
   };
 
   return {
     tabs,
     products,
     product,
-    value,
+    quantity,
     tabActive,
-    amount,
+    price,
     date,
     error,
     loading,
     setProduct,
-    setValue,
+    setQuantity,
     setTabActive,
-    setAmount,
+    setPrice,
     setDate,
     handleCreateSale,
     onChange,
