@@ -53,7 +53,7 @@ const variants = {
 };
 
 interface TypographyProps extends TextProps {
-  children: string;
+  children: string | string[];
   variant?: keyof typeof variants;
   style?: StyleProp<TextStyle>;
 }
