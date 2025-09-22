@@ -32,7 +32,7 @@ export const GoalCard = ({ product, productIcon, name, measure, type, value, tar
 
         <View style={styles.names}>
           <Typography variant='label'>{name}</Typography>
-          <Typography style={styles.text}>{product}</Typography>
+          <Typography style={styles.text}>{type} - {product}</Typography>
         </View>
 
         <View style={styles.values}>
