@@ -1,6 +1,6 @@
 import { useFormAddStock } from '@/hooks';
 import { theme } from '@/theme';
-import { StyleSheet, Switch, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, DatePicker, Field, Select, Typography } from '../shared';
 import { TabItem } from '../TabItem';
 
@@ -10,16 +10,14 @@ export const FormAddStock = () => {
     products,
     selectedType,
     product,
-    value,
+    quantity,
     date,
-    discountPreviousStep,
     error,
     loading,
     setSelectedType,
     setProduct,
-    setValue,
+    setQuantity,
     setDate,
-    setDiscountPreviousStep,
     handleCreateStock,
     onChange,
   } = useFormAddStock();
@@ -43,20 +41,20 @@ export const FormAddStock = () => {
       <Field>
         <Field.TextInput
           placeholder='Digite a quantidade'
-          value={value}
+          value={quantity}
           keyboardType='numeric'
-          onChangeText={(value) => onChange(setValue, value)}
+          onChangeText={(value) => onChange(setQuantity, value)}
         />
-        {error.value && (
+        {error.quantity && (
           <Field.FeedbackMessage>
-            <Typography variant='error'>{error.value}</Typography>
+            <Typography variant='error'>{error.quantity}</Typography>
           </Field.FeedbackMessage>
         )}
       </Field>
 
       <DatePicker placeholder='Selecione a data' date={date} setDate={setDate} error={error.date} />
 
-      <View style={styles.toggleContainer}>
+      {/* <View style={styles.toggleContainer}>
         <Switch
           trackColor={{ false: theme.colors.gray700, true: theme.colors.gray500 }}
           thumbColor={discountPreviousStep ? theme.colors.primary : theme.colors.gray200}
@@ -71,7 +69,7 @@ export const FormAddStock = () => {
         >
           Descontar da etapa anterior?
         </Typography>
-      </View>
+      </View> */}
 
       <Button onPress={handleCreateStock} loading={loading}>
         <Typography variant='label'>Cadastrar estoque</Typography>
