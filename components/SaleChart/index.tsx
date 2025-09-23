@@ -19,7 +19,7 @@ export const SaleChart = () => {
         .reduce((acc, sale) => acc + sale.total_price, 0);
 
       return {
-        value: totalValue,
+        value: totalValue / 100,
         label: product.name,
         frontColor: getColorByName(product.color) || theme.colors.primary,
       };
