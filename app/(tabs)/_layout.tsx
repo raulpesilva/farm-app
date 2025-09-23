@@ -42,7 +42,7 @@ const NotificationTab = ({ router, isNotifications }: NotificationProps) => {
 
   return (
     <View style={{ position: 'relative', marginLeft: 20 }}>
-      <ButtonIcon icon='notification' onPress={() => router.push('/notifications')} style={{ backgroundColor }} />
+      <ButtonIcon icon='notification' onPress={() => router.navigate('/notifications')} style={{ backgroundColor }} />
       {unreadNotificationsCount > 0 && (
         <View
           style={{
@@ -68,7 +68,7 @@ const AccountTab = ({ router, isAccount }: AccountProps) => {
   const backgroundColor = isAccount ? theme.colors.gray700 : undefined;
 
   return (
-    <ButtonIcon icon='configs' onPress={() => router.push('/account')} style={{ marginRight: 20, backgroundColor }} />
+    <ButtonIcon icon='configs' onPress={() => router.navigate('/account')} style={{ marginRight: 20, backgroundColor }} />
   );
 };
 
