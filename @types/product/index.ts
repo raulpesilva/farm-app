@@ -22,7 +22,7 @@ export const COLOR_MAP: Record<string, string> = {
 };
 
 export const getColorByName = (name: string) => {
-  if (name?.startsWith('#') || typeof name !== 'string' ) return name;
+  if (name?.startsWith('#') || typeof name !== 'string') return name;
   return COLOR_MAP[name] || COLOR_MAP['red'];
 };
 
@@ -46,7 +46,6 @@ export const ICONS_PRODUCT: OptionSelect[] = [
   { displayName: 'Cítrico', type: 'citrus', icon: 'citrus' },
   { displayName: 'Folhagem', type: 'leafy', icon: 'leafy' },
   { displayName: 'Maça', type: 'apple', icon: 'apple' },
-  { displayName: 'Ovo', type: 'egg', icon: 'egg' },
   { displayName: 'Semente', type: 'sprout', icon: 'sprout' },
   { displayName: 'Uva', type: 'grape', icon: 'grape' },
   { displayName: 'Vegetal', type: 'vegan', icon: 'vegan' },
