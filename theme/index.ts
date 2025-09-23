@@ -11,6 +11,10 @@ export const theme = {
     white: '#FFFFFF',
     error: '#BF1313',
     success: '#2AA631',
+    harvest: '#11c76cff',
+    sale: '#cf3c3cff',
+    plant: '#5e3311ff',
+    storage: '#1b4daaff',
   },
 
   fontFamilies: {

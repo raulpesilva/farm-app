@@ -1,6 +1,7 @@
 import { OptionSelect } from '@/components';
 import { addStock } from '@/services';
 import { useProductsSelect } from '@/states';
+import { onlyNumbersWithDot } from '@/utils';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -22,35 +23,33 @@ export const useFormAddStock = () => {
 
   const [selectedType, setSelectedType] = useState<(typeof tabs)[number]>(tabs[0]);
   const [product, setProduct] = useState<OptionSelect | undefined>(undefined);
-  const [value, setValue] = useState('');
+  const [quantity, setQuantity] = useState('');
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [discountPreviousStep, setDiscountPreviousStep] = useState(true);
-  const [error, setError] = useState({ product: '', value: '', date: '' });
+  const [error, setError] = useState({ product: '', quantity: '', date: '' });
   const [loading, setLoading] = useState(false);
 
   const handleCreateStock = async () => {
     try {
       setLoading(true);
-      setError({ product: '', value: '', date: '' });
+      setError({ product: '', quantity: '', date: '' });
 
       if (!product) setError((prev) => ({ ...prev, product: 'Selecione um produto' }));
-      if (!value) setError((prev) => ({ ...prev, value: 'Digite a quantidade' }));
+      if (!quantity) setError((prev) => ({ ...prev, quantity: 'Digite a quantidade' }));
       if (!date) setError((prev) => ({ ...prev, date: 'Selecione a data' }));
-      if (!product || !value || !date) return;
+      if (!product || !quantity || !date) return;
 
-      const valueFormatted = Number(value.replace(/[^\d,-]/g, '').replace(',', '.'));
+      const formattedQuantity = Number(onlyNumbersWithDot(quantity));
 
       await addStock({
         product_id: Number(product.type),
-        quantity: valueFormatted,
+        quantity: formattedQuantity,
         date: date.toISOString(),
         type: selectedType.value,
       });
 
       setProduct(undefined);
-      setValue('');
+      setQuantity('');
       setDate(undefined);
-      setDiscountPreviousStep(true);
       if (router.canGoBack()) router.back();
       else router.navigate('/(tabs)/stocks');
     } catch (error: any) {
@@ -62,7 +61,7 @@ export const useFormAddStock = () => {
 
   const onChange = (setValue: React.Dispatch<React.SetStateAction<string>>, value: string) => {
     setValue(value);
-    setError({ product: '', value: '', date: '' });
+    setError({ product: '', quantity: '', date: '' });
   };
 
   return {
@@ -70,16 +69,14 @@ export const useFormAddStock = () => {
     products,
     selectedType,
     product,
-    value,
+    quantity,
     date,
-    discountPreviousStep,
     error,
     loading,
     setSelectedType,
     setProduct,
-    setValue,
+    setQuantity,
     setDate,
-    setDiscountPreviousStep,
     handleCreateStock,
     onChange,
   };
