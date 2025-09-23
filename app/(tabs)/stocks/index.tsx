@@ -50,6 +50,8 @@ export default function Stocks() {
     return mapped;
   }, [transactions, products]);
 
+  const hasStock = group.some((g) => g.data.length > 0);
+
   if (loading && !transactions?.length) {
     return (
       <View style={styles.container}>
@@ -66,11 +68,11 @@ export default function Stocks() {
         <Empty text='Você ainda não cadastrou nenhum produto?' button='Cadastrar produto' link='/products' />
       )}
 
-      {!!products?.length && !transactions?.length && (
+      {!!products?.length && !hasStock && (
         <Empty text=' Vocês ainda não cadastrou nenhum estoque?' button='Cadastrar estoque' link='/stocks/add' />
       )}
 
-      {!!products?.length && !!transactions?.length && (
+      {!!products?.length && !!hasStock && (
         <View style={styles.content}>
           <Button onPress={() => router.navigate('/stocks/add')}>
             <Typography variant='label'>Cadastrar estoque</Typography>
