@@ -1,4 +1,4 @@
-import { COLORS_GOAL, GoalItem, MEASURE_GOAL } from '@/@types/goal';
+import { COLORS_GOAL, GoalItem, MEASURE_GOAL, TYPE_GOAL } from '@/@types/goal';
 import { theme } from '@/theme';
 import { formatBRLCurrencyDisplay } from '@/utils';
 import { useMemo } from 'react';
@@ -32,7 +32,9 @@ export const GoalCard = ({ product, productIcon, name, measure, type, value, tar
 
         <View style={styles.names}>
           <Typography variant='label'>{name}</Typography>
-          <Typography style={styles.text}>{type} - {product}</Typography>
+          <Typography style={styles.text}>
+            {TYPE_GOAL[type]} - {product}
+          </Typography>
         </View>
 
         <View style={styles.values}>
