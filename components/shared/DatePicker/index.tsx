@@ -1,18 +1,17 @@
 import { theme } from '@/theme';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Keyboard, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Button } from '../Button';
 import { Typography } from '../Typography';
 
 interface DatePickerProps {
-  placeholder: string;
-  date: Date | undefined;
-  setDate: (value: Date | undefined) => void;
+  date: Date;
+  setDate: (value: Date) => void;
   error: string;
 }
 
-export const DatePicker = ({ placeholder, date, setDate, error }: DatePickerProps) => {
+export const DatePicker = ({ date, setDate, error }: DatePickerProps) => {
   const isIOS = Platform.OS === 'ios';
   const [show, setShow] = useState(false);
   const [tempDate, setTempDate] = useState<Date>(new Date());
@@ -49,7 +48,7 @@ export const DatePicker = ({ placeholder, date, setDate, error }: DatePickerProp
         }}
       >
         <Typography style={[styles.text, dateFormatted && styles.textSelected]} variant='heading3'>
-          {dateFormatted || placeholder}
+          {dateFormatted}
         </Typography>
       </TouchableOpacity>
 

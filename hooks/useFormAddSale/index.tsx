@@ -24,7 +24,7 @@ export const useFormAddSale = () => {
   const [quantity, setQuantity] = useState('');
   const [tabActive, setTabActive] = useState(tabs[0]);
   const [price, setPrice] = useState('');
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [date, setDate] = useState<Date>(new Date());
   const [error, setError] = useState({ product: '', value: '', price: '', date: '' });
   const [loading, setLoading] = useState(false);
 
@@ -54,7 +54,7 @@ export const useFormAddSale = () => {
       setProduct(undefined);
       setQuantity('');
       setPrice('');
-      setDate(undefined);
+      setDate(new Date());
 
       if (router.canGoBack()) router.back();
       else router.navigate('/(tabs)/sales');

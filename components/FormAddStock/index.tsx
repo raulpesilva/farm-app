@@ -52,7 +52,7 @@ export const FormAddStock = () => {
         )}
       </Field>
 
-      <DatePicker placeholder='Selecione a data' date={date} setDate={setDate} error={error.date} />
+      <DatePicker date={date} setDate={setDate} error={error.date} />
 
       {/* <View style={styles.toggleContainer}>
         <Switch

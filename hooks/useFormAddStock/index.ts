@@ -24,7 +24,7 @@ export const useFormAddStock = () => {
   const [selectedType, setSelectedType] = useState<(typeof tabs)[number]>(tabs[0]);
   const [product, setProduct] = useState<OptionSelect | undefined>(undefined);
   const [quantity, setQuantity] = useState('');
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [date, setDate] = useState<Date>(new Date());
   const [error, setError] = useState({ product: '', quantity: '', date: '' });
   const [loading, setLoading] = useState(false);
 
@@ -49,7 +49,7 @@ export const useFormAddStock = () => {
 
       setProduct(undefined);
       setQuantity('');
-      setDate(undefined);
+      setDate(new Date());
       if (router.canGoBack()) router.back();
       else router.navigate('/(tabs)/stocks');
     } catch (error: any) {
