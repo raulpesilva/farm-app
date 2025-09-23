@@ -2,6 +2,7 @@ import { GoalItem } from '@/@types/goal';
 import { OptionSelect } from '@/components';
 import { addGoal } from '@/services';
 import { useFarmSelect, useProductsSelect } from '@/states';
+import { formatBRLCurrencyPayload, onlyNumbers, unformatBRLCurrencyInput } from '@/utils';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -34,10 +35,8 @@ export const useFormAddGoal = () => {
       if (!target) setError((prev) => ({ ...prev, target: 'Digite o objetivo' }));
       if (!name || !product || !target || !farm) return;
 
-      const targetFormatted =
-        measure === 'quantity'
-          ? Number(target.replace(/\D/g, ''))
-          : Number(target.replace(/[^\d,-]/g, '').replace(',', '.'));
+      let targetFormatted = Number(onlyNumbers(target));
+      if (measure !== 'quantity') targetFormatted = Number(formatBRLCurrencyPayload(unformatBRLCurrencyInput(target)));
 
       await addGoal({
         product_id: Number(product.type),

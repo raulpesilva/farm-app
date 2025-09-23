@@ -11,7 +11,7 @@ const TABS_MEASURE = [
 
 const TABS_TYPE = {
   quantity: [
-    { label: 'Comprar', value: 'storage' },
+    { label: 'Estoque', value: 'storage' },
     { label: 'Plantar', value: 'plant' },
     { label: 'Colher', value: 'harvest' },
     { label: 'Vender', value: 'sale' },

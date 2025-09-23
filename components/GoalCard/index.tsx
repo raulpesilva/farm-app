@@ -1,6 +1,6 @@
 import { COLORS_GOAL, GoalItem, MEASURE_GOAL } from '@/@types/goal';
 import { theme } from '@/theme';
-import { formatCurrency } from '@/utils';
+import { formatBRLCurrencyDisplay } from '@/utils';
 import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Icon, ICON_MAP, Typography } from '../shared';
@@ -14,7 +14,7 @@ export const GoalCard = ({ product, productIcon, name, measure, type, value, tar
   const color = COLORS_GOAL[type];
 
   const formattedTarget = useMemo(() => {
-    return measure === 'price' ? formatCurrency(target) : String(target);
+    return measure === 'price' ? formatBRLCurrencyDisplay(target) : String(target);
   }, [measure, target]);
 
   const percentageCompleted = useMemo(() => {

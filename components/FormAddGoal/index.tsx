@@ -1,5 +1,5 @@
 import { useFormAddGoal } from '@/hooks';
-import { maskCurrency, maskDecimal } from '@/utils';
+import { formatBRLCurrencyInput, maskDecimal } from '@/utils';
 import { StyleSheet, View } from 'react-native';
 import { Button, Field, Select, Typography } from '../shared';
 import { TabsGoal } from '../TabsGoal';
@@ -52,7 +52,7 @@ export const FormAddGoal = () => {
           placeholder='Digite o objetivo'
           value={target}
           onChangeText={(value) => {
-            const formatted = measure === 'quantity' ? maskDecimal(value) : maskCurrency(value);
+            const formatted = measure === 'quantity' ? maskDecimal(value) : formatBRLCurrencyInput(value);
             onChange(setTarget, formatted);
           }}
           keyboardType='numeric'
