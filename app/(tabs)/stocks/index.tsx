@@ -1,11 +1,10 @@
 import { Button, Empty, StockCard, StockChart, Typography } from '@/components';
-import { getGoals, getNotifications, getProducts, getSales } from '@/services';
+import { getGoals, getNotifications, getProducts } from '@/services';
 import { getTransactionsRequest } from '@/services/getTransactions';
 import {
   dispatchGoals,
   dispatchNotifications,
   dispatchProducts,
-  dispatchSales,
   dispatchTransactions,
   useProductsSelect,
   useTransactionsSelect,
@@ -26,16 +25,14 @@ export default function Stocks() {
       try {
         setLoading(true);
 
-        const [transactions, productsData, salesData, goalsData, notificationsData] = await Promise.all([
+        const [transactions, productsData, goalsData, notificationsData] = await Promise.all([
           getTransactionsRequest(),
           getProducts(),
-          getSales(),
           getGoals(),
           getNotifications(),
         ]);
         dispatchTransactions(transactions);
         dispatchProducts(productsData);
-        dispatchSales(salesData);
         dispatchGoals(goalsData);
         dispatchNotifications(notificationsData);
       } finally {

@@ -1,10 +1,9 @@
 import { Button, Empty, SaleCard, SaleChart, Typography } from '@/components';
-import { getProducts, getSales } from '@/services';
-import { dispatchProducts, dispatchSales, useProductsSelect, useSalesSelect } from '@/states';
+import { useProductsSelect, useSalesSelect } from '@/states';
 import { theme } from '@/theme';
 import { groupByDate } from '@/utils';
 import { useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { SectionList, StyleSheet, View } from 'react-native';
 
 const SaleHeader = ({ title }: { title: string }) => {
@@ -19,36 +18,11 @@ export default function Sales() {
   const router = useRouter();
   const products = useProductsSelect();
   const sales = useSalesSelect();
-  const [loading, setLoading] = useState(sales.length === 0);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const [productsData, salesData] = await Promise.all([getProducts(), getSales()]);
-        dispatchProducts(productsData);
-        dispatchSales(salesData);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   const group = useMemo(
     () => groupByDate(sales.filter((sale) => products.some((product) => product.id === sale.product_id))),
     [sales, products]
   );
-
-  if (loading && !sales?.length && !products?.length) {
-    return (
-      <View style={styles.container}>
-        <Typography style={styles.loading} variant='heading3'>
-          Carregando vendas...
-        </Typography>
-      </View>
-    );
-  }
 
   return (
     <View style={styles.container}>

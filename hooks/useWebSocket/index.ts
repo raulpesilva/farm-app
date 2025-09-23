@@ -1,13 +1,6 @@
 import { createSocket } from '@/api';
 import { getGoals, getNotifications, getProducts } from '@/services';
-import {
-  dispatchGoals,
-  dispatchNotifications,
-  dispatchProducts,
-  dispatchSales,
-  dispatchTransactions,
-  useFarmSelect,
-} from '@/states';
+import { dispatchGoals, dispatchNotifications, dispatchProducts, dispatchTransactions, useFarmSelect } from '@/states';
 import { useEffect } from 'react';
 
 export const useWebSocket = () => {
@@ -50,8 +43,7 @@ export const useWebSocket = () => {
     });
     socket.on('transaction:new', (data) => {
       console.log('New transaction', data);
-      if (data.type === 'sale') dispatchSales((prev) => [data, ...prev]);
-      if (data.type !== 'sale') dispatchTransactions((prev) => [data, ...prev]);
+      dispatchTransactions((prev) => [data, ...prev]);
     });
 
     socket.on('disconnect', () => {

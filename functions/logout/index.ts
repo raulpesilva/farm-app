@@ -3,7 +3,6 @@ import {
   resetGoals,
   resetNotifications,
   resetProducts,
-  resetSales,
   resetStocks,
   resetToken,
   resetUser,
@@ -15,7 +14,6 @@ export const logout = () => {
   resetGoals();
   resetNotifications();
   resetProducts();
-  resetSales();
   resetStocks();
   resetUser();
 };
