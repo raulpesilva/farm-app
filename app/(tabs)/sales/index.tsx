@@ -27,7 +27,7 @@ export default function Sales() {
   return (
     <View style={styles.container}>
       {!products?.length && (
-        <Empty text='Você ainda não cadastrou nenhum produto?' button='Cadastrar produto' link='/products' />
+        <Empty text='Você ainda não cadastrou nenhum produto?' button='Cadastrar produto' link='/products/add' />
       )}
 
       {!!products?.length && !sales?.length && (

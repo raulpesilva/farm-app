@@ -1,11 +1,11 @@
-import { Href, useRouter } from 'expo-router';
+import { LinkProps, useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { Button, Typography } from '../shared';
 
 interface EmptyProps {
   text: string;
   button: string;
-  link: Href;
+  link: LinkProps['href'];
 }
 
 export const Empty = ({ text, button, link }: EmptyProps) => {
@@ -19,7 +19,15 @@ export const Empty = ({ text, button, link }: EmptyProps) => {
       <Typography variant='heading2' style={styles.text}>
         Cadastre e comece a gerenciar sua fazenda
       </Typography>
-      <Button style={styles.button} onPress={() => router.navigate(link)}>
+      <Button
+        style={styles.button}
+        onPress={() => {
+          // Workaround to avoid navigation issues on Expo Router
+          if (typeof link === 'string' && link.includes('products/add'))
+            router.navigate(link.replace('/add', '') as LinkProps['href']);
+          setTimeout(() => router.navigate(link), 0);
+        }}
+      >
         <Typography variant='label'>{button}</Typography>
       </Button>
     </View>
