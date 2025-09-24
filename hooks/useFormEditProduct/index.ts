@@ -22,7 +22,7 @@ export const useFormEditProduct = (id: number) => {
   const [loading, setLoading] = useState(false);
 
   const edited = product?.name !== name || product?.icon !== icon?.icon || product?.color !== color?.type;
-  console.log(JSON.stringify({edited, name, icon, color, product}, null, 2));
+  console.log(JSON.stringify({ edited, name, icon, color, product }, null, 2));
 
   const handleUpdateProduct = async () => {
     try {
@@ -39,9 +39,8 @@ export const useFormEditProduct = (id: number) => {
       if (router.canGoBack()) router.back();
       else router.navigate('/(tabs)/products');
     } catch (error: any) {
-      console.log('Error editing product:', error);
-    } finally {
       setLoading(false);
+      console.log('Error editing product:', error);
     }
   };
 
@@ -53,9 +52,8 @@ export const useFormEditProduct = (id: number) => {
       if (router.canGoBack()) router.back();
       else router.navigate('/(tabs)/products');
     } catch (error: any) {
-      console.log('Error deleting product:', error);
-    } finally {
       setLoading(false);
+      console.log('Error deleting product:', error);
     }
   };
 
