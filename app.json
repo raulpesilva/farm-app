@@ -46,7 +46,8 @@
             "node_modules/@expo-google-fonts/inter/500Medium"
           ]
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
