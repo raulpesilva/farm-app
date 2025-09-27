@@ -2,7 +2,7 @@ import { getToken } from '@/states';
 import axios, { AxiosHeaders } from 'axios';
 
 export const coreApi = axios.create({
-  baseURL: 'https://api-fiap-farm.raulpesilva.com',
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
 });
 
 coreApi.interceptors.request.use((config) => {
