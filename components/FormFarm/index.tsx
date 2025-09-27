@@ -14,14 +14,13 @@ const useFormFarm = () => {
 
   const handleCreateFarm = async () => {
     try {
-      setLoading(true);
       if (!name) return setError('Preencha o campo com o nome da fazenda');
+      setLoading(true);
       const farm = await createFarm({ name });
       dispatchFarm(farm);
     } catch (error: any) {
       console.log('Error creating farm:', error);
       setError('Farm in failed: ' + error.message);
-    } finally {
       setLoading(false);
     }
   };
