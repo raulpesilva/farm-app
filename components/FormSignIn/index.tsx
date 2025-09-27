@@ -23,6 +23,7 @@ const useFormSignIn = () => {
         dispatchFarm(farm);
       } catch {
         dispatchFarm(null);
+        setLoading(false);
       }
     } catch (error: any) {
       console.log('Error signing in with email and password:', error);
