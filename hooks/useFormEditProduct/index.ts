@@ -41,6 +41,8 @@ export const useFormEditProduct = (id: number) => {
     } catch (error: any) {
       setLoading(false);
       console.log('Error editing product:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,6 +56,8 @@ export const useFormEditProduct = (id: number) => {
     } catch (error: any) {
       setLoading(false);
       console.log('Error deleting product:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
