@@ -12,7 +12,7 @@ export default function ProductDetail() {
       <View style={styles.container}>
         <Typography variant='heading1'>Produto</Typography>
         <FormEditProduct id={Number(id)} />
-        <TabsProduct />
+        <TabsProduct productId={Number(id)} />
       </View>
     </KeyboardAvoiding>
   );

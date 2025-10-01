@@ -2,7 +2,7 @@ import { OptionSelect } from '@/components';
 import { addStock } from '@/services';
 import { useProductsSelect } from '@/states';
 import { onlyNumbersWithDot } from '@/utils';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 
 const tabs = [
@@ -13,6 +13,7 @@ const tabs = [
 
 export const useFormAddStock = () => {
   const router = useRouter();
+  const { ['product-id']: productId } = useLocalSearchParams<{ 'product-id'?: string }>();
   const productsSelect = useProductsSelect();
 
   const products: OptionSelect[] = productsSelect.map((product) => ({
@@ -21,8 +22,10 @@ export const useFormAddStock = () => {
     type: String(product.id),
   }));
 
+  const selectedProduct = products?.find((product) => product.type === productId);
+
   const [selectedType, setSelectedType] = useState<(typeof tabs)[number]>(tabs[0]);
-  const [product, setProduct] = useState<OptionSelect | undefined>(undefined);
+  const [product, setProduct] = useState<OptionSelect | undefined>(selectedProduct || undefined);
   const [quantity, setQuantity] = useState('');
   const [date, setDate] = useState<Date>(new Date());
   const [error, setError] = useState({ product: '', quantity: '', date: '' });

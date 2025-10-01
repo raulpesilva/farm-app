@@ -3,11 +3,12 @@ import { OptionSelect } from '@/components';
 import { addGoal } from '@/services';
 import { useFarmSelect, useProductsSelect } from '@/states';
 import { formatBRLCurrencyPayload, onlyNumbers, unformatBRLCurrencyInput } from '@/utils';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 
 export const useFormAddGoal = () => {
   const router = useRouter();
+  const { ['product-id']: productId } = useLocalSearchParams<{ 'product-id'?: string }>();
   const productsSelect = useProductsSelect();
   const farm = useFarmSelect();
 
@@ -17,8 +18,10 @@ export const useFormAddGoal = () => {
     type: String(product.id),
   }));
 
+  const selectedProduct = products?.find((product) => product.type === productId);
+
   const [name, setName] = useState('');
-  const [product, setProduct] = useState<OptionSelect | undefined>(undefined);
+  const [product, setProduct] = useState<OptionSelect | undefined>(selectedProduct || undefined);
   const [target, setTarget] = useState('');
   const [measure, setMeasure] = useState<GoalItem['measure']>('quantity');
   const [type, setType] = useState<GoalItem['type']>('storage');

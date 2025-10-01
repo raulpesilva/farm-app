@@ -5,6 +5,10 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Typography } from '../shared';
 import { TabItem } from '../TabItem';
 
+interface TabsProductProps {
+  productId: number;
+}
+
 export interface TabProps {
   label: string;
   link?: Href;
@@ -25,7 +29,7 @@ const TABS_PRODUCT: TabProps[] = [
   },
 ];
 
-export const TabsProduct = () => {
+export const TabsProduct = ({ productId }: TabsProductProps) => {
   const router = useRouter();
   const [active, setActive] = useState(TABS_PRODUCT[1]);
 
@@ -37,7 +41,7 @@ export const TabsProduct = () => {
         ))}
       </View>
 
-      <Button variant='outlined' onPress={() => router.push(active.link || '/products/add')}>
+      <Button variant='outlined' onPress={() => router.push(`${active.link}?product-id=${productId}` as Href)}>
         <Typography variant='label'>Cadastrar</Typography>
       </Button>
     </View>

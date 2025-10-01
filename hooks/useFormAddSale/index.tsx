@@ -2,7 +2,7 @@ import { OptionSelect } from '@/components';
 import { addSale } from '@/services';
 import { useProductsSelect } from '@/states';
 import { formatBRLCurrencyPayload, onlyNumbers, unformatBRLCurrencyInput } from '@/utils';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 
 const tabs = [
@@ -12,6 +12,7 @@ const tabs = [
 
 export const useFormAddSale = () => {
   const router = useRouter();
+  const { ['product-id']: productId } = useLocalSearchParams<{ 'product-id'?: string }>();
   const productsSelect = useProductsSelect();
 
   const products: OptionSelect[] = productsSelect.map((product) => ({
@@ -20,7 +21,9 @@ export const useFormAddSale = () => {
     type: String(product.id),
   }));
 
-  const [product, setProduct] = useState<OptionSelect | undefined>(undefined);
+  const selectedProduct = products?.find((product) => product.type === productId);
+
+  const [product, setProduct] = useState<OptionSelect | undefined>(selectedProduct || undefined);
   const [quantity, setQuantity] = useState('');
   const [tabActive, setTabActive] = useState(tabs[0]);
   const [price, setPrice] = useState('');
