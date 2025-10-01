@@ -22,7 +22,6 @@ export const useFormEditProduct = (id: number) => {
   const [loading, setLoading] = useState(false);
 
   const edited = product?.name !== name || product?.icon !== icon?.icon || product?.color !== color?.type;
-  console.log(JSON.stringify({ edited, name, icon, color, product }, null, 2));
 
   const handleUpdateProduct = async () => {
     try {
